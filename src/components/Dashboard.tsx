@@ -17,7 +17,6 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-
 export default function DividerStack() {
   const [selectedSatellite, setSelectedSatellite] = React.useState(false);
   const [connectedRotator, setConnectedRotator] = React.useState(false);
@@ -34,37 +33,29 @@ export default function DividerStack() {
           <Button
             variant="outlined"
             onClick={() => setSelectedSatellite(true)}
-            sx = {{padding:'5rem', width:'20%'}}
+            sx={{ padding: "5rem", width: "20%" }}
           >
             Add Satellite
           </Button>
         )}
-        {selectedSatellite && (
-       
-            <SatelliteCard />
-          
-        )}
+        {selectedSatellite && <SatelliteCard />}
         {!connectedRotator && (
           <Button
             variant="outlined"
             size="large"
             onClick={() => setConnectedRotator(true)}
-            sx = {{padding:'5rem', width:'80%'}}
+            sx={{ padding: "5rem", width: "80%" }}
           >
             Connect a Rotator
           </Button>
         )}
         {connectedRotator && (
           <>
-            <Item>
-              <RadioCard />
-            </Item>
-            <Item>
-              <RotatorCard />
-            </Item>
-            <Item>
-              <ControllerCard />
-            </Item>
+            <RadioCard />
+
+            <RotatorCard />
+
+            <ControllerCard />
           </>
         )}
       </Stack>

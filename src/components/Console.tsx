@@ -137,7 +137,7 @@ export default function CustomizedTabs() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Box sx={{ bgcolor: "#2e1534",height: "25rem" }}>
+      <Box sx={{ bgcolor: "#2e1534",height: "20rem" }}>
         <StyledTabs value={value} onChange={handleChange}>
           <StyledTab label="Satellites" {...a11yProps(0)} />
           <StyledTab label="Dashboard" {...a11yProps(1)} />

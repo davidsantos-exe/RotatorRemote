@@ -1,0 +1,15 @@
+{
+  "AOS": "12:12:13",
+  "LOS": "10:02:10",
+  "Uplink": "64kHz",
+  "Downlink": "32MHz",
+  "SignalLevel": "-20",
+  "Latitude": "43.210 N",
+  "Longitude": "39.321 W",
+  "Azimuth": "123.24",
+  "Elevation": "90.232",
+  "Radio": "Yaesu FT-991A",
+  "Rotator": "Yaesu G-5500",
+  "Heading": "-80 W",
+  "Velocity": "3.23 rad/s"
+}

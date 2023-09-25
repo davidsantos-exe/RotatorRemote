@@ -40,8 +40,9 @@ export default function BasicCard() {
           alignItems="center"
           sx={{paddingBottom:"4px"}}
         >
-          <Stack direction="row" spacing={1}>
+          <Stack direction="row" spacing={2}>
             <List
+              dense ={true}
               sx={{
                 ".MuiListItem-root": { padding: "0px", paddingRight: "16px" },
                 ".MuiListItemText-root": { margin: "0px", width: "100%" },
@@ -52,20 +53,21 @@ export default function BasicCard() {
                 <ListItemText primary="AOS" />
                 <ListItemText
                   secondary=" 18:50:30 "
-                  sx={{ paddingLeft: "0px" }}
+                  sx={{ paddingLeft: "0px",paddingRight: "8px" }}
                 />
               </ListItem>
               <ListItem>
                 <ListItemText primary="LOS" />
                 <ListItemText
                   secondary=" 18:50:30 "
-                  sx={{ paddingLeft: "0px" }}
+                  sx={{ paddingLeft: "0px",paddingRight: "8px" }}
                 />
               </ListItem>
             </List>
             <List
+            dense = {true}
               sx={{
-                ".MuiListItem-root": { padding: "0px", paddingRight: "16px" },
+                ".MuiListItem-root": { padding: "0px", marginRight: "16px" },
                 ".MuiListItemText-root": { margin: "0px", width: "100%" },
               }}
             >
@@ -73,14 +75,14 @@ export default function BasicCard() {
                 <ListItemText primary="Uplink" />
                 <ListItemText
                   secondary=" 43 kHz "
-                  sx={{ paddingLeft: "16px" }}
+                  sx={{ paddingLeft: "8px" }}
                 />
               </ListItem>
               <ListItem>
                 <ListItemText primary="Downlink" />
                 <ListItemText
                   secondary=" 293 kHz "
-                  sx={{ paddingLeft: "16px" }}
+                  sx={{ paddingLeft: "8px" }}
                 />
               </ListItem>
             </List>
@@ -92,7 +94,7 @@ export default function BasicCard() {
           justifyContent="center"
           alignItems="stretch"
           width="100%"
-          sx={{paddingTop:"4px"}}
+          sx={{paddingTop:"8px"}}
         >
           <LinearGauge />
         </Grid>

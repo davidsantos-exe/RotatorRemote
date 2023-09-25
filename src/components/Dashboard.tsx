@@ -75,7 +75,7 @@ export default function DividerStack() {
                 </Card>
               </Fade>
               <Fade in={connectedRotator} timeout={1600}>
-                <Card sx={{ minWidth: 300, width: "100%" }}>
+                <Card sx={{ minWidth: 450, width: "40%" }}>
                   <RotatorCard />
                 </Card>
               </Fade>

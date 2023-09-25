@@ -70,7 +70,7 @@ const StyledTabs = styled((props: StyledTabsProps) => (
   "& .MuiTabs-indicatorSpan": {
     maxWidth: 40,
     width: "100%",
-    backgroundColor: "#635ee7",
+    backgroundColor: "#d1eaff",
   },
 });
 
@@ -92,6 +92,14 @@ const StyledTab = styled((props: StyledTabProps) => (
   "&.Mui-focusVisible": {
     backgroundColor: "rgba(100, 95, 228, 0.32)",
   },
+  "&.MuiTab-root": {
+    minHeight: "32px",
+    paddingTop: "4px",
+    paddingBottom: "4px",
+  },
+ 
+
+
 }));
 
 interface TabPanelProps {
@@ -106,13 +114,14 @@ function CustomTabPanel(props: TabPanelProps) {
   return (
     <div
       role="tabpanel"
+      
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3}}>
+        <Box sx={{ p: 3, padding: '12px'}}>
           <Typography>{children}</Typography>
         </Box>
         
@@ -137,8 +146,8 @@ export default function CustomizedTabs() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Box sx={{ bgcolor: "#2e1534",height: "20rem" }}>
-        <StyledTabs value={value} onChange={handleChange}>
+      <Box sx={{height: "15.5rem" }}>
+        <StyledTabs sx={{minHeight:"32px"}} value={value} onChange={handleChange}>
           <StyledTab label="Satellites" {...a11yProps(0)} />
           <StyledTab label="Dashboard" {...a11yProps(1)} />
         </StyledTabs>

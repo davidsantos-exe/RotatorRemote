@@ -4,13 +4,24 @@ import Divider from "@mui/material/Divider";
 import Console from "./components/Console";
 import Box from "@mui/material/Box";
 import "./styles/App.css";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 export default function App() {
   return (
     <div>
-      <div className="console">
-        <Console />
-      </div>
+      <ThemeProvider theme={darkTheme}>
+  
+        <div className="console">
+          <Console />
+        </div>
+      </ThemeProvider>
     </div>
   );
 }

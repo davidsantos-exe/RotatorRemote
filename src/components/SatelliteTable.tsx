@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 interface Column {
-  id: 'name' | 'code' | 'population' | 'size' | 'density';
+  id: 'name' | 'nextpass' | 'latitude' | 'longitude' | 'height' | 'maxe';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -17,26 +17,33 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+  { id: 'name', label: 'Name', minWidth: 100 },
+  { id: 'nextpass', label: 'Next\u00a0Pass', minWidth: 50 },
   {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
+    id: 'latitude',
+    label: 'Latitude\u00a0(\u00b0)',
+    minWidth: 50,
     align: 'right',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
+    id: 'longitude',
+    label: 'Longitude\u00a0(\u00b0)',
+    minWidth: 50,
     align: 'right',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
+    id: 'height',
+    label: 'Height\u00a0(mi)',
+    minWidth: 50,
+    align: 'right',
+    format: (value: number) => value.toFixed(2),
+  },
+  {
+    id: 'maxe',
+    label: 'Max\u00a0E\u00a0(mi)',
+    minWidth: 50,
     align: 'right',
     format: (value: number) => value.toFixed(2),
   },
@@ -44,38 +51,35 @@ const columns: readonly Column[] = [
 
 interface Data {
   name: string;
-  code: string;
-  population: number;
-  size: number;
-  density: number;
+  nextpass: string;
+  latitude: number;
+  longitude: number;
+  height: number;
+  maxe: number;
 }
 
 function createData(
   name: string,
-  code: string,
-  population: number,
-  size: number,
+  nextpass: string,
+  latitude: number,
+  longitude: number,
+  height: number,
+  maxe: number
 ): Data {
-  const density = population / size;
-  return { name, code, population, size, density };
+  return { name, nextpass, latitude, longitude, height,maxe };
 }
 
 const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767),
+  createData('ISS (Zarya)', '5 min', -134, 202,256,300),
+  createData('ISS', '5 min', -134, 202,256,300),
+  createData('ISS', '5 min', -134, 202,256,300),
+  createData('ISS', '5 min', -134, 202,256,300),
+  createData('ISS', '5 min', -134, 202,256,300),
+  createData('ISS (Zarya)', '5 min', -134, 202,256,300),
+  createData('ISS', '5 min', -134, 202,256,300),
+  createData('ISS', '5 min', -134, 202,256,300),
+  createData('ISS', '5 min', -134, 202,256,300),
+  createData('ISS', '5 min', -134, 202,256,300)
 ];
 
 export default function StickyHeadTable() {
@@ -92,16 +96,16 @@ export default function StickyHeadTable() {
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: '14rem'}}>
+    <Paper sx={{ overflow: 'hidden'}}>
+      <TableContainer sx={{ maxHeight: '12rem'}}>
         <Table stickyHeader aria-label="sticky table">
-          <TableHead>
+          <TableHead >
             <TableRow>
               {columns.map((column) => (
-                <TableCell
+                <TableCell 
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{minWidth: column.minWidth , paddingTop: '4px',paddingBottom: '4px'}}
                 >
                   {column.label}
                 </TableCell>
@@ -113,11 +117,11 @@ export default function StickyHeadTable() {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.nextpass}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell style ={{paddingTop: '4px',paddingBottom: '4px'}} key={column.id} align={column.align}>
                           {column.format && typeof value === 'number'
                             ? column.format(value)
                             : value}

@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import SatelliteTable from "./SatelliteTable";
 import Dashboard from "./Dashboard";
+import Stack from "@mui/material/Stack";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -94,8 +95,8 @@ const StyledTab = styled((props: StyledTabProps) => (
   },
   "&.MuiTab-root": {
     minHeight: "32px",
-    paddingTop: "4px",
-    paddingBottom: "4px",
+   // paddingTop: "4px",
+   // paddingBottom: "4px",
   },
  
 
@@ -146,7 +147,7 @@ export default function CustomizedTabs() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Box sx={{height: "15.5rem" }}>
+      <Box sx={{height: "15rem" }}>
         <StyledTabs sx={{minHeight:"32px"}} value={value} onChange={handleChange}>
           <StyledTab label="Satellites" {...a11yProps(0)} />
           <StyledTab label="Dashboard" {...a11yProps(1)} />

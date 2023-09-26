@@ -41,10 +41,6 @@ export default function BasicCard() {
             <ListItemText secondary=" 23:50:36 " sx={{paddingLeft:"8px"}}/>
           </ListItem>
           <ListItem>
-            <ListItemText primary="Next Pass" />
-            <ListItemText secondary=" 5 min " sx={{paddingLeft:"8px"}}/>
-          </ListItem>
-          <ListItem>
             <ListItemText primary="Latitude" />
             <ListItemText secondary=" -20.95 " sx={{paddingLeft:"8px"}}/>
           </ListItem>

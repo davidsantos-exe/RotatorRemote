@@ -30,20 +30,20 @@ export default function DividerStack() {
         justifyContent="space-around"
         divider={<Divider orientation="vertical" flexItem />}
         spacing={1}
-        sx={{ height: "12rem" }}
+        sx={{ height: "11rem" }}
       >
         {!selectedSatellite && (
           <Button
             variant="outlined"
             onClick={() => setSelectedSatellite(true)}
-            sx={{ width: 180, minWidth: 180 }}
+            sx={{minWidth: 180, maxWidth:200 , width: "100%", }}
           >
             Add Satellite
           </Button>
         )}
         {selectedSatellite && (
           <Fade in={selectedSatellite} timeout={800}>
-            <Card sx={{ width: 180, minWidth: 180 }}>
+            <Card sx={{minWidth: 180, maxWidth:200 , width: "100%", }}>
               <SatelliteCard />
             </Card>
           </Fade>
@@ -67,23 +67,19 @@ export default function DividerStack() {
               direction="row"
               divider={<Divider orientation="vertical" flexItem />}
               spacing={1}
-              sx={{ height: "12rem", width: "100%" }}
+              sx={{ height: "11rem", width: "100%" }}
             >
               <Fade in={connectedRotator} timeout={800}>
-                <Card sx={{ minWidth: 300, width: "20%" }}>
+                <Card sx={{ minWidth: 300, maxWidth: 450, width: "100%" }}>
                   <RadioCard />
                 </Card>
               </Fade>
               <Fade in={connectedRotator} timeout={1600}>
-                <Card sx={{ minWidth: 450, width: "40%" }}>
+                <Card sx={{minWidth: 730, maxWidth: 800, width: "100%" }}>
                   <RotatorCard />
                 </Card>
               </Fade>
-              <Fade in={connectedRotator} timeout={2400} >
-                <Card sx={{ minWidth: 300, width: "100%", display: "flex" }}>
-                  <ControllerCard />
-                </Card>
-              </Fade>
+
             </Stack>
     
           </>

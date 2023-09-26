@@ -2,13 +2,10 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-const Rect = (props) => {
-  return <rect {...props} />;
-};
 
 const LinearGauge = () => {
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%", paddingTop:"4px"}}>
       <Stack
         width="100%"
         direction="row"
@@ -29,6 +26,7 @@ const LinearGauge = () => {
       <Box
         //border={1}
         sx={{
+          paddingTop: "8px",
           width: "100%",
           height: "1.8rem",
         }}

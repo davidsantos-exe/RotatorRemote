@@ -31,43 +31,41 @@ export default function BasicCard() {
         direction="column"
         justifyContent="center"
         alignItems="center"
-       
       >
         <Grid
           container
           direction="row"
           justifyContent="center"
           alignItems="center"
-          sx={{paddingBottom:"4px"}}
+          sx={{ paddingBottom: "4px" }}
         >
           <Stack direction="row" spacing={2}>
             <List
-              dense ={true}
+              dense={true}
               sx={{
-                ".MuiListItem-root": { padding: "0px", paddingRight: "16px" },
+                ".MuiListItem-root": { padding: "0px", paddingRight: "16px",paddingBottom: "4px" },
                 ".MuiListItemText-root": { margin: "0px", width: "100%" },
-                
               }}
             >
               <ListItem>
                 <ListItemText primary="AOS" />
                 <ListItemText
                   secondary=" 18:50:30 "
-                  sx={{ paddingLeft: "0px",paddingRight: "8px" }}
+                  sx={{ paddingLeft: "0px", paddingRight: "8px" }}
                 />
               </ListItem>
               <ListItem>
                 <ListItemText primary="LOS" />
                 <ListItemText
                   secondary=" 18:50:30 "
-                  sx={{ paddingLeft: "0px",paddingRight: "8px" }}
+                  sx={{ paddingLeft: "0px", paddingRight: "8px" }}
                 />
               </ListItem>
             </List>
             <List
-            dense = {true}
+              dense={true}
               sx={{
-                ".MuiListItem-root": { padding: "0px", marginRight: "16px" },
+                ".MuiListItem-root": { padding: "0px", marginRight: "16px" ,paddingBottom: "4px"},
                 ".MuiListItemText-root": { margin: "0px", width: "100%" },
               }}
             >
@@ -88,16 +86,8 @@ export default function BasicCard() {
             </List>
           </Stack>
         </Grid>
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="stretch"
-          width="100%"
-          sx={{paddingTop:"8px"}}
-        >
-          <LinearGauge />
-        </Grid>
+
+        <LinearGauge />
       </Grid>
     </CardContent>
   );

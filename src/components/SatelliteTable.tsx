@@ -72,7 +72,7 @@ function createData(
 
 const rows = [
   createData("ISS (Zarya)", "5 min", -134, 202, 256, 300),
-  createData("ISS", "5 min", -134, 202, 256, 300),
+  createData("ISS", "1456 min", -134, 202, 256, 300),
   createData("ISS", "5 min", -134, 202, 256, 300),
   createData("ISS", "5 min", -134, 202, 256, 300),
   createData("ISS", "5 min", -134, 202, 256, 300),

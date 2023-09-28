@@ -17,11 +17,10 @@ export default function App() {
   return (
     <div>
       <ThemeProvider theme={darkTheme}>
-  
-        <div className="console">
+        <div className="console" style={{ backgroundColor: "transparent" }}>
           <Console />
         </div>
-      </ThemeProvider>
+       </ThemeProvider>
     </div>
   );
 }

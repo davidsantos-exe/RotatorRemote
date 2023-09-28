@@ -1,63 +1,78 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import Stack from "@mui/material/Stack";
+
+const SatelliteListLabels = [
+  "UTC",
+  "Local",
+  "NextPass",
+  "Latitude",
+  "Longitude",
+  "Max E",
+];
+const SatelliteListValues = [
+  "18:20:10",
+  "24:10:20",
+  "01:22:20",
+  "-25.22° N",
+  "230.21° W",
+  "256 mi",
+];
 
 export default function BasicCard() {
   return (
-    
-      <CardContent
-        sx={{
-          padding: "8px",
-          paddingLeft: "16px",
-          paddingTop: "4px",
-          "&.MuiCardContent-root": { paddingBottom: "8px" },
-        }}
+    <CardContent
+      sx={{
+        height: "100%",
+        padding: "8px",
+        "&.MuiCardContent-root": { paddingBottom: "8px" },
+      }}
+    >
+      <Stack
+        direction="column"
+        alignItems="space-between"
+        justifyContent="space-between"
       >
-        <Typography variant="h6" component="div">
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ fontFamily: "Inter, sans-serif" }}
+        >
           ISS (Zarya)
         </Typography>
-
-        <List
-          dense={true}
-          sx={{
-            ".MuiListItem-root": { padding:"0px" },
-            ".MuiListItemText-root": { margin:"0px", width:"100%"},
-            paddingBottom:'0px'
-          }}
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="space-between"
+          alignItems="space-between"
         >
-          <ListItem>
-            <ListItemText primary="UTC" />
-            <ListItemText secondary=" 18:50:30 " sx={{paddingLeft:"8px"}}/>
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Local" />
-            <ListItemText secondary=" 23:50:36 " sx={{paddingLeft:"8px"}}/>
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Latitude" />
-            <ListItemText secondary=" -20.95 " sx={{paddingLeft:"8px"}}/>
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Longitude" />
-            <ListItemText secondary=" 148.83 " sx={{paddingLeft:"8px"}}/>
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Height" />
-            <ListItemText secondary=" 252 mi " sx={{paddingLeft:"8px"}}/>
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Max E" />
-            <ListItemText secondary=" 420 mi" sx={{paddingLeft:"8px"}}/>
-          </ListItem>
-        </List>
-      </CardContent>
-    
+          <Stack
+            direction="column"
+            justifyContent="space-between"
+            alignItems="space-between"
+          >
+            {SatelliteListLabels.map((label, index) => (
+              <Typography
+                key={index}
+                variant="caption"
+                component="div"
+                sx={{ fontFamily: "Inter, sans-serif" }}
+              >
+                {label}
+              </Typography>
+            ))}
+          </Stack>
+
+          <Stack direction="column">
+            {SatelliteListValues.map((label, index) => (
+              <Typography key={index} variant="caption" component="div" sx={{color: "#4BDAE3", fontFamily:"Inter, sans-serif"}}>
+                {label}
+              </Typography>
+            ))}
+          </Stack>
+        </Stack>
+      </Stack>
+    </CardContent>
   );
 }

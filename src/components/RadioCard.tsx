@@ -17,78 +17,93 @@ export default function BasicCard() {
     <CardContent
       sx={{
         padding: "8px",
-        paddingLeft: "16px",
-        paddingRight: "16px",
-        paddingTop: "4px",
         "&.MuiCardContent-root": { paddingBottom: "8px" },
       }}
     >
-      <Typography variant="h6" component="div">
-        {RotatorData.Radio}
-      </Typography>
-      <Grid
-        container
+      <Stack
         direction="column"
-        justifyContent="center"
-        alignItems="center"
+        justifyContent="space-between"
+        alignItems="space-between"
       >
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          sx={{ paddingBottom: "4px" }}
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ fontFamily: "Inter, sans-serif" }}
         >
-          <Stack direction="row" spacing={2}>
-            <List
-              dense={true}
-              sx={{
-                ".MuiListItem-root": { padding: "0px", paddingRight: "16px",paddingBottom: "4px" },
-                ".MuiListItemText-root": { margin: "0px", width: "100%" },
-              }}
-            >
-              <ListItem>
-                <ListItemText primary="AOS" />
-                <ListItemText
-                  secondary=" 18:50:30 "
-                  sx={{ paddingLeft: "0px", paddingRight: "8px" }}
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="LOS" />
-                <ListItemText
-                  secondary=" 18:50:30 "
-                  sx={{ paddingLeft: "0px", paddingRight: "8px" }}
-                />
-              </ListItem>
-            </List>
-            <List
-              dense={true}
-              sx={{
-                ".MuiListItem-root": { padding: "0px", marginRight: "16px" ,paddingBottom: "4px"},
-                ".MuiListItemText-root": { margin: "0px", width: "100%" },
-              }}
-            >
-              <ListItem>
-                <ListItemText primary="Uplink" />
-                <ListItemText
-                  secondary=" 43 kHz "
-                  sx={{ paddingLeft: "8px" }}
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Downlink" />
-                <ListItemText
-                  secondary=" 293 kHz "
-                  sx={{ paddingLeft: "8px" }}
-                />
-              </ListItem>
-            </List>
-          </Stack>
-        </Grid>
-
+          Yaesu FT-2031
+        </Typography>
         <LinearGauge />
-      </Grid>
+        <Stack sx={{ paddingTop: "1rem" }} direction="row" justifyContent="space-around">
+          <Stack direction="column">
+            <Stack direction="row">
+              <Typography
+                variant="caption"
+                component="div"
+                sx={{ fontFamily: "Inter, sans-serif", fontSize:12, paddingRight:"16px" }}
+              >
+                LOS
+              </Typography>
+              <Typography
+                variant="caption"
+                component="div"
+                sx={{color: "#4BDAE3", fontFamily: "Inter, sans-serif", fontSize:12 }}
+              >
+                10:10:92
+              </Typography>
+            </Stack>
+            <Stack direction="row">
+              <Typography
+                variant="caption"
+                component="div"
+                sx={{ fontFamily: "Inter, sans-serif" , fontSize:12,  paddingRight:"16px"}}
+              >
+                AOS
+              </Typography>
+              <Typography
+                variant="caption"
+                component="div"
+                sx={{color: "#4BDAE3", fontFamily: "Inter, sans-serif", fontSize:12 }}
+              >
+                03:39:10
+              </Typography>
+            </Stack>
+          </Stack>
+          <Stack direction="column">
+            <Stack direction="row">
+              <Typography
+                variant="caption"
+                component="div"
+                sx={{ fontFamily: "Inter, sans-serif", fontSize:12 , paddingRight:"16px"}}
+              >
+                Uplink
+              </Typography>
+              <Typography
+                variant="caption"
+                component="div"
+                sx={{color: "#4BDAE3", fontFamily: "Inter, sans-serif", fontSize:12}}
+              >
+                42.334 kHz
+              </Typography>
+            </Stack>
+            <Stack direction="row">
+              <Typography
+                variant="caption"
+                component="div"
+                sx={{ fontFamily: "Inter, sans-serif" , fontSize:12, paddingRight:"16px"}}
+              >
+                Downlink
+              </Typography>
+              <Typography
+                variant="caption"
+                component="div"
+                sx={{color: "#4BDAE3", fontFamily: "Inter, sans-serif", fontSize:12 }}
+              >
+                90.23 kHz
+              </Typography>
+            </Stack>
+          </Stack>
+        </Stack>
+      </Stack>
     </CardContent>
   );
 }

@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 
 const LinearGauge = () => {
   return (
-    <div style={{ width: "100%", paddingTop:"4px"}}>
+    <div style={{ width: "100%"}}>
       <Stack
         width="100%"
         direction="row"
@@ -24,17 +24,17 @@ const LinearGauge = () => {
         </Typography>
       </Stack>
       <Box
-        //border={1}
+    
         sx={{
           paddingTop: "8px",
           width: "100%",
-          height: "1.8rem",
+          height: "2rem",
         }}
       >
         <svg width={"100%"} height={"100%"}>
-          <rect x={0} y={0} fill="#0A5B88" width={"10%"} height={"100%"} />
-          <rect x={"10%"} y={0} fill="#4A9CB6" width={"30%"} height={"100%"} />
-          <rect x={"40%"} y={0} fill="#4BDAE3" width={"60%"} height={"100%"} />
+          <rect x={0} y={0} fill="#FF0000" width={"10%"} height={"100%"} />
+          <rect x={"10%"} y={0} fill="#FF9900" width={"30%"} height={"100%"} />
+          <rect x={"40%"} y={0} fill="#19B600" width={"60%"} height={"100%"} />
           <rect x={"55%"} y={0} fill="white" width={"0.25rem"} height={"100%"} />
         </svg>
       </Box>

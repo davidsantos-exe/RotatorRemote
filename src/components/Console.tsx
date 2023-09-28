@@ -3,53 +3,11 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import SatelliteTable from "./SatelliteTable";
 import Dashboard from "./Dashboard";
-import Stack from "@mui/material/Stack";
+
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-
-const AntTabs = styled(Tabs)({
-  borderBottom: "1px solid #e8e8e8",
-  "& .MuiTabs-indicator": {
-    backgroundColor: "#1890ff",
-  },
-});
-
-const AntTab = styled((props: StyledTabProps) => (
-  <Tab disableRipple {...props} />
-))(({ theme }) => ({
-  textTransform: "none",
-  minWidth: 0,
-  [theme.breakpoints.up("sm")]: {
-    minWidth: 0,
-  },
-  fontWeight: theme.typography.fontWeightRegular,
-  marginRight: theme.spacing(1),
-  color: "rgba(0, 0, 0, 0.85)",
-  fontFamily: [
-    "-apple-system",
-    "BlinkMacSystemFont",
-    '"Segoe UI"',
-    "Roboto",
-    '"Helvetica Neue"',
-    "Arial",
-    "sans-serif",
-    '"Apple Color Emoji"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-  ].join(","),
-  "&:hover": {
-    color: "#40a9ff",
-    opacity: 1,
-  },
-  "&.Mui-selected": {
-    color: "#1890ff",
-    fontWeight: theme.typography.fontWeightMedium,
-  },
-  "&.Mui-focusVisible": {
-    backgroundColor: "#d1eaff",
-  },
-}));
+import TabIcon from "../icons/TabIcon.svg";
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -63,6 +21,9 @@ const StyledTabs = styled((props: StyledTabsProps) => (
     TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
   />
 ))({
+  "&.MuiTabs-root": {
+    minHeight: "24px",
+  },
   "& .MuiTabs-indicator": {
     display: "flex",
     justifyContent: "center",
@@ -71,18 +32,19 @@ const StyledTabs = styled((props: StyledTabsProps) => (
   "& .MuiTabs-indicatorSpan": {
     maxWidth: 40,
     width: "100%",
-    backgroundColor: "#d1eaff",
+   backgroundColor: "blue",
   },
 });
 
 interface StyledTabProps {
-  label: string;
+  label: string; // Add the label prop
 }
 
 const StyledTab = styled((props: StyledTabProps) => (
   <Tab disableRipple {...props} />
 ))(({ theme }) => ({
   textTransform: "none",
+
   fontWeight: theme.typography.fontWeightRegular,
   fontSize: theme.typography.pxToRem(15),
   marginRight: theme.spacing(1),
@@ -91,16 +53,17 @@ const StyledTab = styled((props: StyledTabProps) => (
     color: "#fff",
   },
   "&.Mui-focusVisible": {
-    backgroundColor: "rgba(100, 95, 228, 0.32)",
+     //backgroundColor: "rgba(100, 95, 228, 0.32)",
   },
   "&.MuiTab-root": {
-    minHeight: "32px",
-   // paddingTop: "4px",
-   // paddingBottom: "4px",
+    height: "26px",
+    minHeight: "26px",
+    width: "130px",
+    backgroundImage: `url(${TabIcon})`,
+    backgroundSize: "cover",
+    paddingTop: "0px",
+    paddingBottom: "0px",
   },
- 
-
-
 }));
 
 interface TabPanelProps {
@@ -115,17 +78,15 @@ function CustomTabPanel(props: TabPanelProps) {
   return (
     <div
       role="tabpanel"
-      
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3, padding: '12px'}}>
+        <Box sx={{ p: 3, padding: "12px", backgroundColor: "#00052D" }}>
           <Typography>{children}</Typography>
         </Box>
-        
       )}
     </div>
   );
@@ -147,16 +108,16 @@ export default function CustomizedTabs() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Box sx={{height: "15rem" }}>
-        <StyledTabs sx={{minHeight:"32px"}} value={value} onChange={handleChange}>
-          <StyledTab label="Satellites" {...a11yProps(0)} />
-          <StyledTab label="Dashboard" {...a11yProps(1)} />
+      <Box>
+        <StyledTabs value={value} onChange={handleChange}>
+          <StyledTab label="Satellites" {...a11yProps(0)} sx={{marginRight:"-10px"}} />
+          <StyledTab label="Dashboard" {...a11yProps(1)} sx={{marginLeft:"-10px"}}/>
         </StyledTabs>
-        <CustomTabPanel value={value} index={0} >
+        <CustomTabPanel value={value} index={0}>
           <SatelliteTable />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <Dashboard/>
+          <Dashboard />
         </CustomTabPanel>
       </Box>
     </Box>

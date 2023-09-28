@@ -6,7 +6,6 @@ import { Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import CoordinateGauge from "./CoordinateGauge";
 
 
 const ManualPanel = () => {
@@ -142,7 +141,7 @@ const ManualPanel = () => {
       <Box>
         <Stack direction="column" spacing={0} sx={{ minWidth: 130 }}>
           <Typography variant="body1" component="div">
-            Azimuth
+            Elevation
           </Typography>
           <Stack
             direction="row"

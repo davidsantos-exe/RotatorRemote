@@ -8,6 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Stack from "@mui/material/Stack";
 import ManualPanel from "./ManualPanel";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Controller from "./Controller";
 import IconButton from "@mui/material/IconButton";
@@ -39,68 +40,71 @@ export default function BasicCard() {
         "&.MuiCardContent-root": { paddingBottom: "8px" },
       }}
     >
-      <Stack
-        direction="column"
-        justifyContent="space-between"
-        alignItems="space-between"
-      >
-        <Stack direction="row" alignItems="flex-start">
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ fontFamily: "Inter, sans-serif" }}
-          >
-            Yaesu G-5500
-          </Typography>
-          <IconButton aria-label="delete" sx={{ marginLeft: "8px" }}>
-            <PowerOffSharpIcon sx={{ fontSize: "16px" }} />
-          </IconButton>
+      <Stack direction="row">
+        <Stack
+          direction="column"
+          justifyContent="space-between"
+          alignItems="space-between"
+        >
+          {/*Card Name */}
+          <Stack direction="row" alignItems="flex-start">
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ fontFamily: "Inter, sans-serif" }}
+            >
+              Yaesu G-5500
+            </Typography>
+            <IconButton aria-label="delete" sx={{ marginLeft: "8px" }}>
+              <PowerOffSharpIcon sx={{ fontSize: "16px" }} />
+            </IconButton>
+          </Stack>
+          {/*Radio List*/}
+          <Stack spacing={3} direction="row" justifyContent="flex-start">
+            <Stack
+              sx={{ maxWidth: 130, minWidth: 120 }}
+              direction="row"
+              justifyContent="space-between"
+            >
+              {/*Heading*/}
+              <Stack direction="column">
+                {RadioListLabels.map((label, index) => (
+                  <Typography
+                    key={index}
+                    variant="caption"
+                    component="div"
+                    sx={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    {label}
+                  </Typography>
+                ))}
+              </Stack>
+              {/*Values*/}
+              <Stack direction="column">
+                {RadioListButtons.map((label, index) => (
+                  <Typography
+                    key={index}
+                    variant="caption"
+                    component="div"
+                    sx={{ fontFamily: "Inter, sans-serif", color: "#4BDAE3" }}
+                  >
+                    {label}
+                  </Typography>
+                ))}
+              </Stack>
+            </Stack>
+          </Stack>
         </Stack>
-        {/*Radio List*/}
-        <Stack spacing={2} direction="row" justifyContent="flex-start">
-          <Stack
-            sx={{ maxWidth: 130, minWidth: 120 }}
-            direction="row"
-            justifyContent="space-between"
-          >
-            <Stack direction="column">
-              {RadioListLabels.map((label, index) => (
-                <Typography
-                  key={index}
-                  variant="caption"
-                  component="div"
-                  sx={{ fontFamily: "Inter, sans-serif" }}
-                >
-                  {label}
-                </Typography>
-              ))}
-            </Stack>
-            <Stack direction="column">
-              {RadioListButtons.map((label, index) => (
-                <Typography
-                  key={index}
-                  variant="caption"
-                  component="div"
-                  sx={{ fontFamily: "Inter, sans-serif", color: "#4BDAE3" }}
-                >
-                  {label}
-                </Typography>
-              ))}
-            </Stack>
-          </Stack>
-          {/*Manual Controls*/}
-          <Stack
-            //sx={{ maxWidth: 300 }}
-            direction="row"
-            justifyContent="space-between"
-          >
-            {/*Azimuth*/}
-            <Controller />
-            {/*Elevation*/}
-          </Stack>
-
+        {/*Manual Controls*/}
+        <Stack
+          //sx={{ maxWidth: 300 }}
+          direction="row"
+          justifyContent="space-between"
+        >
+          {/*Azimuth*/}
+          <Controller />
+          {/*Elevation*/}
           {/*Three.js Applet*/}
-
           {/*Control Buttons*/}
         </Stack>
       </Stack>

@@ -6,49 +6,32 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-const Controller = () => {
-  const marks = [
-    {
-      value: 0,
-      label: "0°",
-    },
-    {
-      value: 90,
-      label: "90°",
-    },
-    {
-      value: 180,
-      label: "180°",
-    },
-    {
-      value: 270,
-      label: "270°",
-    },
-    {
-      value: 360,
-      label: "360°",
-    },
-  ];
+interface ControllerProps {
+  label: string;
+  fillColor: string;
+  min: number;
+  max: number;
+  step: number;
+}
 
-  const [angle, setAngle] = useState(20); // Store the angle in state
-
-  const fillColor = "#FF9900";
-
+const Controller: React.FC<ControllerProps> = (props) => {
+  const [angle, setAngle] = useState(20);
   const handleIncrement = () => {
-    // Increment angle by 45 degrees
-    const newAngle = (angle + 45) % 360;
+    // Increment angle by the specified step
+    const newAngle = angle + props.step;
     setAngle(newAngle);
   };
 
   const handleDecrement = () => {
-    // Decrement angle by 45 degrees
-    const newAngle = (angle - 45 + 360) % 360;
+    // Decrement angle by the specified step
+    const newAngle = angle - props.step;
     setAngle(newAngle);
   };
 
-  const renderNumberList = () => {
-    const numbers = [360, 270, 180, 90, 0];
-    return numbers.map((number) => <div key={number}>{number}</div>);
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    if (typeof newValue === "number") {
+      setAngle(newValue);
+    }
   };
 
   return (
@@ -59,31 +42,46 @@ const Controller = () => {
         justifyContent="flex-end"
         spacing={1}
       >
-        {/* Add label */}
         <Typography
           variant="caption"
           component="div"
           sx={{ fontFamily: "Inter, sans-serif", fontSize: 15 }}
         >
-          Azimuth
+          {props.label}
         </Typography>
 
-        {/* Add SVG circle */}
         <Box sx={{ width: "86px", height: "86px" }}>
           <svg width="100%" height="100%">
-            <circle cx="43px" cy="43px" r="50%" fill={fillColor} />
-            {/* Add clock hand */}
-            <line
-              x1="43px"
-              y1="43px"
-              x2="50"
-              y2="10"
-              stroke="white"
-              strokeWidth="2"
-            />
+            
+            {props.label === "Azimuth" ? (
+              <>
+                <circle cx="43px" cy="43px" r="50%" fill={props.fillColor} />
+                <line
+                  x1="43px"
+                  y1="43px"
+                  x2={`${43 - 43 * Math.cos((90 + angle) * (Math.PI / 180))}`}
+                  y2={`${43 - 43 * Math.sin((90 + angle) * (Math.PI / 180))}`}
+                  stroke="white"
+                  strokeWidth="2"
+                />
+              </>
+            ) : (
+              
+              <>
+              <circle cx="0" cy="86" r="100%" fill={props.fillColor} />
+              <line
+                x1="1px"
+                y1="85px"
+                x2={`${86* Math.cos((angle) * (Math.PI / 180))}`}
+                y2={`${86-86* Math.sin((angle) * (Math.PI / 180))}`}
+                stroke="white"
+                strokeWidth="2"
+              />
+            </>
+            )}
           </svg>
         </Box>
-        {/* Add button group */}
+
         <Stack
           direction="row"
           sx={{
@@ -101,10 +99,9 @@ const Controller = () => {
             <TextField
               fullWidth
               id="number"
-              type="tel"
               value={angle}
               onChange={(event) => {
-                const newAngle = parseInt(event.target.value);
+                const newAngle = parseFloat(event.target.value);
                 if (!isNaN(newAngle)) {
                   setAngle(newAngle);
                 }
@@ -133,23 +130,26 @@ const Controller = () => {
           </Button>
         </Stack>
       </Stack>
-      <Box
-        sx={{
-          paddingBottom: "16px",
-          paddingTop: "16px",
-          height: "90%",
-          backgroundColor: "#000B6D",
-        }}
+              <Box
+          sx={{
+            paddingBottom: "16px",
+            paddingTop: "16px",
+            height: "90%",
+            backgroundColor: "#000B6D",
+          }}
+       
+           
         borderRadius="6px"
-        justifyContent="flex-end"
-      >
-        <Slider
+        justifyContent="flex-end">
+         <Slider
           size="small"
           aria-label="Temperature"
           orientation="vertical"
-          step={45}
-          min={0}
-          max={360}
+          value={angle}
+          onChange={handleSliderChange}
+          min={props.min}
+          max={props.max}
+          step={props.step}
         />
       </Box>
     </Stack>

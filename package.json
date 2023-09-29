@@ -13,9 +13,14 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "@react-three/drei": "^9.86.1",
+    "@react-three/fiber": "^8.14.3",
+    "leva": "^0.9.35",
     "react": "latest",
     "react-dom": "latest",
-    "styled-components": "^6.0.8"
+    "react-gamepads": "^1.0.0",
+    "styled-components": "^6.0.8",
+    "three": "^0.157.0"
   },
   "devDependencies": {
     "@types/react": "latest",

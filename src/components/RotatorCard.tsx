@@ -7,6 +7,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Stack from "@mui/material/Stack";
 import ManualPanel from "./ManualPanel";
+import Scene from "./Scene.jsx";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -99,12 +100,30 @@ export default function BasicCard() {
         <Stack
           //sx={{ maxWidth: 300 }}
           direction="row"
+          spacing={2}
           justifyContent="space-between"
         >
           {/*Azimuth*/}
-          <Controller />
+          <Controller
+            label="Azimuth"
+            fillColor="#FF9900"
+            min={0}
+            max={360}
+            step={1}
+          />
           {/*Elevation*/}
+          <Controller
+            label="Elevation"
+            fillColor="#FF0000"
+            min={0}
+            max={90}
+            step={1}
+          />
           {/*Three.js Applet*/}
+          
+          <Scene/>
+         
+
           {/*Control Buttons*/}
         </Stack>
       </Stack>

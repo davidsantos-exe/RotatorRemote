@@ -19,12 +19,20 @@ interface ControllerProps {
 
 
 const Controller: React.FC<ControllerProps> = (props) => {
+  const [offset, setOffset] = useState(0);
+  const [editedValue, setEditedValue] = useState(props.angle);
+
+ 
   //const [angle, setAngle] = [props.angle,props.setAngle];
 
   const handleIncrement = () => {
     // Increment angle by the specified step
     const newAngle = props.angle + props.step;
-    props.setAngle(newAngle);
+    if(newAngle <= props.max){
+      props.setAngle(newAngle);
+      setEditedValue(newAngle)
+    }
+    console.log("increment")
    // props.value = props.value + props.step
   };
   
@@ -32,15 +40,49 @@ const Controller: React.FC<ControllerProps> = (props) => {
   const handleDecrement = () => {
     // Decrement angle by the specified step
     const newAngle = props.angle - props.step;
-    props.setAngle(newAngle);
+    if(newAngle >= props.min){
+      props.setAngle(newAngle);
+      setEditedValue(newAngle)
+    }
+    console.log("decrement")
+   
     //props.value = props.value - props.step
   };
+  const handleInputChange = (event) => {
+    setEditedValue(event.target.value);
+  };
+
+  function handleInputBlur(event) {
+    const newValue = event.target.value
+    // Get Whole Part
+    const newAngle =  Math.floor(newValue); 
+    // Get Decimal Part
+    const newOffset = Math.round(((newValue % 1))*100)/100;
+    // Combine and Set If conditions met
+
+    if (newAngle <= props.max && newAngle >= props.min){
+      if(newOffset <= 1 && newOffset >= 0){
+        props.setAngle(newAngle+newOffset)
+        setEditedValue(newAngle+newOffset)
+        setOffset(newOffset)
+      }else{
+        setEditedValue(props.angle)
+      }
+    }else{
+      setEditedValue(props.angle)
+    }
+  }
+  
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    if (typeof newValue === "number") {
-      props.setAngle(newValue)
-      //props.value = newValue
-    }
+    if (typeof newValue === 'number'){
+    const newAngle = Math.round((props.angle-offset+newValue)*100)/100
+    if (newAngle <= props.max) {
+      props.setAngle(newAngle)
+      setOffset(newValue)
+      setEditedValue(newAngle)
+    }}
+
   };
 
   return (
@@ -105,14 +147,10 @@ const Controller: React.FC<ControllerProps> = (props) => {
           <Box sx={{ width: "100%" }}>
             <TextField
               fullWidth
-              id="number"
-              value={props.angle}
-              onChange={(event) => {
-                const newAngle = parseFloat(event.target.value);
-                if (!isNaN(newAngle)) {
-                  props.setAngle(newAngle)
-                }
-              }}
+              id="standard"
+              value={editedValue}
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
               sx={{
                 ".MuiOutlinedInput-input": {
                   height: 30,
@@ -147,7 +185,7 @@ const Controller: React.FC<ControllerProps> = (props) => {
         borderRadius="6px"
         justifyContent="flex-end"
       >
-        <Slider
+{/*<Slider
           size="small"
           aria-label="Temperature"
           orientation="vertical"
@@ -156,7 +194,17 @@ const Controller: React.FC<ControllerProps> = (props) => {
           min={props.min}
           max={props.max}
           step={props.step}
-        />
+      />*/}
+      <Slider
+          size="small"
+          aria-label="Temperature"
+          orientation="vertical"
+          value={offset}
+          onChange={handleSliderChange}
+          min={0}
+          max={0.99}
+          step={0.01}
+      />
       </Box>
     </Stack>
   );

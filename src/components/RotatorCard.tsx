@@ -104,21 +104,21 @@ export default function BasicCard() {
           justifyContent="space-between"
         >
           {/*Azimuth*/}
-          <Controller
+          {/*<Controller
             label="Azimuth"
             fillColor="#FF9900"
             min={0}
             max={360}
             step={1}
-          />
+                />*/}
           {/*Elevation*/}
-          <Controller
+           {/*<Controller
             label="Elevation"
             fillColor="#FF0000"
             min={0}
             max={90}
             step={1}
-          />
+          />*/}
           {/*Three.js Applet*/}
           
           <Scene/>

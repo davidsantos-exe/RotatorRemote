@@ -12,25 +12,28 @@ interface ControllerProps {
   min: number;
   max: number;
   step: number;
+  value:number;
 }
 
 const Controller: React.FC<ControllerProps> = (props) => {
-  const [angle, setAngle] = useState(20);
+  //const [angle, setAngle] = useState(20);
   const handleIncrement = () => {
     // Increment angle by the specified step
-    const newAngle = angle + props.step;
-    setAngle(newAngle);
+    //const newAngle = angle + props.step;
+    //setAngle(newAngle);
+    props.value = props.value + props.step
   };
 
   const handleDecrement = () => {
     // Decrement angle by the specified step
-    const newAngle = angle - props.step;
-    setAngle(newAngle);
+    //const newAngle = angle - props.step;
+    //setAngle(newAngle);
+    props.value = props.value - props.step
   };
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     if (typeof newValue === "number") {
-      setAngle(newValue);
+      props.value = newValue
     }
   };
 
@@ -52,32 +55,30 @@ const Controller: React.FC<ControllerProps> = (props) => {
 
         <Box sx={{ width: "86px", height: "86px" }}>
           <svg width="100%" height="100%">
-            
             {props.label === "Azimuth" ? (
               <>
                 <circle cx="43px" cy="43px" r="50%" fill={props.fillColor} />
                 <line
                   x1="43px"
                   y1="43px"
-                  x2={`${43 - 43 * Math.cos((90 + angle) * (Math.PI / 180))}`}
-                  y2={`${43 - 43 * Math.sin((90 + angle) * (Math.PI / 180))}`}
+                  x2={`${43 - 43 * Math.cos((90 + props.value) * (Math.PI / 180))}`}
+                  y2={`${43 - 43 * Math.sin((90 + props.value) * (Math.PI / 180))}`}
                   stroke="white"
                   strokeWidth="2"
                 />
               </>
             ) : (
-              
               <>
-              <circle cx="0" cy="86" r="100%" fill={props.fillColor} />
-              <line
-                x1="1px"
-                y1="85px"
-                x2={`${86* Math.cos((angle) * (Math.PI / 180))}`}
-                y2={`${86-86* Math.sin((angle) * (Math.PI / 180))}`}
-                stroke="white"
-                strokeWidth="2"
-              />
-            </>
+                <circle cx="0" cy="86" r="100%" fill={props.fillColor} />
+                <line
+                  x1="1px"
+                  y1="85px"
+                  x2={`${86 * Math.cos(props.value * (Math.PI / 180))}`}
+                  y2={`${86 - 86 * Math.sin(props.value * (Math.PI / 180))}`}
+                  stroke="white"
+                  strokeWidth="2"
+                />
+              </>
             )}
           </svg>
         </Box>
@@ -99,11 +100,11 @@ const Controller: React.FC<ControllerProps> = (props) => {
             <TextField
               fullWidth
               id="number"
-              value={angle}
+              value={props.value}
               onChange={(event) => {
                 const newAngle = parseFloat(event.target.value);
                 if (!isNaN(newAngle)) {
-                  setAngle(newAngle);
+                  props.value = newAngle
                 }
               }}
               sx={{
@@ -130,22 +131,21 @@ const Controller: React.FC<ControllerProps> = (props) => {
           </Button>
         </Stack>
       </Stack>
-              <Box
-          sx={{
-            paddingBottom: "16px",
-            paddingTop: "16px",
-            height: "90%",
-            backgroundColor: "#000B6D",
-          }}
-       
-           
+      <Box
+        sx={{
+          paddingBottom: "16px",
+          paddingTop: "16px",
+          height: "90%",
+          backgroundColor: "#000B6D",
+        }}
         borderRadius="6px"
-        justifyContent="flex-end">
-         <Slider
+        justifyContent="flex-end"
+      >
+        <Slider
           size="small"
           aria-label="Temperature"
           orientation="vertical"
-          value={angle}
+          value={props.value}
           onChange={handleSliderChange}
           min={props.min}
           max={props.max}

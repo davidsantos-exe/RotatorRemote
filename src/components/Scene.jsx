@@ -6,6 +6,7 @@ import { useControls } from "leva";
 import TextField from "@mui/material/TextField";
 import { useRotator } from "../classes/RotatorContext";
 import { useGamepads } from "react-gamepads";
+import Box from "@mui/material/Box";
 import {
   OrthographicCamera,
   PerspectiveCamera,
@@ -13,10 +14,7 @@ import {
   Vector3,
 } from "three";
 import Controller from "./Controller";
-
-//var azimuth = 0.88;
-//var elevation = 0.22;
-
+import Stack from "@mui/material/Stack";
 
 const viewCamera = new OrthographicCamera(-1.5, 1.77, 3.0, -0.4, 0.01, 2000);
 viewCamera.zoom = 80;
@@ -56,7 +54,7 @@ function ObserverModel() {
   const octahedronRef = useRef();
   const azimuthRef = useRef();
   const { azimuth, elevation, updateAzimuth, updateElevation } = useRotator();
-  
+
   /*
   const [{ theta }, set] = useControls(() => ({
     theta: {
@@ -85,12 +83,12 @@ function ObserverModel() {
   useFrame((_, delta) => {
     const h = atLeast(gamepad?.axes[2], 0.1);
     const v = atLeast(gamepad?.axes[3], 0.1);
-    let phi = elevation * Math.PI/180;
-    let theta = azimuth * Math.PI/180;
+    let phi = (elevation * Math.PI) / 180;
+    let theta = (azimuth * Math.PI) / 180;
     //const h = atLeast(Math.PI, 0.1)
     //const v = atLeast(Math.PI, 0.1)
     const newPhi = clamp(phi - v * delta * 5, -Math.PI * 0.3, Math.PI * 0.3);
-     /*
+    /*
     set({
       theta: theta + h * delta * 5,
     });
@@ -243,61 +241,38 @@ function ObserverModel() {
 
 function Scene() {
   const { azimuth, elevation, updateAzimuth, updateElevation } = useRotator();
-  
+
   return (
     <>
-      {/*<TextField
-        id="outlined-number"
-        label="Number"
-        type="number"
-        onChange={(event) => {
-          updateAzimuth((event.target.value * Math.PI)/180)
-        }}
-        //value={phi}
-        InputLabelProps={{
-          shrink: true
-        }}/>*/}
-
+      <Stack direction="row" spacing={2}>
         <Controller
-            label="Azimuth"
-            fillColor="#FF9900"
-            min={0}
-            max={360}
-            step={1}
-            angle={azimuth}
-            setAngle={updateAzimuth}
-         />
+          label="Azimuth"
+          fillColor="#FF9900"
+          min={0}
+          max={360}
+          step={1}
+          angle={azimuth}
+          setAngle={updateAzimuth}
+        />
         <Controller
-            label="Elevation"
-            fillColor="#FF0000"
-            min={0}
-            max={90}
-            step={1}
-            angle={elevation}
-            setAngle={updateElevation}
-         />
-
-       {/*} <TextField
-        id="outlined-number"
-        label="Number"
-        type="number"
-        onChange={(event) => {
-          updateElevation((event.target.value * Math.PI)/180)
-        }}
-        //value={phi}
-        InputLabelProps={{
-          shrink: true
-        }}/>*/}
-      
-
-
-      <Canvas camera={viewCamera} px={{ maxWidth: 200 }}>
-        <ObserverModel />
-        {/* Uncomment the following line if you want to display axes */}
-        {/* <axesHelper /> */}
-        <color attach="background" args={["#000B6D"]} />
-        <OrbitControls />
-      </Canvas>
+          label="Elevation"
+          fillColor="#FF0000"
+          min={0}
+          max={90}
+          step={1}
+          angle={elevation}
+          setAngle={updateElevation}
+        />
+        <Box >
+          <Canvas camera={viewCamera} style={{borderRadius:"6px"}}>
+            <ObserverModel />
+            {/* Uncomment the following line if you want to display axes */}
+            {/* <axesHelper /> */}
+            <color attach="background" args={["#000B6D"]} />
+            <OrbitControls />
+          </Canvas>
+        </Box>
+      </Stack>
     </>
   );
 }

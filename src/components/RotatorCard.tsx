@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Stack from "@mui/material/Stack";
-import ManualPanel from "./ManualPanel";
+
 import Scene from "./Scene.jsx";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";

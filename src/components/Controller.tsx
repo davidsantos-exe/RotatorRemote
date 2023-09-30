@@ -185,16 +185,6 @@ const Controller: React.FC<ControllerProps> = (props) => {
         borderRadius="6px"
         justifyContent="flex-end"
       >
-{/*<Slider
-          size="small"
-          aria-label="Temperature"
-          orientation="vertical"
-          value={props.angle}
-          onChange={handleSliderChange}
-          min={props.min}
-          max={props.max}
-          step={props.step}
-      />*/}
       <Slider
           size="small"
           aria-label="Temperature"

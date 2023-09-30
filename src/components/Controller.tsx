@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import {useEffect} from 'react'
 
 interface ControllerProps {
   label: string;
@@ -12,28 +13,33 @@ interface ControllerProps {
   min: number;
   max: number;
   step: number;
-  value:number;
+  angle: number;
+  setAngle: (angle: number) => void;
 }
 
+
 const Controller: React.FC<ControllerProps> = (props) => {
-  //const [angle, setAngle] = useState(20);
+  //const [angle, setAngle] = [props.angle,props.setAngle];
+
   const handleIncrement = () => {
     // Increment angle by the specified step
-    //const newAngle = angle + props.step;
-    //setAngle(newAngle);
-    props.value = props.value + props.step
+    const newAngle = props.angle + props.step;
+    props.setAngle(newAngle);
+   // props.value = props.value + props.step
   };
+  
 
   const handleDecrement = () => {
     // Decrement angle by the specified step
-    //const newAngle = angle - props.step;
-    //setAngle(newAngle);
-    props.value = props.value - props.step
+    const newAngle = props.angle - props.step;
+    props.setAngle(newAngle);
+    //props.value = props.value - props.step
   };
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     if (typeof newValue === "number") {
-      props.value = newValue
+      props.setAngle(newValue)
+      //props.value = newValue
     }
   };
 
@@ -61,8 +67,8 @@ const Controller: React.FC<ControllerProps> = (props) => {
                 <line
                   x1="43px"
                   y1="43px"
-                  x2={`${43 - 43 * Math.cos((90 + props.value) * (Math.PI / 180))}`}
-                  y2={`${43 - 43 * Math.sin((90 + props.value) * (Math.PI / 180))}`}
+                  x2={`${43 - 43 * Math.cos((90 + props.angle) * (Math.PI / 180))}`}
+                  y2={`${43 - 43 * Math.sin((90 + props.angle) * (Math.PI / 180))}`}
                   stroke="white"
                   strokeWidth="2"
                 />
@@ -73,8 +79,8 @@ const Controller: React.FC<ControllerProps> = (props) => {
                 <line
                   x1="1px"
                   y1="85px"
-                  x2={`${86 * Math.cos(props.value * (Math.PI / 180))}`}
-                  y2={`${86 - 86 * Math.sin(props.value * (Math.PI / 180))}`}
+                  x2={`${86 * Math.cos(props.angle * (Math.PI / 180))}`}
+                  y2={`${86 - 86 * Math.sin(props.angle * (Math.PI / 180))}`}
                   stroke="white"
                   strokeWidth="2"
                 />
@@ -100,11 +106,11 @@ const Controller: React.FC<ControllerProps> = (props) => {
             <TextField
               fullWidth
               id="number"
-              value={props.value}
+              value={props.angle}
               onChange={(event) => {
                 const newAngle = parseFloat(event.target.value);
                 if (!isNaN(newAngle)) {
-                  props.value = newAngle
+                  props.setAngle(newAngle)
                 }
               }}
               sx={{
@@ -145,7 +151,7 @@ const Controller: React.FC<ControllerProps> = (props) => {
           size="small"
           aria-label="Temperature"
           orientation="vertical"
-          value={props.value}
+          value={props.angle}
           onChange={handleSliderChange}
           min={props.min}
           max={props.max}

@@ -37,95 +37,66 @@ export default function BasicCard() {
     <CardContent
       sx={{
         height: "100%",
+        width: "100%",
         padding: "8px",
         "&.MuiCardContent-root": { paddingBottom: "8px" },
       }}
     >
-      <Stack direction="row">
-        <Stack
-          direction="column"
-          justifyContent="space-between"
-          alignItems="space-between"
-        >
-          {/*Card Name */}
-          <Stack direction="row" alignItems="flex-start">
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ fontFamily: "Inter, sans-serif" }}
-            >
-              Yaesu G-5500
-            </Typography>
-            <IconButton aria-label="delete" sx={{ marginLeft: "8px" }}>
-              <PowerOffSharpIcon sx={{ fontSize: "16px" }} />
-            </IconButton>
-          </Stack>
-          {/*Radio List*/}
-          <Stack spacing={3} direction="row" justifyContent="flex-start">
-            <Stack
-              sx={{ maxWidth: 130, minWidth: 120 }}
-              direction="row"
-              justifyContent="space-between"
-            >
-              {/*Heading*/}
-              <Stack direction="column">
-                {RadioListLabels.map((label, index) => (
-                  <Typography
-                    key={index}
-                    variant="caption"
-                    component="div"
-                    sx={{ fontFamily: "Inter, sans-serif" }}
-                  >
-                    {label}
-                  </Typography>
-                ))}
-              </Stack>
-              {/*Values*/}
-              <Stack direction="column">
-                {RadioListButtons.map((label, index) => (
-                  <Typography
-                    key={index}
-                    variant="caption"
-                    component="div"
-                    sx={{ fontFamily: "Inter, sans-serif", color: "#4BDAE3" }}
-                  >
-                    {label}
-                  </Typography>
-                ))}
-              </Stack>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="space-between"
+      >
+        {/*Card Name */}
+        <Stack direction="row" alignItems="flex-start" sx={{ minWidth:0 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Yaesu G-5500
+          </Typography>
+          <IconButton aria-label="delete" sx={{ marginLeft: "8px" }}>
+            <PowerOffSharpIcon sx={{ fontSize: "16px" }} />
+          </IconButton>
+        </Stack>
+        {/*Radio List*/}
+        <Stack spacing={3} direction="row" justifyContent="flex-start">
+          <Stack
+            sx={{ maxWidth: 130, minWidth: 120 }}
+            direction="row"
+            justifyContent="space-between"
+          >
+            {/*Heading*/}
+            <Stack direction="column">
+              {RadioListLabels.map((label, index) => (
+                <Typography
+                  key={index}
+                  variant="caption"
+                  component="div"
+                  sx={{ fontFamily: "Inter, sans-serif" }}
+                >
+                  {label}
+                </Typography>
+              ))}
+            </Stack>
+            {/*Values*/}
+            <Stack direction="column">
+              {RadioListButtons.map((label, index) => (
+                <Typography
+                  key={index}
+                  variant="caption"
+                  component="div"
+                  sx={{ fontFamily: "Inter, sans-serif", color: "#4BDAE3" }}
+                >
+                  {label}
+                </Typography>
+              ))}
             </Stack>
           </Stack>
         </Stack>
-        {/*Manual Controls*/}
-        <Stack
-          //sx={{ maxWidth: 300 }}
-          direction="row"
-          spacing={2}
-          justifyContent="space-between"
-        >
-          {/*Azimuth*/}
-          {/*<Controller
-            label="Azimuth"
-            fillColor="#FF9900"
-            min={0}
-            max={360}
-            step={1}
-                />*/}
-          {/*Elevation*/}
-           {/*<Controller
-            label="Elevation"
-            fillColor="#FF0000"
-            min={0}
-            max={90}
-            step={1}
-          />*/}
-          {/*Three.js Applet*/}
-          
-          <Scene/>
-         
 
-          {/*Control Buttons*/}
-        </Stack>
+        <Scene />
       </Stack>
     </CardContent>
   );

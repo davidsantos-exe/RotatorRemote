@@ -23,7 +23,7 @@ const LinearGauge = () => {
         </Typography>
       </Stack>
 
-      <svg width={"100%"} height={"32px"}>
+      <svg width={"100%"} height={"24px"}>
         <rect x={0} y={0} fill="#FF0000" width={"10%"} height={"100%"} />
         <rect x={"10%"} y={0} fill="#FF9900" width={"30%"} height={"100%"} />
         <rect x={"40%"} y={0} fill="#19B600" width={"60%"} height={"100%"} />

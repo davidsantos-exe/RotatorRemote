@@ -85,8 +85,8 @@ function ObserverModel() {
   useFrame((_, delta) => {
     const h = atLeast(gamepad?.axes[2], 0.1);
     const v = atLeast(gamepad?.axes[3], 0.1);
-    let phi = azimuth;
-    let theta = elevation;
+    let phi = elevation * Math.PI/180;
+    let theta = azimuth * Math.PI/180;
     //const h = atLeast(Math.PI, 0.1)
     //const v = atLeast(Math.PI, 0.1)
     const newPhi = clamp(phi - v * delta * 5, -Math.PI * 0.3, Math.PI * 0.3);
@@ -246,7 +246,7 @@ function Scene() {
   
   return (
     <>
-      <TextField
+      {/*<TextField
         id="outlined-number"
         label="Number"
         type="number"
@@ -256,11 +256,28 @@ function Scene() {
         //value={phi}
         InputLabelProps={{
           shrink: true
-        }}/>
+        }}/>*/}
 
+        <Controller
+            label="Azimuth"
+            fillColor="#FF9900"
+            min={0}
+            max={360}
+            step={1}
+            angle={azimuth}
+            setAngle={updateAzimuth}
+         />
+        <Controller
+            label="Elevation"
+            fillColor="#FF0000"
+            min={0}
+            max={90}
+            step={1}
+            angle={elevation}
+            setAngle={updateElevation}
+         />
 
-
-        <TextField
+       {/*} <TextField
         id="outlined-number"
         label="Number"
         type="number"
@@ -270,7 +287,7 @@ function Scene() {
         //value={phi}
         InputLabelProps={{
           shrink: true
-        }}/>
+        }}/>*/}
       
 
 

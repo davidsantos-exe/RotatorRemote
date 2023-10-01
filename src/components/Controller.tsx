@@ -85,7 +85,7 @@ const Controller: React.FC<ControllerProps> = (props) => {
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     if (typeof newValue === 'number'){
-    const newAngle = Math.round((props.angle-offset+newValue)*100)/100
+    const newAngle = props.angle-offset+newValue
     if (newAngle <= props.max && newAngle >= props.min) {
       props.setAngle(newAngle)
       setOffset(newValue)
@@ -200,6 +200,7 @@ const Controller: React.FC<ControllerProps> = (props) => {
           aria-label="Temperature"
           orientation="vertical"
           value={props.angle}
+          valueLabelDisplay="auto"
           onChange={handleFullSliderChange}
           min={props.min}
           max={props.max}
@@ -221,6 +222,7 @@ const Controller: React.FC<ControllerProps> = (props) => {
           size="small"
           aria-label="Temperature"
           orientation="vertical"
+          valueLabelDisplay="auto"
           value={offset}
           onChange={handleSliderChange}
           min={-0.99}

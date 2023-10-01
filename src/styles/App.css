@@ -9,3 +9,8 @@
     box-sizing: border-box;
     z-index: 999; /* Ensure it's above other content */
 }
+
+.leaflet-container {
+  width: 100wh; 
+  height: 100vh;
+}

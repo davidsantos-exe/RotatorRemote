@@ -7,6 +7,8 @@ import "./styles/App.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { RotatorProvider } from "./classes/RotatorContext";
+import MercatorMap from "./components/MercatorMap";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 const darkTheme = createTheme({
   palette: {
@@ -17,6 +19,7 @@ const darkTheme = createTheme({
 export default function App() {
   return (
     <RotatorProvider>
+      <MercatorMap />
       <ThemeProvider theme={darkTheme}>
         <div className="console" style={{ backgroundColor: "transparent" }}>
           <Console />

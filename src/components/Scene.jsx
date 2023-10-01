@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import "../styles/styles.css";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Grid } from "@react-three/drei";
 import { useControls } from "leva";
 import TextField from "@mui/material/TextField";
 import { useRotator } from "../classes/RotatorContext";
@@ -16,9 +16,15 @@ import {
 import Controller from "./Controller";
 import Stack from "@mui/material/Stack";
 
-const viewCamera = new OrthographicCamera(-1.5, 1.77, 3.0, -0.4, 0.01, 2000);
-viewCamera.zoom = 80;
-viewCamera.position.set(-3, 1, 0);
+function setupCamera(camera) {
+  camera.position.set(0, 0.2, 0.2);
+  camera.rotation.set(-0.154, 0, 0);
+  console.log(viewCamera.position);
+}
+
+//viewCamera.zoom = 80;
+//viewCamera.position.set(0, 1, 4);
+//viewCamera.rotation.set(-10* Math.PI, 0, 0);
 
 function useGamepad() {
   const [gamepads, setGamepads] = useState({});
@@ -139,7 +145,7 @@ function ObserverModel() {
         <circleGeometry args={[1, 64, 0, 2 * Math.PI]} />
         <meshBasicMaterial color="#0a5b88" />
       </mesh>
-      <mesh
+      {/*<mesh
         name="Meridian"
         scale={1}
         position={[0, 0, 0]}
@@ -147,7 +153,7 @@ function ObserverModel() {
       >
         <torusGeometry args={[0.99, 0.01, 32, 64, Math.PI]} />
         <meshBasicMaterial color="#4bdae3" />
-      </mesh>
+  </mesh>*/}
       <mesh
         ref={azimuthRef}
         name="Azimuth"
@@ -244,7 +250,7 @@ function Scene() {
 
   return (
     <>
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={2} sx={{width:"100%"}} justifyContent="space-between">
         <Controller
           label="Azimuth"
           fillColor="#FF9900"
@@ -263,18 +269,38 @@ function Scene() {
           angle={elevation}
           setAngle={updateElevation}
         />
-        <Box >
-          <Canvas camera={viewCamera} style={{borderRadius:"6px"}}>
+        <Box>
+          <Canvas camera={{position:[-2,1,0]}} style={{ borderRadius: "6px" }}>
+          <Ground />
+          
             <ObserverModel />
             {/* Uncomment the following line if you want to display axes */}
             {/* <axesHelper /> */}
             <color attach="background" args={["#000B6D"]} />
-            <OrbitControls />
+            <OrbitControls target={[0, 0, 0]} />
+         
           </Canvas>
         </Box>
       </Stack>
     </>
   );
 }
+
+function Ground() {
+  const gridConfig = {
+    cellSize: 0.5,
+    cellThickness: 0.5,
+    cellColor: '#6f6f6f',
+    sectionSize: 3,
+    sectionThickness: 1,
+    sectionColor: '#9d4b4b',
+    fadeDistance: 10,
+    fadeStrength: 1,
+    followCamera: false,
+    infiniteGrid: true
+  }
+  return <Grid position={[0, -0.01, 0]} args={[10.5, 10.5]} {...gridConfig} />
+}
+
 
 export default Scene;

@@ -37,7 +37,7 @@ export default function BasicCard() {
     <CardContent
       sx={{
         height: "100%",
-        width: "100%",
+        //width: "100%",
         padding: "8px",
         "&.MuiCardContent-root": { paddingBottom: "8px" },
       }}
@@ -47,8 +47,10 @@ export default function BasicCard() {
         justifyContent="space-between"
         alignItems="space-between"
       >
-        {/*Card Name */}
-        <Stack direction="row" alignItems="flex-start" sx={{ minWidth:0 }}>
+
+        <Stack direction="column" justifyContent="flex-start" sx={{ minWidth:180 }}>
+            {/*Card Name */}
+        <Stack direction="row" alignItems="flex-start" >
           <Typography
             variant="h6"
             component="div"
@@ -60,8 +62,6 @@ export default function BasicCard() {
             <PowerOffSharpIcon sx={{ fontSize: "16px" }} />
           </IconButton>
         </Stack>
-        {/*Radio List*/}
-        <Stack spacing={3} direction="row" justifyContent="flex-start">
           <Stack
             sx={{ maxWidth: 130, minWidth: 120 }}
             direction="row"
@@ -95,7 +95,6 @@ export default function BasicCard() {
             </Stack>
           </Stack>
         </Stack>
-
         <Scene />
       </Stack>
     </CardContent>

@@ -73,11 +73,20 @@ const Controller: React.FC<ControllerProps> = (props) => {
     }
   }
   
+  const handleFullSliderChange = (event: Event, newValue: number | number[]) => {
+    if (typeof newValue === 'number'){
+      props.setAngle(newValue)
+      setEditedValue(newValue)
+    }
+
+  };
+
+
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     if (typeof newValue === 'number'){
     const newAngle = Math.round((props.angle-offset+newValue)*100)/100
-    if (newAngle <= props.max) {
+    if (newAngle <= props.max && newAngle >= props.min) {
       props.setAngle(newAngle)
       setOffset(newValue)
       setEditedValue(newAngle)
@@ -86,7 +95,7 @@ const Controller: React.FC<ControllerProps> = (props) => {
   };
 
   return (
-    <Stack direction="row" spacing={2} alignItems="flex-end">
+    <Stack direction="row" spacing={2} alignItems="flex-end" justifyContent="space-between" sx={{width:"100%", maxWidth:300}}>
       <Stack
         direction="column"
         alignItems="center"
@@ -185,13 +194,36 @@ const Controller: React.FC<ControllerProps> = (props) => {
         borderRadius="6px"
         justifyContent="flex-end"
       >
+
+      <Slider
+          size="small"
+          aria-label="Temperature"
+          orientation="vertical"
+          value={props.angle}
+          onChange={handleFullSliderChange}
+          min={props.min}
+          max={props.max}
+          step={1}
+      />
+      </Box>
+      <Box
+        sx={{
+          paddingBottom: "16px",
+          paddingTop: "16px",
+          height: "90%",
+          backgroundColor: "#000B6D",
+        }}
+        borderRadius="6px"
+        justifyContent="flex-end"
+      >
+
       <Slider
           size="small"
           aria-label="Temperature"
           orientation="vertical"
           value={offset}
           onChange={handleSliderChange}
-          min={0}
+          min={-0.99}
           max={0.99}
           step={0.01}
       />

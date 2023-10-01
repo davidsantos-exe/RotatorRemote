@@ -68,7 +68,7 @@ export default function DividerStack() {
                 </Box>
               </Fade>
               <Fade in={connectedRotator} timeout={2400}>
-                <Box sx={{minWidth: 730, maxWidth: 800, width: "100%", backgroundColor:"transparent" }}>
+                <Box sx={{minWidth: 730, maxWidth: 1050, width: "100%", backgroundColor:"transparent" }}>
                   <RotatorCard />
                 </Box>
               </Fade>

@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Stack from "@mui/material/Stack";
-
+import { useRotator } from "../classes/RotatorContext";
 import Scene from "./Scene.jsx";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -33,6 +33,8 @@ const RadioListButtons = [
 ];
 
 export default function BasicCard() {
+  const { updateRotator } = useRotator();
+
   return (
     <CardContent
       sx={{
@@ -47,21 +49,28 @@ export default function BasicCard() {
         justifyContent="space-between"
         alignItems="space-between"
       >
-
-        <Stack direction="column" justifyContent="flex-start" sx={{ minWidth:180 }}>
-            {/*Card Name */}
-        <Stack direction="row" alignItems="flex-start" >
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ fontFamily: "Inter, sans-serif" }}
-          >
-            Yaesu G-5500
-          </Typography>
-          <IconButton aria-label="delete" sx={{ marginLeft: "8px" }}>
-            <PowerOffSharpIcon sx={{ fontSize: "16px" }} />
-          </IconButton>
-        </Stack>
+        <Stack
+          direction="column"
+          justifyContent="flex-start"
+          sx={{ minWidth: 180 }}
+        >
+          {/*Card Name */}
+          <Stack direction="row" alignItems="flex-start">
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ fontFamily: "Inter, sans-serif" }}
+            >
+              Yaesu G-5500
+            </Typography>
+            <IconButton
+              onClick={() => updateRotator(null)}
+              aria-label="delete"
+              sx={{ marginLeft: "8px" }}
+            >
+              <PowerOffSharpIcon sx={{ fontSize: "16px" }} />
+            </IconButton>
+          </Stack>
           <Stack
             sx={{ maxWidth: 130, minWidth: 120 }}
             direction="row"
@@ -95,7 +104,15 @@ export default function BasicCard() {
             </Stack>
           </Stack>
         </Stack>
+
         <Scene />
+        {/*Control Buttons*/}
+
+        <Stack direction="column" spacing={1} sx={{minWidth:100, paddingLeft:"8px"}}>
+                <Button>Start</Button>
+                <Button>Stop</Button>
+                <Button>Park</Button>
+          </Stack>
       </Stack>
     </CardContent>
   );

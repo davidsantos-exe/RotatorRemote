@@ -70,7 +70,7 @@ export default function DividerStack() {
           </Fade>
         )}
 
-        {rotator== null && (
+        {rotator==null && (
           <Button
             variant="outlined"
             size="large"
@@ -98,9 +98,9 @@ export default function DividerStack() {
               <Fade in={!(rotator==null)} timeout={800}>
                 <Box
                   sx={{
-                    minWidth: 260,
-                    maxWidth: 450,
-                    width: "100%",
+                    //minWidth: 260,
+                    //maxWidth: 450,
+                    width: 260,
                     backgroundColor: "transparent",
                   }}
                 >

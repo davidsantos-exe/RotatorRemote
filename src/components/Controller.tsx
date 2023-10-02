@@ -5,7 +5,10 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import {useEffect} from 'react'
+import {useEffect} from 'react';
+import PropTypes from 'prop-types';
+
+
 
 interface ControllerProps {
   label: string;
@@ -19,10 +22,7 @@ interface ControllerProps {
 
 
 const Controller: React.FC<ControllerProps> = (props) => {
-  const [offset, setOffset] = useState(0);
   const [editedValue, setEditedValue] = useState(props.angle);
-
- 
   //const [angle, setAngle] = [props.angle,props.setAngle];
 
   const handleIncrement = () => {
@@ -54,20 +54,11 @@ const Controller: React.FC<ControllerProps> = (props) => {
 
   function handleInputBlur(event) {
     const newValue = event.target.value
-    // Get Whole Part
     const newAngle =  Math.floor(newValue); 
-    // Get Decimal Part
-    const newOffset = Math.round(((newValue % 1))*100)/100;
-    // Combine and Set If conditions met
 
     if (newAngle <= props.max && newAngle >= props.min){
-      if(newOffset <= 1 && newOffset >= 0){
-        props.setAngle(newAngle+newOffset)
-        setEditedValue(newAngle+newOffset)
-        setOffset(newOffset)
-      }else{
-        setEditedValue(props.angle)
-      }
+        props.setAngle(newAngle)
+        setEditedValue(newAngle)
     }else{
       setEditedValue(props.angle)
     }
@@ -81,18 +72,6 @@ const Controller: React.FC<ControllerProps> = (props) => {
 
   };
 
-
-
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    if (typeof newValue === 'number'){
-    const newAngle = props.angle-offset+newValue
-    if (newAngle <= props.max && newAngle >= props.min) {
-      props.setAngle(newAngle)
-      setOffset(newValue)
-      setEditedValue(newAngle)
-    }}
-
-  };
 
   return (
     <Stack direction="row" spacing={2} alignItems="flex-end" justifyContent="space-between" sx={{width:"100%", maxWidth:300}}>
@@ -197,7 +176,6 @@ const Controller: React.FC<ControllerProps> = (props) => {
 
       <Slider
           size="small"
-          aria-label="Temperature"
           orientation="vertical"
           value={props.angle}
           valueLabelDisplay="auto"
@@ -205,6 +183,7 @@ const Controller: React.FC<ControllerProps> = (props) => {
           min={props.min}
           max={props.max}
           step={1}
+  
       />
       </Box>
       <Box
@@ -217,18 +196,6 @@ const Controller: React.FC<ControllerProps> = (props) => {
         borderRadius="6px"
         justifyContent="flex-end"
       >
-
-      <Slider
-          size="small"
-          aria-label="Temperature"
-          orientation="vertical"
-          valueLabelDisplay="auto"
-          value={offset}
-          onChange={handleSliderChange}
-          min={-0.99}
-          max={0.99}
-          step={0.01}
-      />
       </Box>
     </Stack>
   );

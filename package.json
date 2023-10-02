@@ -24,14 +24,14 @@
     "react-leaflet": "^4.2.1",
     "satellite.js": "^5.0.0",
     "styled-components": "^6.0.8",
-    "three": "^0.157.0"
+    "three": "^0.157.0",
+    "typescript": "^4.9.5"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.6",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
-    "typescript": "latest",
     "vite": "latest"
   }
 }

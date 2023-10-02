@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import "../styles/styles.css";
 import { OrbitControls, Grid } from "@react-three/drei";
-import { useControls } from "leva";
 import TextField from "@mui/material/TextField";
 import { useRotator } from "../classes/RotatorContext";
 import { useGamepads } from "react-gamepads";
@@ -16,12 +15,12 @@ import {
 import Controller from "./Controller";
 import Stack from "@mui/material/Stack";
 
+
 function setupCamera(camera) {
   camera.position.set(0, 0.2, 0.2);
   camera.rotation.set(-0.154, 0, 0);
   console.log(viewCamera.position);
 }
-
 //viewCamera.zoom = 80;
 //viewCamera.position.set(0, 1, 4);
 //viewCamera.rotation.set(-10* Math.PI, 0, 0);
@@ -250,7 +249,12 @@ function Scene() {
 
   return (
     <>
-      <Stack direction="row" spacing={2} sx={{width:"100%"}} justifyContent="space-between">
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{ width: "100%" }}
+        justifyContent="space-between"
+      >
         <Controller
           label="Azimuth"
           fillColor="#FF9900"
@@ -270,15 +274,17 @@ function Scene() {
           setAngle={updateElevation}
         />
         <Box>
-          <Canvas camera={{position:[-2,1,0]}} style={{ borderRadius: "6px" }}>
-          <Ground />
-          
+          <Canvas
+            camera={{ position: [-2, 1, 0] }}
+            style={{ borderRadius: "6px" }}
+          >
+            <Ground />
+
             <ObserverModel />
             {/* Uncomment the following line if you want to display axes */}
             {/* <axesHelper /> */}
             <color attach="background" args={["#000B6D"]} />
             <OrbitControls target={[0, 0, 0]} />
-         
           </Canvas>
         </Box>
       </Stack>
@@ -290,17 +296,16 @@ function Ground() {
   const gridConfig = {
     cellSize: 0.5,
     cellThickness: 0.5,
-    cellColor: '#6f6f6f',
+    cellColor: "#6f6f6f",
     sectionSize: 3,
     sectionThickness: 1,
-    sectionColor: '#9d4b4b',
+    sectionColor: "#9d4b4b",
     fadeDistance: 10,
     fadeStrength: 1,
     followCamera: false,
-    infiniteGrid: true
-  }
-  return <Grid position={[0, -0.01, 0]} args={[10.5, 10.5]} {...gridConfig} />
+    infiniteGrid: true,
+  };
+  return <Grid position={[0, -0.01, 0]} args={[10.5, 10.5]} {...gridConfig} />;
 }
-
 
 export default Scene;

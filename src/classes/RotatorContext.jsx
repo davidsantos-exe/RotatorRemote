@@ -16,6 +16,7 @@ export function useRotator() {
 export function RotatorProvider({ children }) {
   const [azimuth, setAzimuth] = useState(0);
   const [elevation, setElevation] = useState(0);
+  const [rotator, setRotator] = useState(null);
 
   const updateAzimuth = (newAzimuth) => {
     setAzimuth(newAzimuth);
@@ -25,8 +26,12 @@ export function RotatorProvider({ children }) {
     setElevation(newElevation);
   };
 
+   const updateRotator = (newRotator) => {
+    setRotator(newRotator);
+  };
+
   return (
-    <RotatorContext.Provider value={{ azimuth, elevation, updateAzimuth, updateElevation }}>
+    <RotatorContext.Provider value={{ azimuth, elevation, rotator, updateRotator, updateAzimuth, updateElevation,}}>
       {children}
     </RotatorContext.Provider>
   );

@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import SatelliteTable from "./SatelliteTable";
 import Dashboard from "./Dashboard";
-import { Icon } from "@mui/material";
+import { Icon, Modal } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -32,7 +32,7 @@ const StyledTabs = styled((props: StyledTabsProps) => (
   "& .MuiTabs-indicatorSpan": {
     maxWidth: 40,
     width: "100%",
-   backgroundColor: "blue",
+    backgroundColor: "blue",
   },
 });
 
@@ -41,8 +41,7 @@ interface StyledTabProps {
 }
 
 const StyledTab = styled((props: StyledTabProps) => (
-  <Tab disableRipple {...props}/>
-    
+  <Tab disableRipple {...props} />
 ))(({ theme }) => ({
   textTransform: "none",
 
@@ -52,11 +51,11 @@ const StyledTab = styled((props: StyledTabProps) => (
   color: "rgba(255, 255, 255, 0.7)",
   "&.Mui-selected": {
     color: "#fff",
-    zIndex: 1
-   //bring to front
+    zIndex: 1,
+    //bring to front
   },
   "&.Mui-focusVisible": {
-     //backgroundColor: "rgba(100, 95, 228, 0.32)",
+    //backgroundColor: "rgba(100, 95, 228, 0.32)",
   },
   "&.MuiTab-root": {
     height: "26px",
@@ -104,24 +103,36 @@ function a11yProps(index: number) {
 export default function CustomizedTabs() {
   const [value, setValue] = React.useState(0);
 
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box>
-        <StyledTabs value={value} onChange={handleChange}>
-          <StyledTab label="Satellites" {...a11yProps(0)} sx={{marginRight:"-10px"}} />
-          <StyledTab label="Dashboard" {...a11yProps(1)} sx={{marginLeft:"-31px"}}/>
-        </StyledTabs>
-        <CustomTabPanel value={value} index={0}>
-          <SatelliteTable />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <Dashboard />
-        </CustomTabPanel>
+    <>
+
+      <Box sx={{ width: "100%" }}>
+        <Box>
+          <StyledTabs value={value} onChange={handleChange}>
+            <StyledTab
+              label="Satellites"
+              {...a11yProps(0)}
+              sx={{ marginRight: "-10px" }}
+            />
+            <StyledTab
+              label="Dashboard"
+              {...a11yProps(1)}
+              sx={{ marginLeft: "-31px" }}
+            />
+          </StyledTabs>
+          <CustomTabPanel value={value} index={0}>
+            <SatelliteTable />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            <Dashboard />
+          </CustomTabPanel>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }

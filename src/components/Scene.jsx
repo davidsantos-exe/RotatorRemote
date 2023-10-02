@@ -15,7 +15,6 @@ import {
 import Controller from "./Controller";
 import Stack from "@mui/material/Stack";
 
-
 function setupCamera(camera) {
   camera.position.set(0, 0.2, 0.2);
   camera.rotation.set(-0.154, 0, 0);
@@ -110,8 +109,8 @@ function ObserverModel() {
       radiusRef.current.rotation.y = -theta;
       radiusRef.current.rotation.z = phi;
 
-      const T = Math.cos(phi); // distance to y-axis after being rotated up
-      const Y = Math.sin(phi);
+      const T = 2 * Math.cos(phi); // distance to y-axis after being rotated up
+      const Y = 2 * Math.sin(phi);
 
       const X = T * Math.cos(theta);
       const Z = T * Math.sin(theta);
@@ -121,62 +120,61 @@ function ObserverModel() {
       heightRef.current.position.z = Z;
 
       widthRef.current.rotation.y = -theta;
-      widthRef.current.scale.y = Math.cos(phi);
-      widthRef.current.scale.x = Math.cos(phi);
+      widthRef.current.scale.y = 2 * Math.cos(phi);
+      widthRef.current.scale.x = 2 * Math.cos(phi);
 
-      azimuthRef.current.scale.y = Math.cos(phi);
-      azimuthRef.current.scale.x = Math.cos(phi);
+      azimuthRef.current.scale.y = 2 * Math.cos(phi);
+      azimuthRef.current.scale.x = 2 * Math.cos(phi);
     }
   });
 
   return (
     <>
-      <mesh ref={octahedronRef} position={[0, 0, 0]} rotation={[0, 0, 0]}>
-        <octahedronGeometry args={[0.01, 15]} />
+      <mesh ref={octahedronRef} scale={2} position={[0, 0, 0]} rotation={[0, 0, 0]}>
+        <octahedronGeometry args={[0.02, 15]} />
         <meshBasicMaterial color="#ff0000" />
       </mesh>
       <mesh
         name="Horizon"
-        scale={1}
+        scale={2}
         position={[0, 0, 0]}
         rotation={[-0.5 * Math.PI, 0, 0]}
       >
         <circleGeometry args={[1, 64, 0, 2 * Math.PI]} />
         <meshBasicMaterial color="#0a5b88" />
       </mesh>
-      {/*<mesh
+      <mesh
         name="Meridian"
-        scale={1}
+        scale={2}
         position={[0, 0, 0]}
         rotation={[0, -0.5 * Math.PI, 0]}
       >
-        <torusGeometry args={[0.99, 0.01, 32, 64, Math.PI]} />
+        <torusGeometry args={[0.99, 0.02, 32, 64, Math.PI]} />
         <meshBasicMaterial color="#4bdae3" />
-  </mesh>*/}
+      </mesh>
       <mesh
         ref={azimuthRef}
         name="Azimuth"
-        scale={1}
+        scale={2}
         position={[0, 0, 0]}
         rotation={[-0.5 * Math.PI, 0, 0]}
       >
-        <torusGeometry args={[1, 0.01, 64, 64, 2 * Math.PI]} />
+        <torusGeometry args={[1, 0.02, 64, 64, 2 * Math.PI]} />
         <meshBasicMaterial color="#f37419" />
       </mesh>
       <mesh
         name="Orbit"
-        scale={1}
+        scale={2}
         position={[0, 0, 0]}
         rotation={[-0.597, 1.0, 0.54]}
       >
-        <torusGeometry args={[0.99, 0.01, 64, 32, Math.PI]} />
+        <torusGeometry args={[0.99, 0.02, 64, 32, Math.PI]} />
         <meshBasicMaterial color="#19b600" />
       </mesh>
-
       <mesh
         ref={radiusRef}
         name="Radius"
-        scale={1}
+        scale={2}
         position={[0, 0, 0]}
         rotation={[0, 0, 0]}
       >
@@ -188,18 +186,17 @@ function ObserverModel() {
               new Vector3(1, 0, 0),
             ),
             32,
-            0.01,
+            0.02,
             16,
             false,
           ]}
         />
         <meshBasicMaterial color="#ff0000" />
       </mesh>
-
       <mesh
         ref={heightRef}
         name="Height"
-        scale={1}
+        scale={2}
         position={[0, 0, 0]}
         rotation={[0, 0, 0]}
       >
@@ -211,7 +208,7 @@ function ObserverModel() {
               new Vector3(0, 1, 0),
             ),
             32,
-            0.01,
+            0.02,
             16,
             false,
           ]}
@@ -221,7 +218,7 @@ function ObserverModel() {
       <mesh
         ref={widthRef}
         name="Width"
-        scale={1}
+        scale={2}
         position={[0, 0, 0]}
         rotation={[0, 0, 0]}
       >
@@ -233,7 +230,7 @@ function ObserverModel() {
               new Vector3(1, 0, 0),
             ),
             32,
-            0.01,
+            0.02,
             16,
             false,
           ]}
@@ -275,7 +272,8 @@ function Scene() {
         />
         <Box>
           <Canvas
-            camera={{ position: [-2, 1, 0] }}
+            orthographic
+            camera={{zoom:40, position: [-3.5, 2,3.5] }}
             style={{ borderRadius: "6px" }}
           >
             <Ground />
@@ -284,7 +282,7 @@ function Scene() {
             {/* Uncomment the following line if you want to display axes */}
             {/* <axesHelper /> */}
             <color attach="background" args={["#000B6D"]} />
-            <OrbitControls target={[0, 0, 0]} />
+            <OrbitControls target={[0, 1, 0]} />
           </Canvas>
         </Box>
       </Stack>

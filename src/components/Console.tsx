@@ -7,7 +7,6 @@ import { Icon, Modal } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import TabIcon from "../icons/TabIcon.jsx";
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -31,8 +30,8 @@ const StyledTabs = styled((props: StyledTabsProps) => (
   },
   "& .MuiTabs-indicatorSpan": {
     maxWidth: 40,
-    width: "100%",
-    backgroundColor: "blue",
+    //width: "100%",
+    //backgroundColor: "blue",
   },
 });
 
@@ -44,16 +43,19 @@ const StyledTab = styled((props: StyledTabProps) => (
   <Tab disableRipple {...props} />
 ))(({ theme }) => ({
   textTransform: "none",
-
+  fontFamily: "Roboto Mono, monospace",
   fontWeight: theme.typography.fontWeightRegular,
   fontSize: theme.typography.pxToRem(15),
   marginRight: theme.spacing(1),
-  color: "rgba(255, 255, 255, 0.7)",
+  color: "#8C92A4",
   "&.Mui-selected": {
     color: "#fff",
     zIndex: 1,
-    //bring to front
-  },
+    "&.MuiTab-root":{
+      backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='129' height='26' fill='none'><path fill='%23181C20' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
+   
+    }
+ },
   "&.Mui-focusVisible": {
     //backgroundColor: "rgba(100, 95, 228, 0.32)",
   },
@@ -61,6 +63,7 @@ const StyledTab = styled((props: StyledTabProps) => (
     height: "26px",
     minHeight: "26px",
     width: "130px",
+    backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='129' height='26' fill='none'><path fill='%23373C4B' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
     backgroundSize: "cover",
     paddingTop: "0px",
     paddingBottom: "0px",
@@ -85,7 +88,14 @@ function CustomTabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3, padding: "12px", backgroundColor: "#181C20", borderRadius:"8px" }}>
+        <Box
+          sx={{
+            p: 3,
+            padding: "12px",
+            backgroundColor: "#181C20",
+            borderRadius: "8px",
+          }}
+        >
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -103,32 +113,30 @@ function a11yProps(index: number) {
 export default function CustomizedTabs() {
   const [value, setValue] = React.useState(0);
 
-
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   return (
     <>
-
       <Box sx={{ width: "100%" }}>
         <Box>
           <StyledTabs value={value} onChange={handleChange}>
             <StyledTab
-              label="Satellites"
+              label="Dashboard"
               {...a11yProps(0)}
-              sx={{ marginRight: "-10px" }}
+              sx={{ marginLeft: "4px",marginRight: "-10px" }}
             />
             <StyledTab
-              label="Dashboard"
+              label="Satellites"
               {...a11yProps(1)}
-              sx={{ marginLeft: "-31px" }}
+              sx={{ marginLeft: "-20px" }}
             />
           </StyledTabs>
-          <CustomTabPanel value={value} index={0}>
+          <CustomTabPanel value={value} index={1}>
             <SatelliteTable />
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
+          <CustomTabPanel value={value} index={0}>
             <Dashboard />
           </CustomTabPanel>
         </Box>

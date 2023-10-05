@@ -23,8 +23,11 @@ const newRotator = new AntennaRotator({
   },
 });
 
+interface ConnectionModalProps {
+  setOpen: (value: boolean) => void;
+}
 
-const Modal: React.FC<ModalProps> = (props) => {
+const Modal: React.FC<ConnectionModalProps> = (props) => {
   const { updateRotator } = useRotator();
 
   const handleSetNewRotator = () => {

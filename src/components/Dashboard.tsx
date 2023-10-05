@@ -41,7 +41,7 @@ export default function DividerStack() {
           <Divider
             orientation="vertical"
             flexItem
-            sx={{ backgroundColor: "#0A5B88" }}
+            sx={{ backgroundColor: "#373C4B" }}
           />
         }
         spacing={1}
@@ -90,10 +90,11 @@ export default function DividerStack() {
                 <Divider
                   orientation="vertical"
                   flexItem
-                  sx={{ backgroundColor: "#0A5B88" }}
+                  sx={{ backgroundColor: "#373C4B" }}
                 />
               }
               spacing={1}
+              //justifyContent="space-around"
               sx={{ height: "11rem", width: "100%" ,minWidth: 280}}
             >
               <Fade in={!(rotator==null)} timeout={800}>

@@ -12,7 +12,7 @@ import Scene from "./Scene.jsx";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import Controller from "./Controller";
+//import Controller from "./Controller";
 import IconButton from "@mui/material/IconButton";
 import PowerOffSharpIcon from "@mui/icons-material/PowerOffSharp";
 
@@ -26,7 +26,7 @@ export default function BasicCard() {
     <CardContent
       sx={{
         height: "100%",
-        //width: "100%",
+        width: "100%",
         padding: "8px",
         "&.MuiCardContent-root": { paddingBottom: "8px" },
       }}
@@ -85,8 +85,8 @@ export default function BasicCard() {
                 <Input
                 value={label}
                 key={index}
-                variant="caption"
-                component="div"
+                //variant="caption"
+                //component="div"
                 sx={{
                   fontFamily: "Roboto Mono, monospace",
                   color: "#8C92A4",

@@ -37,7 +37,7 @@ export default function BasicCard() {
         <Typography
           variant="h6"
           component="div"
-          sx={{ fontFamily: "Inter, sans-serif" }}
+          sx={{ fontFamily: "Roboto Mono, monospace" }}
         >
           ISS (Zarya)
         </Typography>
@@ -57,7 +57,7 @@ export default function BasicCard() {
                 key={index}
                 variant="caption"
                 component="div"
-                sx={{ fontFamily: "Inter, sans-serif" }}
+                sx={{ fontFamily: "Roboto Mono, monospace" }}
               >
                 {label}
               </Typography>
@@ -66,7 +66,7 @@ export default function BasicCard() {
 
           <Stack direction="column">
             {SatelliteListValues.map((label, index) => (
-              <Typography key={index} variant="caption" component="div" sx={{color: "#4BDAE3", fontFamily:"Inter, sans-serif"}}>
+              <Typography key={index} variant="caption" component="div" sx={{color: "#8C92A4", fontFamily:"Roboto Mono, monospace"}}>
                 {label}
               </Typography>
             ))}

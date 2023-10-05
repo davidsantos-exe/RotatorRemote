@@ -59,7 +59,7 @@ export default function BasicCard() {
             <Typography
               variant="h6"
               component="div"
-              sx={{ fontFamily: "Inter, sans-serif" }}
+              sx={{ fontFamily: "Roboto Mono, monospace" }}
             >
               Yaesu G-5500
             </Typography>
@@ -72,7 +72,7 @@ export default function BasicCard() {
             </IconButton>
           </Stack>
           <Stack
-            sx={{ maxWidth: 130, minWidth: 120 }}
+            sx={{ maxWidth: 150, minWidth: 130 }}
             direction="row"
             justifyContent="space-between"
           >
@@ -83,7 +83,7 @@ export default function BasicCard() {
                   key={index}
                   variant="caption"
                   component="div"
-                  sx={{ fontFamily: "Inter, sans-serif" }}
+                  sx={{ fontFamily: "Roboto Mono, monospace" }}
                 >
                   {label}
                 </Typography>
@@ -96,7 +96,7 @@ export default function BasicCard() {
                   key={index}
                   variant="caption"
                   component="div"
-                  sx={{ fontFamily: "Inter, sans-serif", color: "#4BDAE3" }}
+                  sx={{ fontFamily: "Roboto Mono, monospace", color: "#8C92A4" }}
                 >
                   {label}
                 </Typography>
@@ -105,14 +105,14 @@ export default function BasicCard() {
           </Stack>
         </Stack>
 
-        <Scene />
+        {/*<Scene />*/}
         {/*Control Buttons*/}
 
-        <Stack direction="column" spacing={1} sx={{minWidth:100, paddingLeft:"8px"}}>
+        {/*<Stack direction="column" spacing={1} sx={{minWidth:100, paddingLeft:"8px"}}>
                 <Button>Start</Button>
                 <Button>Stop</Button>
                 <Button>Park</Button>
-          </Stack>
+              </Stack>*/}
       </Stack>
     </CardContent>
   );

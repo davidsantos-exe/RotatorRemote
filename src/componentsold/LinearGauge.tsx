@@ -12,13 +12,13 @@ const LinearGauge = () => {
         alignItems="center"
         spacing={2}
       >
-        <Typography variant="caption" component="h1">
+        <Typography variant="caption" component="h1" sx={{fontFamily: "Roboto Mono, monospace"}}>
           -120
         </Typography>
-        <Typography variant="caption" component="h2">
+        <Typography variant="caption" component="h2" sx={{fontFamily: "Roboto Mono, monospace"}}>
           Signal Strength (dB)
         </Typography>
-        <Typography variant="caption" component="h3">
+        <Typography variant="caption" component="h3" sx={{fontFamily: "Roboto Mono, monospace"}}>
           -10
         </Typography>
       </Stack>

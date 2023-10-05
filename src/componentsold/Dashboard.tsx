@@ -94,31 +94,31 @@ export default function DividerStack() {
                 />
               }
               spacing={1}
-              sx={{ height: "11rem", width: "100%" }}
+              sx={{ height: "11rem", width: "100%" ,minWidth: 280}}
             >
               <Fade in={!(rotator==null)} timeout={800}>
                 <Box
                   sx={{
-                    //minWidth: 260,
-                    //maxWidth: 450,
-                    width: 260,
+         
+                    maxWidth: 450,
+                    minwidth: 260,
+                    width: "100%",
                     backgroundColor: "transparent",
                   }}
                 >
-                  {/*<RadioCard />*/}
+                  <RadioCard />
                 </Box>
               </Fade>
               <Fade in={!(rotator==null)} timeout={2400}>
                 <Box
                   sx={{
-                    minWidth: 730,
-                    maxWidth: 1050,
-                    width: "100%",
+    
+                    //width: "100%",
                     backgroundColor: "transparent",
                   }}
                 >
-                  {/*<RotatorCard />*/}
-                  <RotatorModel/>
+                  <RotatorCard />
+                  
                 </Box>
               </Fade>
             </Stack>

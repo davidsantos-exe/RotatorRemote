@@ -10,7 +10,6 @@ import { RotatorProvider } from "./classes/RotatorContext";
 import MercatorMap from "./components/MercatorMap";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import RotatorModel from "./components/RotatorModel";
-import IdeClone from "./components/IdeClone";
 
 const darkTheme = createTheme({
   palette: {
@@ -24,13 +23,18 @@ export default function App() {
     
     <div>
 
-
+        <ThemeProvider theme={darkTheme}>
         <RotatorProvider>
-      <MercatorMap />
-      <div className="rotator" style={{ backgroundColor: "transparent" }}>
-        <RotatorModel />
-      </div>
+          <MercatorMap />
+          <div className="rotator" style={{ backgroundColor: "transparent" }}>
+            <RotatorModel />
+          </div>
+
+          <div className="console" style={{ backgroundColor: "transparent" }}>
+            <Console />
+          </div>
         </RotatorProvider>
+        </ThemeProvider>
     </div>
   
   );

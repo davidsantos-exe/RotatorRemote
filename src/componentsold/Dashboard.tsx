@@ -14,6 +14,7 @@ import TabIcon from "../icons/TabIcon.svg";
 import ConnectionModal from "./ConnectionModal";
 import { useRotator } from "../classes/RotatorContext";
 import { isNonNullExpression } from "typescript";
+import RotatorModel from "../components/RotatorModel";
 
 export default function DividerStack() {
   const [selectedSatellite, setSelectedSatellite] = React.useState(false);
@@ -104,7 +105,7 @@ export default function DividerStack() {
                     backgroundColor: "transparent",
                   }}
                 >
-                  <RadioCard />
+                  {/*<RadioCard />*/}
                 </Box>
               </Fade>
               <Fade in={!(rotator==null)} timeout={2400}>
@@ -116,7 +117,8 @@ export default function DividerStack() {
                     backgroundColor: "transparent",
                   }}
                 >
-                  <RotatorCard />
+                  {/*<RotatorCard />*/}
+                  <RotatorModel/>
                 </Box>
               </Fade>
             </Stack>

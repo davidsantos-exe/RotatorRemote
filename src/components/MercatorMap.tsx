@@ -236,7 +236,6 @@ var path;
 
 function MyComponent() {
   const leafletMap = useMap()
-  console.log('map center:', leafletMap.getCenter())
   var transform = geoTransform({ point: projectPointCurry(leafletMap) });
   path = geoPath().projection(transform).pointRadius(2.5);
   svgLayer = L.svg();
@@ -249,7 +248,8 @@ function MyComponent() {
 function MercatorMap() {
 
   const [baseMap, setBaseMap] = useState(maps.map1);
-  const [controls, set] = useControls(() => ({
+
+  const [controls, set] = useControls('Map', () => ({
     select: {
       value: baseMap.label,
       label: "Base Map",

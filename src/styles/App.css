@@ -1,27 +1,28 @@
 /* Apply some basic styles to the console */
 .console {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #333;
-    color: white;
-    box-sizing: border-box;
-    z-index: 999; /* Ensure it's above other content */
+  position: fixed;
+  bottom: 0.6rem;
+  left: 0.6rem;
+  width: calc(100vw - 19.3rem);
+  background-color: #333;
+  color: white;
+  box-sizing: border-box;
+  z-index: 999; /* Ensure it's above other content */
 }
 
 .leaflet-container {
-  width: 100wh; 
+  width: 100wh;
   height: 100vh;
 }
 
-
 .rotator {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    background-color: white;
-    color: white;
-    box-sizing: border-box;
-    z-index: 999; /* Ensure it's above other content */
+  position: fixed;
+  bottom: 0;
+  height: calc(100vh - 17.5rem);
+  right: 0;
+  margin-bottom:0.6rem;
+  margin-right: 0.6rem;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  z-index: 999;
 }

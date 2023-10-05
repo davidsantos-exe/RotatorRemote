@@ -41,15 +41,14 @@ const Modal: React.FC<ModalProps> = (props) => {
         color: "white",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        width: 400,
-        bgcolor: "#00052D",
-        border: "2px solid #000",
+        width: 300,
+        bgcolor: "#181C20",
         boxShadow: 24,
-        borderRadius: "12px",
+        borderRadius: "8px",
         p: 4,
       }}
     >
-      <Typography id="modal-modal-title" variant="h6" component="h2">
+      <Typography id="modal-modal-title" variant="h6" component="h2" sx={{color:"#8C92A4"}}>
         Connect a Rotator
       </Typography>
       <RotatorIcon />

@@ -88,14 +88,15 @@ export function Model(props) {
                 castShadow
                 receiveShadow
                 geometry={nodes.Cylinder004_1.geometry}
-                material={materials.antenna}
+                color={"blue"}
+               // material={materials.antenna}
               />
               <mesh
                 name="Cylinder004_2"
                 castShadow
                 receiveShadow
                 geometry={nodes.Cylinder004_2.geometry}
-                material={materials.antennacaps}
+               // material={materials.antennacaps}
               />
             </group>
           </group>
@@ -130,16 +131,16 @@ useGLTF.preload("/public/models/scene.gltf");
 
 const camera1 = new THREE.OrthographicCamera(-15, 15, 15, -15, 0.1, 2000);
 camera1.zoom = 15;
-camera1.position.set(0, 10, -5);
+camera1.position.set(0, 10, 10);
 camera1.rotation.set(0, Math.PI * 0.5, 0);
 const camera2 = new THREE.OrthographicCamera(-15, 15, 15, -15, 0, 2000);
 camera2.zoom = 16;
 camera2.position.set(-5, 15, 0);
 camera2.rotation.set(Math.PI * 0.5, Math.PI, 0);
-const camera3 = new THREE.OrthographicCamera(60, 1, 0.1, 2000);
+const camera3 = new THREE.OrthographicCamera(-15, 15, 15, -15, 0, 2000);
 camera3.zoom = 15;
-camera3.position.set(8.6, 18, 0.6);
-camera3.rotation.set(-0.838, 0.561, 0.534);
+camera3.position.set(5, 5, 5);
+camera3.rotation.set(0,Math.PI*0.25,0);
 
 export default function RotatorModel() {
   const [view,setView] = useState(camera3)
@@ -163,21 +164,22 @@ export default function RotatorModel() {
           default:
             break;
         }
-      },
+      }
     },
   
     
   }))
 
   return (
-    <div>
+    <div style={{height:"100%"}}>
       <Canvas
         orthographic
         camera={view}
-        style={{ height: "30rem", width: "30rem" }}
+        //camera={view}
+        style={{height: "100%",width: "17.5rem", borderRadius:"8px"}}
       >
         {/*<OrbitControls target={[0, 0, 0]} />*/}
-        {/*<color attach="background" args={["White"]} />*/}
+        <color attach="background" args={["#181C20"]} />
         <Suspense fallback={null}>
           <Model />
           {/*<Environment preset="sunset" background />*/}

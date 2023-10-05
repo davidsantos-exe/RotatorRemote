@@ -26,7 +26,7 @@ export default function App() {
         <ThemeProvider theme={darkTheme}>
         <RotatorProvider>
           <MercatorMap />
-          <div className="rotator" style={{ backgroundColor: "transparent" }}>
+          <div className="rotator" >
             <RotatorModel />
           </div>
 
@@ -35,7 +35,11 @@ export default function App() {
           </div>
         </RotatorProvider>
         </ThemeProvider>
+
+       
     </div>
   
   );
 }
+
+

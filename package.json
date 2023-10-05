@@ -20,6 +20,7 @@
     "leva": "^0.9.35",
     "react": "latest",
     "react-dom": "latest",
+    "react-draggable": "^4.4.6",
     "react-gamepads": "^1.0.0",
     "react-leaflet": "^4.2.1",
     "react-loader-spinner": "^5.4.5",

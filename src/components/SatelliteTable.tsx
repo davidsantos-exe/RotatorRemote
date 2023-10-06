@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Stack from "@mui/material/Stack";
-
+import SearchBar from "./SearchBar";
 interface Column {
   id: "name" | "nextpass" | "latitude" | "longitude" | "height" | "maxe";
   label: string;
@@ -103,11 +103,9 @@ function StickyHeadTable() {
   };
 
   return (
-    <Stack direction="row" spacing={1} justifyContent="space-around" sx={{maxWidth:800}}>
-      <Stack direction="column" spacing={1} justifyContent="center">
-        <div>Select</div>
-        <div>Add</div>
-        <div>Delete</div>
+    <Stack direction="row" spacing={1} justifyContent="space-around" sx={{minWidth:600}}>
+      <Stack direction="column" spacing={1} sx= {{minWidth: 300}}justifyContent="flex-start">
+        <SearchBar/>
       </Stack>
 
       <Paper sx={{ overflow: "hidden", width: "100%", minWidth: 600 }}>

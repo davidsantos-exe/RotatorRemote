@@ -51,7 +51,7 @@ export default function DividerStack() {
           <Button
             variant="outlined"
             onClick={() => setSelectedSatellite(true)}
-            sx={{ minWidth: 150, maxWidth: 180, width: "100%" }}
+            sx={{ boxShadow: "inset 0 0 10px #000000",minWidth: 150, maxWidth: 180, width: "100%" }}
           >
             Add Satellite
           </Button>
@@ -76,7 +76,7 @@ export default function DividerStack() {
             variant="outlined"
             size="large"
             onClick={handleOpen}
-            sx={{ width: "100%" }}
+            sx={{boxShadow: "inset 0 0 10px #000000", width: "100%" }}
           >
             Connect a Rotator
           </Button>

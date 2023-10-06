@@ -94,7 +94,6 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
          gl_FragColor.rgb = hueShift(gl_FragColor.rgb, mod(time, 3.1415926 * 2.)); 
         `,
       );
-      console.log(shader.fragmentShader);
     },
   });
 

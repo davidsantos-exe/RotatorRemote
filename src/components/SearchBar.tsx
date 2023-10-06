@@ -13,10 +13,10 @@ export default function SearchBar() {
     <Paper
       elevation={0}
       component="form"
-      sx={{boxShadow: "inset 0 0 10px #000000", p: '2px 4px', display: 'flex', alignItems: 'center', width: "100%", maxWidth:300, backgroundColor:"#181C20" }}
+      sx={{ boxShadow: "inset 0 0 10px #000000", p: '0px 4px', display: 'flex', alignItems: 'center', width: "100%", maxWidth:300, backgroundColor:"#181C20" }}
     >
       <InputBase
-        sx={{ ml: 1, flex: 1, color:"#8C92A4", fontFamily: "Roboto Mono, monospace" }}
+        sx={{ ml: 1, flex: 1, color:"#8C92A4", fontFamily: "Roboto Mono, monospace"}}
         placeholder="Search..."
         inputProps={{ 'aria-label': 'search google maps' }}
       />

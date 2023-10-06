@@ -37,13 +37,13 @@ export default function DividerStack() {
       <Stack
         direction="row"
         justifyContent="space-around"
-        divider={
+        divider={selectedSatellite && (
           <Divider
             orientation="vertical"
             flexItem
             sx={{ backgroundColor: "#373C4B" }}
           />
-        }
+  )}
         spacing={1}
         sx={{ height: "11rem" }}
       >
@@ -51,7 +51,7 @@ export default function DividerStack() {
           <Button
             variant="outlined"
             onClick={() => setSelectedSatellite(true)}
-            sx={{ boxShadow: "inset 0 0 10px #000000",minWidth: 150, maxWidth: 180, width: "100%" }}
+            sx={{fontFamily:"Roboto Mono,monospace","&:hover":{border:0},color: "#373C4B",border:0, boxShadow: "inset 0 0 10px #000000",minWidth: 150, maxWidth: 180, width: "100%" }}
           >
             Add Satellite
           </Button>
@@ -76,7 +76,7 @@ export default function DividerStack() {
             variant="outlined"
             size="large"
             onClick={handleOpen}
-            sx={{boxShadow: "inset 0 0 10px #000000", width: "100%" }}
+            sx={{fontFamily:"Roboto Mono,monospace",color: "#373C4B",border:0, boxShadow: "inset 0 0 10px #000000", width: "100%", "&:hover":{border:0}}}
           >
             Connect a Rotator
           </Button>

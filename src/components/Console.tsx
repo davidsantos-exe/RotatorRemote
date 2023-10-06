@@ -52,8 +52,7 @@ const StyledTab = styled((props: StyledTabProps) => (
     color: "#fff",
     zIndex: 1,
     "&.MuiTab-root":{
-      backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='129' height='26' fill='none'><path fill='%23181C20' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
-   
+      backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='26' fill='none'><path fill='%23181C20' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
     }
  },
   "&.Mui-focusVisible": {
@@ -63,7 +62,8 @@ const StyledTab = styled((props: StyledTabProps) => (
     height: "26px",
     minHeight: "26px",
     width: "130px",
-    backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='129' height='26' fill='none'><path fill='%23373C4B' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
+
+    backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='26' fill='none'><path fill='%23121417' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
     backgroundSize: "cover",
     paddingTop: "0px",
     paddingBottom: "0px",

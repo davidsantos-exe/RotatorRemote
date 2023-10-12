@@ -129,11 +129,11 @@ export default function BasicCard() {
         {/*<Scene />*/}
         {/*Control Buttons*/}
 
-        {/*<Stack direction="column" spacing={1} sx={{minWidth:100, paddingLeft:"8px"}}>
-                <Button>Start</Button>
+        <Stack direction="column" spacing={1} sx={{minWidth:100, paddingLeft:"8px"}}>
+                {true ? (<Button>Send Command</Button>) : (<Button>Start Tracking</Button>) }
                 <Button>Stop</Button>
                 <Button>Park</Button>
-              </Stack>*/}
+              </Stack>
       </Stack>
     </CardContent>
   );

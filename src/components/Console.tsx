@@ -49,21 +49,24 @@ const StyledTab = styled((props: StyledTabProps) => (
   marginRight: theme.spacing(1),
   color: "#8C92A4",
   "&.Mui-selected": {
-    color: "#fff",
+    color: "white",
     zIndex: 1,
     "&.MuiTab-root":{
-      backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='26' fill='none'><path fill='%23181C20' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
+      backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='129' height='26' fill='none'><path fill='%23181C20' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
     }
  },
   "&.Mui-focusVisible": {
     //backgroundColor: "rgba(100, 95, 228, 0.32)",
   },
+  "&:hover":{
+    color:"white"
+  },
   "&.MuiTab-root": {
+    
     height: "26px",
     minHeight: "26px",
     width: "130px",
-
-    backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='26' fill='none'><path fill='%23121417' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
+    backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='129' height='26' fill='none'><path fill='%23121417' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
     backgroundSize: "cover",
     paddingTop: "0px",
     paddingBottom: "0px",
@@ -96,7 +99,8 @@ function CustomTabPanel(props: TabPanelProps) {
             borderRadius: "8px",
           }}
         >
-          <Typography>{children}</Typography>
+          {children}
+ 
         </Box>
       )}
     </div>
@@ -123,6 +127,7 @@ export default function CustomizedTabs() {
         <Box>
           <StyledTabs value={value} onChange={handleChange}>
             <StyledTab
+           
               label="Dashboard"
               {...a11yProps(0)}
               sx={{ marginLeft: "4px",marginRight: "-10px" }}
@@ -137,7 +142,7 @@ export default function CustomizedTabs() {
             <SatelliteTable />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={0}>
-            <Dashboard />
+            <Dashboard setValue={setValue} />
           </CustomTabPanel>
         </Box>
       </Box>

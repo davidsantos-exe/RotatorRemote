@@ -18,7 +18,7 @@
 .rotator {
   position: fixed;
   bottom: 0;
-  height: calc(100vh - 17.5rem);
+  height: 30rem;
   right: 0;
   margin-bottom:0.6rem;
   margin-right: 0.6rem;

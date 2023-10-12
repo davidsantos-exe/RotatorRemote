@@ -16,15 +16,16 @@ import { useRotator } from "../classes/RotatorContext";
 import { isNonNullExpression } from "typescript";
 import RotatorModel from "../components/RotatorModel";
 
-export default function DividerStack() {
-  const [selectedSatellite, setSelectedSatellite] = React.useState(false);
-  const {rotator} = useRotator();
+export default function Dashboard(props) {
+
+  const {selectedSatellite, rotator} = useRotator();
   const [open, setOpen] = React.useState(false);
+  const [isFirst,setIsFirst] = React.useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   //setConnectedRotator(true)
   return (
-    <div>
+    <>
       <Modal
         open={open}
         onClose={handleClose}
@@ -50,14 +51,14 @@ export default function DividerStack() {
         {!selectedSatellite && (
           <Button
             variant="outlined"
-            onClick={() => setSelectedSatellite(true)}
-            sx={{fontFamily:"Roboto Mono,monospace","&:hover":{border:0},color: "#373C4B",border:0, boxShadow: "inset 0 0 10px #000000",minWidth: 150, maxWidth: 180, width: "100%" }}
+            onClick={() => props.setValue(1)}
+            sx={{fontFamily:"Roboto Mono,monospace","&:hover":{border:0,color:"white"},color: "#8C92A4",border:0, boxShadow: "inset 0 0 10px #000000",minWidth: 150, maxWidth: 180, width: "100%" }}
           >
             Add Satellite
           </Button>
         )}
         {selectedSatellite && (
-          <Fade in={selectedSatellite} timeout={800}>
+          <Fade in={selectedSatellite !== null && isFirst} timeout={800}>
             <Box
               sx={{
                 minWidth: 150,
@@ -76,7 +77,7 @@ export default function DividerStack() {
             variant="outlined"
             size="large"
             onClick={handleOpen}
-            sx={{fontFamily:"Roboto Mono,monospace",color: "#373C4B",border:0, boxShadow: "inset 0 0 10px #000000", width: "100%", "&:hover":{border:0}}}
+            sx={{fontFamily:"Roboto Mono,monospace",color: "#8C92A4",border:0, boxShadow: "inset 0 0 10px #000000", width: "100%","&:hover":{border:0,color:"white"}}}
           >
             Connect a Rotator
           </Button>
@@ -97,7 +98,7 @@ export default function DividerStack() {
               //justifyContent="space-around"
               sx={{ height: "11rem", width: "100%" ,minWidth: 280}}
             >
-              <Fade in={!(rotator==null)} timeout={800}>
+              <Fade in={!(rotator==null) && isFirst} timeout={800} >
                 <Box
                   sx={{
          
@@ -110,7 +111,7 @@ export default function DividerStack() {
                   <RadioCard />
                 </Box>
               </Fade>
-              <Fade in={!(rotator==null)} timeout={2400}>
+              <Fade in={rotator !== null && isFirst} timeout={2400}>
                 <Box
                   sx={{
     
@@ -126,6 +127,6 @@ export default function DividerStack() {
           </>
         )}
       </Stack>
-    </div>
+    </>
   );
 }

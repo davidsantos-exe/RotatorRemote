@@ -9,7 +9,8 @@
         "peakLA": { "Azimuth": "360", "Elevation": "0", "Date": "10/2/23", "Time": "12:23:12"},
         "finishLA": { "Azimuth": "360", "Elevation": "0", "Date": "10/2/23", "Time": "12:23:12"},
         "visibility": "true",
-        "MaxE": "253"
+        "MaxE": "253",
+        "Angle": "21 deg",
       }
     }
   }

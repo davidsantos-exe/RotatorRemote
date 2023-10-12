@@ -26,12 +26,12 @@ export default function App() {
         <ThemeProvider theme={darkTheme}>
         <RotatorProvider>
           <MercatorMap />
-          <div className="rotator" >
+          <div className="rotator" style={{ backgroundColor: "transparent" }}>
             <RotatorModel />
           </div>
 
           <div className="console" style={{ backgroundColor: "transparent" }}>
-            <Console />
+          <Console />
           </div>
         </RotatorProvider>
         </ThemeProvider>

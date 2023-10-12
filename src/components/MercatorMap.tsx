@@ -33,8 +33,6 @@ const bounds = [
 ];
 
 
-
-
 function MercatorMap() {
 
   const [baseMap, setBaseMap] = useState(maps.map1);

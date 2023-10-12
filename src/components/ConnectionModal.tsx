@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef,forwardRef} from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography";
@@ -27,10 +27,10 @@ interface ConnectionModalProps {
   setOpen: (value: boolean) => void;
 }
 
-const Modal: React.FC<ConnectionModalProps> = (props) => {
+const Modal: React.FC<ConnectionModalProps> = forwardRef((props,ref) => {
   const { updateRotator } = useRotator();
-
-  const handleSetNewRotator = () => {
+  const modalRef = useRef();
+  const handleSetNewRotator = (ref) => {
     updateRotator(newRotator);
     //close modal
     props.setOpen(false);
@@ -58,6 +58,6 @@ const Modal: React.FC<ConnectionModalProps> = (props) => {
       <Button onClick={handleSetNewRotator}>Connect</Button>
     </Box>
   );
-};
+});
 
 export default Modal;

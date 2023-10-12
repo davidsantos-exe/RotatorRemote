@@ -8,159 +8,156 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
 import SearchBar from "./SearchBar";
-interface Column {
-  id: "name" | "nextpass" | "latitude" | "longitude" | "height" | "maxe";
-  label: string;
-  minWidth?: number;
-  align?: "right";
-  format?: (value: number) => string;
-}
+import { useRotator } from "../classes/RotatorContext";
 
-const columns: readonly Column[] = [
-  { id: "name", label: "Name", minWidth: 100 ,maxWidth:200},
-  { id: "nextpass", label: "Next\u00a0Pass", minWidth: 50 ,maxWidth:100},
-  {
-    id: "latitude",
-    label: "Latitude\u00a0(\u00b0)",
-    minWidth: 50,
-    maxWidth:100,
-    align: "right",
-    format: (value: number) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "longitude",
-    label: "Longitude\u00a0(\u00b0)",
-    minWidth: 50,
-    maxWidth:100,
-    align: "right",
-    format: (value: number) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "height",
-    label: "Height\u00a0(mi)",
-    minWidth: 50,
-    maxWidth:100,
-    align: "right",
-    format: (value: number) => value.toFixed(2),
-  },
-  {
-    id: "maxe",
-    label: "Max\u00a0E\u00a0(mi)",
-    minWidth: 50,
-    maxWidth:100,
-    align: "right",
-    format: (value: number) => value.toFixed(2),
-  },
-];
+//const trackedSatellites = [{name:"Satellite1"},{name:"Satellite2"},{name:"Satellite3"}];
+const SatelliteListLabels = ["Norad ID", "Uplink", "Downlink", "Mode"];
 
-interface Data {
-  name: string;
-  nextpass: string;
-  latitude: number;
-  longitude: number;
-  height: number;
-  maxe: number;
-}
+function SatelliteTable() {
+  const {
+    trackedSatellites,
+    setTrackedSatellites,
+    setSelectedSatellite,
+    selectedSatellite,
+  } = useRotator();
 
-function createData(
-  name: string,
-  nextpass: string,
-  latitude: number,
-  longitude: number,
-  height: number,
-  maxe: number,
-): Data {
-  return { name, nextpass, latitude, longitude, height, maxe };
-}
+  const handleRemoveButton = (satelliteToRemove) => {
+    // Use the filter method to create a new array excluding the satelliteToRemove
+    const updatedSatellites = trackedSatellites.filter(
+      (satellite) => satellite.name !== satelliteToRemove.name,
+    );
 
-const rows = [
-  createData("ISS (Zarya)", "5 min", -134, 202, 256, 300),
-  createData("ISS", "1456 min", -134, 202, 256, 300),
-  createData("ISS", "5 min", -134, 202, 256, 300),
-  createData("ISS", "5 min", -134, 202, 256, 300),
-  createData("ISS", "5 min", -134, 202, 256, 300),
-  createData("ISS (Zarya)", "5 min", -134, 202, 256, 300),
-  createData("ISS", "5 min", -134, 202, 256, 300),
-  createData("ISS", "5 min", -134, 202, 256, 300),
-  createData("ISS", "5 min", -134, 202, 256, 300),
-  createData("ISS", "5 min", -134, 202, 256, 300),
-];
-
-function StickyHeadTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
+    // Update the trackedSatellites state with the new array
+    setTrackedSatellites(updatedSatellites);
+    // If selected, Remove
+    if (satelliteToRemove.name === selectedSatellite.name) {
+      if(trackedSatellites.length === 1 ){
+        setSelectedSatellite(null);
+      }else{
+        setSelectedSatellite(trackedSatellites[1]);
+      }
+    }
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+  const handleSelectButton = (satelliteToSelect) => {
+    setSelectedSatellite(satelliteToSelect);
+
+    // Reorder the trackedSatellites array to place the selected satellite at the beginning
+    const updatedSatellites = [
+      satelliteToSelect,
+      ...trackedSatellites.filter(
+        (satellite) => satellite.name !== satelliteToSelect.name,
+      ),
+    ];
+
+    setTrackedSatellites(updatedSatellites);
   };
 
   return (
-    <Stack direction="row" spacing={1} justifyContent="space-around" sx={{minWidth:600}}>
-      <Stack direction="column" spacing={1} sx= {{minWidth: 300}}justifyContent="flex-start">
-        <SearchBar/>
+    <Stack
+      direction="row"
+      spacing={1}
+      justifyContent="space-around"
+      sx={{ minWidth: 600 }}
+    >
+      <Stack
+        direction="column"
+        spacing={1}
+        sx={{ minWidth: 300 }}
+        justifyContent="flex-start"
+      >
+        <SearchBar />
       </Stack>
 
-      <Paper sx={{ overflow: "hidden", width: "100%", minWidth: 600 }}>
-        <TableContainer sx={{ maxHeight: "11rem" }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{
-                      minWidth: column.minWidth,
-                      paddingTop: "4px",
-                      paddingBottom: "4px",
-                    }}
+      <Paper
+        elevation={0}
+        sx={{
+          backgroundColor: "#181C20",
+          boxShadow: "inset 0 0 10px #000000",
+          overflow: "hidden",
+          width: "100%",
+          minWidth: 600,
+          height: "11rem",
+        }}
+      >
+        {trackedSatellites.length > 0 && (
+          <Stack
+            spacing={1}
+            direction="row"
+            sx={{
+              padding: "8px",
+              ".MuiCard-root": {
+                width: 200,
+                height: "10rem",
+                backgroundColor: "#2C333A",
+              },
+            }}
+          >
+            {trackedSatellites.map((sat) => (
+              <Card key={sat.name}>
+                <Stack direction="column" spacing={1} alignItems="center">
+                  <Stack
+                    direction="column"
+                    alignItems="space-between"
+                    justifyContent="space-between"
                   >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.nextpass}
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={{ fontFamily: "Roboto Mono, monospace" }}
                     >
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell
-                            style={{ paddingTop: "4px", paddingBottom: "4px" }}
-                            key={column.id}
-                            align={column.align}
+                      {sat.name}
+                    </Typography>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      justifyContent="space-between"
+                      alignItems="space-between"
+                    >
+                      <Stack
+                        direction="column"
+                        justifyContent="space-between"
+                        alignItems="space-between"
+                      >
+                        {SatelliteListLabels.map((label, index) => (
+                          <Typography
+                            key={index}
+                            variant="caption"
+                            component="div"
+                            sx={{ fontFamily: "Roboto Mono, monospace" }}
                           >
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                            {label}
+                          </Typography>
+                        ))}
+                      </Stack>
+
+                      <Stack direction="column">
+                        {/* Show satellite object values from database */}
+                      </Stack>
+                    </Stack>
+                  </Stack>
+
+                  <Stack direction="row">
+                    {selectedSatellite && (selectedSatellite.name !== sat.name ) && (
+                      <Button onClick={() => handleSelectButton(sat)}>
+                        Select
+                      </Button>
+                    )}
+                    <Button onClick={() => handleRemoveButton(sat)}>
+                      Remove
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Card>
+            ))}
+          </Stack>
+        )}
       </Paper>
     </Stack>
   );
 }
-export default StickyHeadTable;
+export default SatelliteTable;

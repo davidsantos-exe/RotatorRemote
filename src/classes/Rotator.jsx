@@ -111,7 +111,7 @@ export class AntennaRotator extends Component {
   }
 }
 
-// Create an instance of AntennaRotator
+/* Create an instance of AntennaRotator
 const antenna = new AntennaRotator({
   CallSign: 'YourCallSign',
   Radio: 'YourRadio',
@@ -137,3 +137,4 @@ antenna.setPosition(45, 30);
 antenna.setLocation(40.7128, -74.0060);
 antenna.markAsNotReady();
 console.log(antenna);
+*/

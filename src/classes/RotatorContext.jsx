@@ -4,8 +4,7 @@ import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { createContext, useContext, ReactNode , useState} from 'react';
-
+import { createContext, useContext, ReactNode, useState } from "react";
 
 const RotatorContext = createContext();
 
@@ -17,6 +16,8 @@ export function RotatorProvider({ children }) {
   const [azimuth, setAzimuth] = useState(0);
   const [elevation, setElevation] = useState(0);
   const [rotator, setRotator] = useState(null);
+  const [selectedSatellite, setSelectedSatellite] = useState(null);
+  const [trackedSatellites, setTrackedSatellites] = useState([]);
 
   const updateAzimuth = (newAzimuth) => {
     setAzimuth(newAzimuth);
@@ -26,12 +27,25 @@ export function RotatorProvider({ children }) {
     setElevation(newElevation);
   };
 
-   const updateRotator = (newRotator) => {
+  const updateRotator = (newRotator) => {
     setRotator(newRotator);
   };
 
   return (
-    <RotatorContext.Provider value={{ azimuth, elevation, rotator, updateRotator, updateAzimuth, updateElevation,}}>
+    <RotatorContext.Provider
+      value={{
+        azimuth,
+        elevation,
+        rotator,
+        updateRotator,
+        updateAzimuth,
+        updateElevation,
+        setSelectedSatellite,
+        trackedSatellites,
+        setTrackedSatellites,
+        selectedSatellite,
+      }}
+    >
       {children}
     </RotatorContext.Provider>
   );

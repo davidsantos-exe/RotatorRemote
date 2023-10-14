@@ -17,10 +17,9 @@ import { isNonNullExpression } from "typescript";
 import RotatorModel from "../components/RotatorModel";
 
 export default function Dashboard(props) {
-
-  const {selectedSatellite, rotator} = useRotator();
+  const { selectedSatellite, rotator } = useRotator();
   const [open, setOpen] = React.useState(false);
-  const [isFirst,setIsFirst] = React.useState(true);
+  const [isFirst, setIsFirst] = React.useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   //setConnectedRotator(true)
@@ -32,19 +31,21 @@ export default function Dashboard(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <ConnectionModal setOpen={setOpen}/>
+        <ConnectionModal setOpen={setOpen} />
       </Modal>
 
       <Stack
         direction="row"
         justifyContent="space-around"
-        divider={selectedSatellite && (
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{ backgroundColor: "#373C4B" }}
-          />
-  )}
+        divider={
+          selectedSatellite && (
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{ backgroundColor: "#373C4B" }}
+            />
+          )
+        }
         spacing={1}
         sx={{ height: "11rem" }}
       >
@@ -52,38 +53,52 @@ export default function Dashboard(props) {
           <Button
             variant="outlined"
             onClick={() => props.setValue(1)}
-            sx={{fontFamily:"Roboto Mono,monospace","&:hover":{border:0,color:"white"},color: "#8C92A4",border:0, boxShadow: "inset 0 0 10px #000000",minWidth: 150, maxWidth: 180, width: "100%" }}
+            sx={{
+              fontFamily: "Roboto Mono,monospace",
+              "&:hover": { border: 0, color: "white" },
+              color: "#8C92A4",
+              border: 0,
+              boxShadow: "inset 0 0 10px #000000",
+              minWidth: 150,
+              maxWidth: 180,
+              width: "100%",
+            }}
           >
             Add Satellite
           </Button>
         )}
         {selectedSatellite && (
-          <Fade in={selectedSatellite !== null && isFirst} timeout={800}>
-            <Box
-              sx={{
-                minWidth: 150,
-                maxWidth: 180,
-                width: "100%",
-                backgroundColor: "transparent",
-              }}
-            >
-              <SatelliteCard />
-            </Box>
-          </Fade>
+          <Box
+            sx={{
+              minWidth: 150,
+              maxWidth: 180,
+              width: "100%",
+              backgroundColor: "transparent",
+            }}
+          >
+            <SatelliteCard />
+          </Box>
         )}
 
-        {rotator==null && (
+        {rotator == null && (
           <Button
             variant="outlined"
             size="large"
             onClick={handleOpen}
-            sx={{fontFamily:"Roboto Mono,monospace",color: "#8C92A4",border:0, boxShadow: "inset 0 0 10px #000000", width: "100%","&:hover":{border:0,color:"white"}}}
+            sx={{
+              fontFamily: "Roboto Mono,monospace",
+              color: "#8C92A4",
+              border: 0,
+              boxShadow: "inset 0 0 10px #000000",
+              width: "100%",
+              "&:hover": { border: 0, color: "white" },
+            }}
           >
             Connect a Rotator
           </Button>
         )}
 
-        {!(rotator==null) && (
+        {!(rotator == null) && (
           <>
             <Stack
               direction="row"
@@ -96,33 +111,27 @@ export default function Dashboard(props) {
               }
               spacing={1}
               //justifyContent="space-around"
-              sx={{ height: "11rem", width: "100%" ,minWidth: 280}}
+              sx={{ height: "11rem", width: "100%", minWidth: 280 }}
             >
-              <Fade in={!(rotator==null) && isFirst} timeout={800} >
-                <Box
-                  sx={{
-         
-                    maxWidth: 450,
-                    minwidth: 260,
-                    width: "100%",
-                    backgroundColor: "transparent",
-                  }}
-                >
-                  <RadioCard />
-                </Box>
-              </Fade>
-              <Fade in={rotator !== null && isFirst} timeout={2400}>
-                <Box
-                  sx={{
-    
-                    //width: "100%",
-                    backgroundColor: "transparent",
-                  }}
-                >
-                  <RotatorCard />
-                  
-                </Box>
-              </Fade>
+              <Box
+                sx={{
+                  maxWidth: 450,
+                  minwidth: 260,
+                  width: "100%",
+                  backgroundColor: "transparent",
+                }}
+              >
+                <RadioCard />
+              </Box>
+
+              <Box
+                sx={{
+                  //width: "100%",
+                  backgroundColor: "transparent",
+                }}
+              >
+                <RotatorCard />
+              </Box>
             </Stack>
           </>
         )}

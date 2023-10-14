@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo, memo } from "react";
+import React, { useRef, useState, useMemo, memo, useEffect } from "react";
 import {
   useGLTF,
   PerspectiveCamera,
@@ -11,49 +11,53 @@ import {
   Svg,
 } from "@react-three/drei";
 import { Suspense } from "react";
-import { Canvas, useLoader } from "@react-three/fiber";
+import { Canvas, useLoader, useFrame, useThree } from "@react-three/fiber";
 import {
   Grid,
   OrbitControls,
   Environment,
-  hemisphereLight,
   Stage,
+  Html,
+  CameraControls,
 } from "@react-three/drei";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useControls } from "leva";
+import { useControls, buttonGroup, button, folder } from "leva";
 import { GLTF } from "three-stdlib";
+import Stack from "@mui/material/Stack";
+import { useRotator } from "../classes/RotatorContext";
+import Typography from "@mui/material/Typography";
 
 type GLTFResult = GLTF & {
   nodes: {
-    basecylinder: THREE.Mesh;
-    basecylinder_1: THREE.Mesh;
     azimuthcylinder: THREE.Mesh;
     azimuthcylinder_1: THREE.Mesh;
     elevation_cylinder: THREE.Mesh;
-    elevation_cylinder_1: THREE.Mesh;
+    Mesh_5: THREE.Mesh;
+    Mesh_5_1: THREE.Mesh;
     elevation_cylinder_2: THREE.Mesh;
-    Circle: THREE.Mesh;
+    basecylinder: THREE.Mesh;
+    basecylinder_1: THREE.Mesh;
   };
   materials: {
     darkpaintedmetal: THREE.MeshStandardMaterial;
     lightpaintedmetal: THREE.MeshPhysicalMaterial;
+    Material_2: THREE.MeshBasicMaterial;
     antenna: THREE.MeshStandardMaterial;
+    tips: THREE.MeshStandardMaterial;
     antennacaps: THREE.MeshStandardMaterial;
-    Markers: THREE.MeshStandardMaterial;
   };
 };
+const { DEG2RAD } = THREE.MathUtils;
 
 export function Model(props: JSX.IntrinsicElements["group"]) {
-  const normalMaterial = new THREE.MeshStandardMaterial({
+  const { nodes, materials } = useGLTF("/models/finalscene.gltf") as GLTFResult;
+
+  const whiteMaterial = new THREE.MeshStandardMaterial({
     color: "white",
     metalness: 1,
     roughness: 0.5,
   });
-
-  const { nodes, materials } = useGLTF(
-    "/models/rotatormodel.gltf",
-  ) as GLTFResult;
 
   const options = useMemo(() => {
     return {
@@ -61,160 +65,177 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
       phi: { value: 0, min: -90, max: 90, step: 1 },
     };
   }, []);
+
   const rotatorPosition = useControls(options);
+  const cameraControlsRef = useRef({});
 
+  const { controls } = useControls({
+    cameraView: buttonGroup({
+      label: "camera view",
+      opts: {
+        Isometric: () => {
+          cameraControlsRef.current?.setPosition(
+            ...[14.14, 14.14, 14.14],
+            true,
+          );
+          cameraControlsRef.current?.setLookAt(
+            ...[14.14, 14.14, 14.14],
+            ...[-3, 2.5, 0],
+            true,
+          );
+        },
+        Side: () => {
+          cameraControlsRef.current?.setPosition(...[20, 4, 2.5], true);
+          cameraControlsRef.current?.setLookAt(
+            ...[20, 4, 2.5],
+            ...[0, 4, 2.5],
+            true,
+          );
+        },
+        Top: () => {
+          cameraControlsRef.current?.setPosition(...[0, 20, -2], true);
+          cameraControlsRef.current?.setLookAt(
+            ...[0, 20, -2],
+            ...[0, 0, -2],
+            true,
+          );
+          cameraControlsRef.current?.rotate(Math.PI, 0, true);
+        },
+      },
+    }),
+  });
+
+
+  useEffect(() => {
+    cameraControlsRef.current?.setLookAt(
+      ...[14.14, 14.14, 14.14],
+      ...[-3, 2.5, 0],
+      false,
+    );
+  }, []); 
+  
   return (
-    <group {...props} dispose={null}>
-      <group name="Scene">
-        <group name="AmbientLight" position={[-14.268, -0.059, -14.854]} />
-        <pointLight
-          name="PointLight"
-          intensity={213.4}
-          decay={3}
-          position={[-1.988, 10.356, 7.446]}
-        />
-
-        <group name="rotatormodeltexturedglb" position={[0, 0, 2.263]}>
-          <group
-            name="Cross"
-            position={[0.07, 2.5, 0]}
-            rotation={[Math.PI / 2, 0, 0]}
-          />
-          <group name="Pole" position={[0, 2.59, 0]} scale={[1, 0, 0.97]} />
-          <group name="Base">
-            <mesh
-              name="basecylinder"
-              castShadow
-              receiveShadow
-              geometry={nodes.basecylinder.geometry}
-              material={normalMaterial}
-            />
-            <mesh
-              name="basecylinder_1"
-              castShadow
-              receiveShadow
-              geometry={nodes.basecylinder_1.geometry}
-              material={normalMaterial}
-            />
-          </group>
-          <group
-            name="Azimuth"
-            position={[0, 10, 0]}
-            rotation={[0, -rotatorPosition.theta * (Math.PI / 180), 0]}
-          >
-            <mesh
-              name="azimuthcylinder"
-              castShadow
-              receiveShadow
-              geometry={nodes.azimuthcylinder.geometry}
-              material={normalMaterial}
-            />
-            <mesh
-              name="azimuthcylinder_1"
-              castShadow
-              receiveShadow
-              geometry={nodes.azimuthcylinder_1.geometry}
-              material={normalMaterial}
-            />
-            <group
-              name="Elevation"
-              position={[0, 1.182, 0]}
-              rotation={[rotatorPosition.phi * (Math.PI / 180), 0, 0]}
-            >
-              <mesh
-                name="elevation_cylinder"
-                castShadow
-                receiveShadow
-                geometry={nodes.elevation_cylinder.geometry}
-                material={normalMaterial}
-              />
-              <mesh
-                name="elevation_cylinder_1"
-                castShadow
-                receiveShadow
-                geometry={nodes.elevation_cylinder_1.geometry}
-                material={normalMaterial}
-              />
-              <mesh
-                name="elevation_cylinder_2"
-                castShadow
-                receiveShadow
-                geometry={nodes.elevation_cylinder_2.geometry}
-                material={normalMaterial}
-              />
+    <>
+      <CameraControls ref={cameraControlsRef}/>
+      <group {...props} dispose={null}>
+        <group name="Scene">
+          <group name="finalmodelglb">
+            <group name="rotatormodeltexturedglb" position={[0, 0, 2.263]} >
+              <group
+                name="Azimuth"
+                position={[0, 10, 0]}
+                rotation={[0, -rotatorPosition.theta * (Math.PI / 180), 0]}
+              >
+                <mesh
+                  name="azimuthcylinder"
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.azimuthcylinder.geometry}
+                  material={whiteMaterial}
+                />
+                <mesh
+                  name="azimuthcylinder_1"
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.azimuthcylinder_1.geometry}
+                  material={whiteMaterial}
+                />
+                <group
+                  name="Elevation"
+                  position={[0, 1.182, 0]}
+                  rotation={[rotatorPosition.phi * (Math.PI / -180), 0, 0]}
+                >
+                  <mesh
+                    name="elevation_cylinder"
+                    castShadow
+                    receiveShadow
+                    geometry={nodes.elevation_cylinder.geometry}
+                    material={whiteMaterial}
+                  />
+                  <group name="elevation_cylinder_1">
+                    <mesh
+                      name="Mesh_5"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.Mesh_5.geometry}
+                      material={whiteMaterial}
+                    />
+                    <mesh
+                      name="Mesh_5_1"
+                      castShadow
+                      receiveShadow
+                      geometry={nodes.Mesh_5_1.geometry}
+                      material={whiteMaterial}
+                    />
+                  </group>
+                  <mesh
+                    name="elevation_cylinder_2"
+                    castShadow
+                    receiveShadow
+                    geometry={nodes.elevation_cylinder_2.geometry}
+                    material={whiteMaterial}
+                  />
+                </group>
+              </group>
+              <group name="Base">
+                <mesh
+                  name="basecylinder"
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.basecylinder.geometry}
+                  material={whiteMaterial}
+                />
+                <mesh
+                  name="basecylinder_1"
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.basecylinder_1.geometry}
+                  material={whiteMaterial}
+                />
+              </group>
             </group>
           </group>
-          <mesh
-            name="Circle"
-            castShadow
-            receiveShadow
-            geometry={nodes.Circle.geometry}
-            material={normalMaterial}
-          />
         </group>
       </group>
-    </group>
+    </>
   );
 }
 
-useGLTF.preload("/models/rotatormodel.gltf");
+useGLTF.preload("/models/finalscene.gltf");
 
-const camera1 = new THREE.OrthographicCamera(-15, 15, 15, -15, 0.1, 2000);
-camera1.zoom = 15;
-camera1.position.set(7, 7.3, 3.1);
-camera1.rotation.set(0, 1.57, 0);
-const camera2 = new THREE.OrthographicCamera(-15, 15, 15, -15, 0, 2000);
-camera2.zoom = 10;
-camera2.position.set(0, 400, 0);
-camera2.rotation.set(-1.58, 0, 3.14);
-const camera3 = new THREE.OrthographicCamera(-15, 15, 25, -25, 0, 2000);
-camera3.zoom = 15;
-camera3.position.set(24, 16, 20);
-camera3.rotation.set(-0.31, 0.92, 0.25);
-
+let viewCamera1;
 export default function RotatorModel() {
-  const [view, setView] = useState(camera3);
-  const [controls, set] = useControls("Model", () => ({
-    camDropdown: {
-      label: "Camera View",
-      value: "Bird",
-      options: ["Bird", "Side", "Above"],
-      onChange: (value) => {
-        // Update the base map based on the selected option
-        switch (value) {
-          case "Side":
-            setView(camera1);
-            break;
-          case "Above":
-            setView(camera2);
-            break;
-          case "Bird":
-            setView(camera3);
-            break;
-          default:
-            break;
-        }
-      },
-    },
+  const { azimuth, elevation } = useRotator();
 
-    /*campos:{x:-9,y:3.79,z:2.48, onChange:(newp) =>{camera1.position.set(newp.x,newp.y,newp.z)}},
-  camros:{x:0,y:-0.56,z:0, onChange:(newr) =>{camera1.rotation.set(newr.x,newr.y,newr.z)}},*/
-  }));
+  //viewCamera1 = new THREE.OrthographicCamera(-15, 15, 15, -15, 0.1, 2000);
+  //viewCamera1.zoom = 16;
+  //viewCamera1.position.set(14.14, 14.14, 14.14);
+  //viewCamera1.lookAt(-3, 2.5, 0);
+  //viewCamera1.setTarget(-3, 2.5, 0);
 
   return (
     <div style={{ height: "100%" }}>
       <Canvas
+        shadows
         orthographic
-        camera={view}
-        //camera={view}
+        camera={{
+          left:-15,
+          right: 15,
+          top: 15,
+          bottom:-15,
+          zoom: 16,
+          position: [14.14, 14.14, 14.14],
+        }}
+
         style={{ height: "100%", width: "17.5rem", borderRadius: "8px" }}
       >
-        {/*<OrbitControls target={[0, 0, 0]} />*/}
+        {/*<OrbitControls target={[-3,2.5,0]} />*/}
         <color attach="background" args={["#181C20"]} />
+
         <Suspense fallback={null}>
           <Environment preset="city" />
           <ContactShadows
-            opacity={1}
+            opacity={0.6}
             scale={20}
             blur={1}
             near={0}
@@ -223,22 +244,69 @@ export default function RotatorModel() {
             color="#000000"
           />
           <Model />
-          {view === camera2 && (
+
+          {/*<group name="text">
+            <Html
+              scale={1}
+              position={[0, 0, 0]}
+              center
+              transform
+              sprite
+              occlude
+            >
+              <Stack
+                direction="row"
+                justifyContent="center"
+                sx={{
+                  width: "50rem",
+                  ".MuiTypography-root": {
+                    color: "white",
+                    fontSize: "3rem",
+                    fontFamily: "Roboto Mono, monospace",
+                  },
+                }}
+              >
+                <Stack
+                  direction="column"
+                  alignItems="center"
+                  sx={{ paddingRight: "64px" }}
+                >
+                  <Typography>Azimuth</Typography>
+                  <Typography>{azimuth}</Typography>
+                </Stack>
+                <Stack
+                  direction="column"
+                  alignItems="center"
+                  sx={{ paddingLeft: "64px" }}
+                >
+                  <Typography>Elevation</Typography>
+                  <Typography>{elevation}</Typography>
+                </Stack>
+              </Stack>
+            </Html>
+              </group>*/}
+          <ambientLight intensity={0.9} />
+          <spotLight
+            position={[10, 10, 10]}
+            angle={0.15}
+            penumbra={1}
+            shadow-mapSize={2048}
+            castShadow
+          />
           <Svg
             fillMaterial={{
               wireframe: false,
             }}
-            position={[-12.5,0 , 14.5]}
-            rotation={[0.5*Math.PI,0,0]}
-            scale={0.05}
+            position={[-7.5, 0, 9.5]}
+            rotation={[0.5 * Math.PI, 0, 0]}
+            scale={0.03}
             src="/src/icons/compass.svg"
-            //src="https://threejs.org/examples/models/svg/tiger.svg"
             strokeMaterial={{
               wireframe: false,
             }}
           />
-          )}
-          <Ground />
+
+          {/*} <Ground />*/}
         </Suspense>
       </Canvas>
     </div>
@@ -247,10 +315,10 @@ export default function RotatorModel() {
 
 function Ground() {
   const gridConfig = {
-    cellSize: 0.5,
-    cellThickness: 0.5,
+    cellSize: 3,
+    cellThickness: 1,
     cellColor: "#6f6f6f",
-    sectionSize: 6,
+    sectionSize: 10,
     sectionThickness: 1,
     sectionColor: "#373C4B",
     fadeDistance: 100,

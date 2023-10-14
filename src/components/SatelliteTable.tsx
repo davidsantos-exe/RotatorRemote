@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import SearchBar from "./SearchBar";
 import { useRotator } from "../classes/RotatorContext";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 //const trackedSatellites = [{name:"Satellite1"},{name:"Satellite2"},{name:"Satellite3"}];
 const SatelliteListLabels = ["Norad ID", "Uplink", "Downlink", "Mode"];
@@ -105,6 +106,7 @@ function SatelliteTable() {
                     alignItems="space-between"
                     justifyContent="space-between"
                   >
+                    <Stack direction="row" alignItems="space-between">
                     <Typography
                       variant="h6"
                       component="div"
@@ -112,6 +114,10 @@ function SatelliteTable() {
                     >
                       {sat.name}
                     </Typography>
+                    <Button onClick={() => handleRemoveButton(sat)}>
+                      <DeleteIcon/>
+                    </Button>
+                    </Stack>
                     <Stack
                       direction="row"
                       spacing={2}
@@ -141,16 +147,13 @@ function SatelliteTable() {
                     </Stack>
                   </Stack>
 
-                  <Stack direction="row">
+                
                     {selectedSatellite && (selectedSatellite.name !== sat.name ) && (
                       <Button onClick={() => handleSelectButton(sat)}>
-                        Select
+                        Set as Target
                       </Button>
                     )}
-                    <Button onClick={() => handleRemoveButton(sat)}>
-                      Remove
-                    </Button>
-                  </Stack>
+             
                 </Stack>
               </Card>
             ))}

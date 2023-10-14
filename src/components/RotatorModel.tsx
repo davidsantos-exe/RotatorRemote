@@ -68,6 +68,7 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
 
   const rotatorPosition = useControls(options);
   const cameraControlsRef = useRef({});
+  const textRef = useRef({});
 
   const { controls } = useControls({
     cameraView: buttonGroup({
@@ -105,22 +106,54 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
     }),
   });
 
-
   useEffect(() => {
     cameraControlsRef.current?.setLookAt(
       ...[14.14, 14.14, 14.14],
       ...[-3, 2.5, 0],
       false,
     );
-  }, []); 
-  
+  }, []);
+
   return (
     <>
-      <CameraControls ref={cameraControlsRef}/>
+      <CameraControls ref={cameraControlsRef} />
+      {/*<group ref={textRef} name="text" position={[16.5, 3, 16]}>
+        <Html  scale={1}  center transform sprite occlude>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            sx={{
+              width: "50rem",
+              ".MuiTypography-root": {
+                color: "white",
+                fontSize: "3rem",
+                fontFamily: "Roboto Mono, monospace",
+              },
+            }}
+          >
+            <Stack
+              direction="column"
+              alignItems="center"
+              sx={{ paddingRight: "64px" }}
+            >
+              <Typography>Azimuth</Typography>
+              <Typography>{rotatorPosition.theta}</Typography>
+            </Stack>
+            <Stack
+              direction="column"
+              alignItems="center"
+              sx={{ paddingLeft: "64px" }}
+            >
+              <Typography>Elevation</Typography>
+              <Typography>{rotatorPosition.phi}</Typography>
+            </Stack>
+          </Stack>
+        </Html>
+          </group>}*/}
       <group {...props} dispose={null}>
         <group name="Scene">
           <group name="finalmodelglb">
-            <group name="rotatormodeltexturedglb" position={[0, 0, 2.263]} >
+            <group name="rotatormodeltexturedglb" position={[0, 0, 2.263]}>
               <group
                 name="Azimuth"
                 position={[0, 10, 0]}
@@ -207,26 +240,19 @@ let viewCamera1;
 export default function RotatorModel() {
   const { azimuth, elevation } = useRotator();
 
-  //viewCamera1 = new THREE.OrthographicCamera(-15, 15, 15, -15, 0.1, 2000);
-  //viewCamera1.zoom = 16;
-  //viewCamera1.position.set(14.14, 14.14, 14.14);
-  //viewCamera1.lookAt(-3, 2.5, 0);
-  //viewCamera1.setTarget(-3, 2.5, 0);
-
   return (
     <div style={{ height: "100%" }}>
       <Canvas
         shadows
         orthographic
         camera={{
-          left:-15,
+          left: -15,
           right: 15,
           top: 15,
-          bottom:-15,
+          bottom: -15,
           zoom: 16,
           position: [14.14, 14.14, 14.14],
         }}
-
         style={{ height: "100%", width: "17.5rem", borderRadius: "8px" }}
       >
         {/*<OrbitControls target={[-3,2.5,0]} />*/}
@@ -244,47 +270,6 @@ export default function RotatorModel() {
             color="#000000"
           />
           <Model />
-
-          {/*<group name="text">
-            <Html
-              scale={1}
-              position={[0, 0, 0]}
-              center
-              transform
-              sprite
-              occlude
-            >
-              <Stack
-                direction="row"
-                justifyContent="center"
-                sx={{
-                  width: "50rem",
-                  ".MuiTypography-root": {
-                    color: "white",
-                    fontSize: "3rem",
-                    fontFamily: "Roboto Mono, monospace",
-                  },
-                }}
-              >
-                <Stack
-                  direction="column"
-                  alignItems="center"
-                  sx={{ paddingRight: "64px" }}
-                >
-                  <Typography>Azimuth</Typography>
-                  <Typography>{azimuth}</Typography>
-                </Stack>
-                <Stack
-                  direction="column"
-                  alignItems="center"
-                  sx={{ paddingLeft: "64px" }}
-                >
-                  <Typography>Elevation</Typography>
-                  <Typography>{elevation}</Typography>
-                </Stack>
-              </Stack>
-            </Html>
-              </group>*/}
           <ambientLight intensity={0.9} />
           <spotLight
             position={[10, 10, 10]}
@@ -309,6 +294,51 @@ export default function RotatorModel() {
           {/*} <Ground />*/}
         </Suspense>
       </Canvas>
+
+      <div
+        style={{
+          position: "absolute",
+          bottom: "15px",
+          left: "10px",
+          right: "10px",
+          background: "rgba(255, 255, 255, 0.1)",
+
+          padding: "10px",
+
+          borderRadius: "8px",
+        }}
+      >
+         <Stack
+            direction="row"
+            justifyContent="center"
+            spacing={5}
+            sx={{
+           
+              ".MuiTypography-root": {
+                color: "white",
+                fontSize: "1.2rem",
+                fontFamily: "Roboto Mono, monospace",
+              },
+            }}
+          >
+            <Stack
+              direction="column"
+              alignItems="center"
+              sx={{  }}
+            >
+              <Typography>Azimuth</Typography>
+              <Typography>{azimuth}</Typography>
+            </Stack>
+            <Stack
+              direction="column"
+              alignItems="center"
+              sx={{ }}
+            >
+              <Typography>Elevation</Typography>
+              <Typography>{elevation}</Typography>
+            </Stack>
+          </Stack>
+      </div>
     </div>
   );
 }

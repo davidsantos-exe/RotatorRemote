@@ -80,7 +80,6 @@ function extrapolateWrappedPointFeatures(feature, westBoundingLongitude, eastBou
   };
 }
 
-
 function radiansToDegrees(radians) {
   return radians * 180 / Math.PI;
 }
@@ -206,7 +205,7 @@ function update(parsedTles) {
     .satrecs(parsedTles);
 
   activeClock = clock()
-    .rate(1000)
+    .rate(1)
     .date(TLE_DATA_DATE);
 
   window.requestAnimationFrame(draw);

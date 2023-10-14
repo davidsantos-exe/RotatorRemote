@@ -28,11 +28,10 @@ interface ConnectionModalProps {
 }
 
 const Modal: React.FC<ConnectionModalProps> = forwardRef((props,ref) => {
-  const { updateRotator } = useRotator();
+  const { rotator,updateRotator } = useRotator();
   const modalRef = useRef();
   const handleSetNewRotator = (ref) => {
     updateRotator(newRotator);
-    //close modal
     props.setOpen(false);
   };
 

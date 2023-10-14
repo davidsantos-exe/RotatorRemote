@@ -1,4 +1,5 @@
 import React, { useState, ReactElement,useRef } from "react";
+import { useRotator } from "../classes/RotatorContext";
 import {
   MapContainer,
   TileLayer,
@@ -34,7 +35,7 @@ const bounds = [
 
 
 function MercatorMap() {
-
+  const {rotator} = useRotator();
   const [baseMap, setBaseMap] = useState(maps.map1);
 
   const [controls, set] = useControls('Map', () => ({
@@ -78,11 +79,11 @@ function MercatorMap() {
         <SatelliteLayer/>
         <Button sx={{ width: 0, height: 0 }} />
         <TileLayer url={baseMap.url} />
-        <Marker position={[30.6280, -96.3344]}>
+        {rotator!==null &&(<Marker position={[rotator.state.Rotator.Location.Latitude,rotator.state.Rotator.Location.Longitude]}>
           <Popup>
-            W5QZ
+            {rotator.state.CallSign}
           </Popup>
-        </Marker>
+        </Marker>)}
       </MapContainer>
     </div>
   );

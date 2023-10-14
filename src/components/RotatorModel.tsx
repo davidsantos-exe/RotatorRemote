@@ -51,6 +51,7 @@ type GLTFResult = GLTF & {
 const { DEG2RAD } = THREE.MathUtils;
 
 export function Model(props: JSX.IntrinsicElements["group"]) {
+  const { azimuth,elevation } = useRotator();
   const { nodes, materials } = useGLTF("/models/finalscene.gltf") as GLTFResult;
 
   const whiteMaterial = new THREE.MeshStandardMaterial({
@@ -59,14 +60,6 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
     roughness: 0.5,
   });
 
-  const options = useMemo(() => {
-    return {
-      theta: { value: 0, min: 0, max: 360, step: 1 },
-      phi: { value: 0, min: -90, max: 90, step: 1 },
-    };
-  }, []);
-
-  const rotatorPosition = useControls(options);
   const cameraControlsRef = useRef({});
   const textRef = useRef({});
 
@@ -112,44 +105,13 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
       ...[-3, 2.5, 0],
       false,
     );
+
+    
   }, []);
 
   return (
     <>
       <CameraControls ref={cameraControlsRef} />
-      {/*<group ref={textRef} name="text" position={[16.5, 3, 16]}>
-        <Html  scale={1}  center transform sprite occlude>
-          <Stack
-            direction="row"
-            justifyContent="center"
-            sx={{
-              width: "50rem",
-              ".MuiTypography-root": {
-                color: "white",
-                fontSize: "3rem",
-                fontFamily: "Roboto Mono, monospace",
-              },
-            }}
-          >
-            <Stack
-              direction="column"
-              alignItems="center"
-              sx={{ paddingRight: "64px" }}
-            >
-              <Typography>Azimuth</Typography>
-              <Typography>{rotatorPosition.theta}</Typography>
-            </Stack>
-            <Stack
-              direction="column"
-              alignItems="center"
-              sx={{ paddingLeft: "64px" }}
-            >
-              <Typography>Elevation</Typography>
-              <Typography>{rotatorPosition.phi}</Typography>
-            </Stack>
-          </Stack>
-        </Html>
-          </group>}*/}
       <group {...props} dispose={null}>
         <group name="Scene">
           <group name="finalmodelglb">
@@ -157,7 +119,7 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
               <group
                 name="Azimuth"
                 position={[0, 10, 0]}
-                rotation={[0, -rotatorPosition.theta * (Math.PI / 180), 0]}
+                rotation={[0, -azimuth * (Math.PI / 180), 0]}
               >
                 <mesh
                   name="azimuthcylinder"
@@ -176,7 +138,7 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
                 <group
                   name="Elevation"
                   position={[0, 1.182, 0]}
-                  rotation={[rotatorPosition.phi * (Math.PI / -180), 0, 0]}
+                  rotation={[elevation * (Math.PI / -180), 0, 0]}
                 >
                   <mesh
                     name="elevation_cylinder"
@@ -301,10 +263,8 @@ export default function RotatorModel() {
           bottom: "15px",
           left: "10px",
           right: "10px",
-          background: "rgba(255, 255, 255, 0.1)",
-
+          //background: "rgba(255, 255, 255, 0.1)",
           padding: "10px",
-
           borderRadius: "8px",
         }}
       >

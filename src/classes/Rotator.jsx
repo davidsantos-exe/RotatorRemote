@@ -62,6 +62,21 @@ export class AntennaRotator extends Component {
     }));
   }
 
+
+  // Method to set the antenna offset
+  setUTCoffset(utcOffset) {
+    this.setState(prevState => ({
+      Rotator: {
+        ...prevState.Rotator,
+        UTCoffset: utcOffset,
+      },
+    }));
+  }
+
+
+
+
+
   // Method to update the antenna position
   setPosition(azimuth, elevation) {
     this.setState(prevState => ({

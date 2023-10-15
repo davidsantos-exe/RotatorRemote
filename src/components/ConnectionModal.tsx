@@ -6,22 +6,6 @@ import RotatorIcon from "../icons/RotatorIcon"
 import { useRotator } from "../classes/RotatorContext";
 import { AntennaRotator } from "../classes/Rotator";
 
-const newRotator = new AntennaRotator({
-  CallSign: 'YourCallSign',
-  Radio: 'YourRadio',
-  Rotator: {
-    // Initial Rotator properties
-    Mode: 'Auto',
-    isAutoTracking: false,
-    isManualTracking: false,
-    Heading: 0,
-    aOffset: 0,
-    yOffset: 0,
-    Position: { azimuth: 0, elevation: 0 },
-    Location: { Latitude: 0, Longitude: 0 },
-    isReady: false,
-  },
-});
 
 interface ConnectionModalProps {
   setOpen: (value: boolean) => void;
@@ -31,6 +15,24 @@ const Modal: React.FC<ConnectionModalProps> = forwardRef((props,ref) => {
   const { rotator,updateRotator } = useRotator();
   const modalRef = useRef();
   const handleSetNewRotator = (ref) => {
+
+    const newRotator = new AntennaRotator({
+      CallSign: 'YourCallSign',
+      Radio: 'YourRadio',
+      Rotator: {
+        // Initial Rotator properties
+        Mode: 'Auto',
+        isAutoTracking: false,
+        isManualTracking: false,
+        Heading: 0,
+        aOffset: 0,
+        yOffset: 0,
+        Position: { azimuth: 0, elevation: 0 },
+        Location: { Latitude: 30.6280, Longitude: -96.3344 },
+        isReady: false,
+        UTCoffset: -5
+      },
+    });
     updateRotator(newRotator);
     props.setOpen(false);
   };

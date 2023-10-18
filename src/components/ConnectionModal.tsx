@@ -1,38 +1,36 @@
-import React, {useRef,forwardRef} from "react";
+import React, { useRef, forwardRef } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button"
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import RotatorIcon from "../icons/RotatorIcon"
+import RotatorIcon from "../icons/RotatorIcon";
 import { useRotator } from "../classes/RotatorContext";
-import { AntennaRotator } from "../classes/Rotator";
-
 
 interface ConnectionModalProps {
   setOpen: (value: boolean) => void;
 }
 
-const Modal: React.FC<ConnectionModalProps> = forwardRef((props,ref) => {
-  const { rotator,updateRotator } = useRotator();
+const Modal: React.FC<ConnectionModalProps> = forwardRef((props, ref) => {
+  const { rotator, updateRotator } = useRotator();
   const modalRef = useRef();
   const handleSetNewRotator = (ref) => {
-
-    const newRotator = new AntennaRotator({
-      CallSign: 'YourCallSign',
-      Radio: 'YourRadio',
+    const newRotator = {
+      CallSign: "YourCallSign",
+      Radio: "YourRadio",
       Rotator: {
         // Initial Rotator properties
-        Mode: 'Auto',
+        Mode: "Auto",
+        Model: "YourRotator",
         isAutoTracking: false,
         isManualTracking: false,
         Heading: 0,
         aOffset: 0,
         yOffset: 0,
         Position: { azimuth: 0, elevation: 0 },
-        Location: { Latitude: 30.6280, Longitude: -96.3344 },
+        Location: { Latitude: 30.628, Longitude: -96.3344 },
         isReady: false,
-        UTCoffset: -5
+        UTCoffset: -5,
       },
-    });
+    };
     updateRotator(newRotator);
     props.setOpen(false);
   };
@@ -52,7 +50,12 @@ const Modal: React.FC<ConnectionModalProps> = forwardRef((props,ref) => {
         p: 4,
       }}
     >
-      <Typography id="modal-modal-title" variant="h6" component="h2" sx={{color:"#8C92A4"}}>
+      <Typography
+        id="modal-modal-title"
+        variant="h6"
+        component="h2"
+        sx={{ color: "#8C92A4" }}
+      >
         Connect a Rotator
       </Typography>
       <RotatorIcon />

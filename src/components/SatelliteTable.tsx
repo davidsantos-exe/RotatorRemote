@@ -16,7 +16,7 @@ import { useRotator } from "../classes/RotatorContext";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 //const trackedSatellites = [{name:"Satellite1"},{name:"Satellite2"},{name:"Satellite3"}];
-const SatelliteListLabels = ["Norad ID", "Uplink", "Downlink", "Mode"];
+const SatelliteListLabels = ["Pass 1", "Pass 2", "Pass 3"];
 
 function SatelliteTable() {
   const {
@@ -94,12 +94,16 @@ function SatelliteTable() {
               ".MuiCard-root": {
                 width: 200,
                 height: "10rem",
-                backgroundColor: "#2C333A",
               },
             }}
           >
             {trackedSatellites.map((sat) => (
-              <Card key={sat.name}>
+               <Card
+               key={sat.name}
+               sx={{
+                 backgroundColor: sat.name === selectedSatellite.name ? 'blue' : '#2C333A'
+               }}
+             >
                 <Stack direction="column" spacing={1} alignItems="center">
                   <Stack
                     direction="column"
@@ -137,6 +141,11 @@ function SatelliteTable() {
                             sx={{ fontFamily: "Roboto Mono, monospace" }}
                           >
                             {label}
+                            start:(-0.2,231.23)
+                            date: 10/10/23
+                            time: 10:10:10
+                            maxE: 234km
+                            visible:  yes
                           </Typography>
                         ))}
                       </Stack>

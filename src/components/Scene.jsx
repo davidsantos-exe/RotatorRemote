@@ -12,7 +12,6 @@ import {
   QuadraticBezierCurve3,
   Vector3,
 } from "three";
-import Controller from "./Controller";
 import Stack from "@mui/material/Stack";
 
 function setupCamera(camera) {
@@ -252,7 +251,7 @@ function Scene() {
         sx={{ width: "100%" }}
         justifyContent="space-between"
       >
-        <Controller
+        {/*<Controller
           label="Azimuth"
           fillColor="#FF9900"
           min={0}
@@ -269,7 +268,7 @@ function Scene() {
           step={1}
           angle={elevation}
           setAngle={updateElevation}
-        />
+  />*/}
         <Box>
           <Canvas
             orthographic

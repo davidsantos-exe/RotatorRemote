@@ -9,10 +9,11 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import LinearGauge from "./LinearGauge";
 import ListItemText from "@mui/material/ListItemText";
+import {useRotator} from "../classes/RotatorContext";
 
 export default function BasicCard() {
   const [signalLevel, setSignalLevel] = useState(-85);
-
+  const {rotator, selectedSatellite} = useRotator();
   return (
     <CardContent
       sx={{
@@ -30,7 +31,7 @@ export default function BasicCard() {
           component="div"
           sx={{ fontFamily: "Roboto Mono, monospace" }}
         >
-          Yaesu FT-2031
+          {rotator.Radio}
         </Typography>
         <LinearGauge />
         <Stack sx={{ paddingTop: "1.8rem" }} direction="row" justifyContent="space-around">
@@ -48,6 +49,7 @@ export default function BasicCard() {
                 component="div"
                 sx={{color: "#8C92A4", fontFamily: "Roboto Mono, monospace", fontSize:12 }}
               >
+                {/*TO-DO Request From MCU*/}
                 10:10:92
               </Typography>
             </Stack>
@@ -64,6 +66,7 @@ export default function BasicCard() {
                 component="div"
                 sx={{color: "#8C92A4", fontFamily: "Roboto Mono, monospace", fontSize:12 }}
               >
+                {/*TO-DO  Request From MCU*/}
                 03:39:10
               </Typography>
             </Stack>
@@ -82,7 +85,7 @@ export default function BasicCard() {
                 component="div"
                 sx={{color: "#8C92A4", fontFamily: "Roboto Mono, monospace", fontSize:12}}
               >
-                42.334 kHz
+                {selectedSatellite && (selectedSatellite.uplink + " kHz")}
               </Typography>
             </Stack>
             <Stack direction="row">
@@ -98,7 +101,7 @@ export default function BasicCard() {
                 component="div"
                 sx={{color: "#8C92A4", fontFamily:"Roboto Mono, monospace", fontSize:12 }}
               >
-                90.23 kHz
+                {selectedSatellite && (selectedSatellite.downlink + " kHz")}
               </Typography>
             </Stack>
           </Stack>

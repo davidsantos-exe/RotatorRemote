@@ -15,9 +15,24 @@ export function useRotator() {
 export function RotatorProvider({ children }) {
   const [azimuth, setAzimuth] = useState(0);
   const [elevation, setElevation] = useState(0);
+  const [heading, setHeading] = useState(0);
+  const [mode, setMode] = useState(0);
+  const [aOffset, setAOffset] = useState(0);
+  const [yOffset, setYOffset] = useState(0);
+  const [radio, setRadio] = useState(null);
   const [rotator, setRotator] = useState(null);
   const [selectedSatellite, setSelectedSatellite] = useState(null);
   const [trackedSatellites, setTrackedSatellites] = useState([]);
+  const [isAutoTracking, setIsAutoTracking] = useState(false);
+  const [isManualTracking, setIsManualTracking] = useState(false);
+
+  const updateIsManualTracking = (value) => {
+    setIsManualTracking(value);
+  };
+
+  const updateIsAutoTracking = (nvalue) => {
+    setIsAutoTracking(nvalue);
+  };
 
   const updateAzimuth = (newAzimuth) => {
     setAzimuth(newAzimuth);
@@ -27,8 +42,31 @@ export function RotatorProvider({ children }) {
     setElevation(newElevation);
   };
 
+  const updateHeading = (newHeading) => {
+    setHeading(newHeading);
+  };
+
+  const updateAzimuthOffset = (offset) => {
+    setAOffset(offset);
+  };
+
+  const updateElevationOffset = (offset) => {
+    setYOffset(offset);
+  };
+  const updateMode = (newMode) => {
+    setMode(newMode);
+  };
+
   const updateRotator = (newRotator) => {
     setRotator(newRotator);
+
+    setAzimuth(newRotator.Rotator.Position.azimuth);
+    setElevation(newRotator.Rotator.Position.elevation);
+
+    setHeading(newRotator.Rotator.Heading);
+    setMode(newRotator.Rotator.Mode);
+    setAOffset(newRotator.Rotator.aOffset);
+    setYOffset(newRotator.Rotator.yOffset);
   };
 
   return (
@@ -36,7 +74,11 @@ export function RotatorProvider({ children }) {
       value={{
         azimuth,
         elevation,
+        isAutoTracking,
+        updateIsAutoTracking,
         rotator,
+        isManualTracking,
+        updateIsManualTracking,
         updateRotator,
         updateAzimuth,
         updateElevation,
@@ -44,6 +86,14 @@ export function RotatorProvider({ children }) {
         trackedSatellites,
         setTrackedSatellites,
         selectedSatellite,
+        heading,
+        mode,
+        aOffset,
+        yOffset,
+        updateHeading,
+        updateMode,
+        updateAzimuthOffset,
+        updateElevationOffset,
       }}
     >
       {children}

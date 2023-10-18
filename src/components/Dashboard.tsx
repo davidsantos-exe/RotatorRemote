@@ -126,11 +126,12 @@ export default function Dashboard(props) {
 
               <Box
                 sx={{
-                  //width: "100%",
+                  width: "100%",
                   backgroundColor: "transparent",
                 }}
               >
                 <RotatorCard />
+               
               </Box>
             </Stack>
           </>

@@ -35,7 +35,7 @@ const bounds = [
 
 
 function MercatorMap() {
-  const {rotator} = useRotator();
+  const {rotator, trackedSatellites} = useRotator();
   const [baseMap, setBaseMap] = useState(maps.map1);
 
   const [controls, set] = useControls('Map', () => ({
@@ -76,12 +76,12 @@ function MercatorMap() {
         //whenCreated={setLeafletMap}
         // maxBounds={bounds}
       >
-        <SatelliteLayer/>
-        <Button sx={{ width: 0, height: 0 }} />
+        {trackedSatellites.length > 0 && (<SatelliteLayer satellites={trackedSatellites}/>)}
+        
         <TileLayer url={baseMap.url} />
-        {rotator!==null &&(<Marker position={[rotator.state.Rotator.Location.Latitude,rotator.state.Rotator.Location.Longitude]}>
+        {rotator!==null &&(<Marker position={[rotator.Rotator.Location.Latitude,rotator.Rotator.Location.Longitude]}>
           <Popup>
-            {rotator.state.CallSign}
+            {rotator.CallSign}
           </Popup>
         </Marker>)}
       </MapContainer>

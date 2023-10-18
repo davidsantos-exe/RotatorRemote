@@ -96,7 +96,7 @@ function CustomTabPanel(props: TabPanelProps) {
             p: 3,
             padding: "12px",
             backgroundColor: "#181C20",
-            borderRadius: "8px",
+            //borderRadius: "8px",
           }}
         >
           {children}

@@ -11,12 +11,18 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import satelliteData from "../data/ActiveSatelliteDatabase.json";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
-import {useRotator} from "../classes/RotatorContext";
+import { useRotator } from "../classes/RotatorContext";
+import {getSatelliteData, getSatData} from "../utils/Helper.jsx";
 
 export default function SearchBar() {
   const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const {trackedSatellites, setTrackedSatellites, selectedSatellite, setSelectedSatellite} = useRotator();
+  const {
+    trackedSatellites,
+    setTrackedSatellites,
+    selectedSatellite,
+    setSelectedSatellite,
+  } = useRotator();
 
   const handleSearchTextChange = (event) => {
     // save search input
@@ -26,42 +32,54 @@ export default function SearchBar() {
     // compute new suggestions based on the search input
     const newSuggestions = satelliteData
       .filter((satelliteData) =>
-        satelliteData.name.toLowerCase().startsWith(newSearchText.toLowerCase())
+        satelliteData.name
+          .toLowerCase()
+          .startsWith(newSearchText.toLowerCase()),
       )
       .slice(0, 4);
     setSuggestions(newSuggestions);
   };
 
-  const handleSuggestionClick = (sat) => {
+  const handleSuggestionClick = async (sat) => {
     // Clear suggestions
     setSuggestions([]);
-  
+
     // Check if the maximum number of tracked satellites has been reached (10).
     if (trackedSatellites.length === 10) {
       console.log("10 satellites are already being tracked, try removing one");
-    } else if (trackedSatellites.some((trackedSat) => trackedSat.name === sat.name)) {
+    } else if (
+      trackedSatellites.some((trackedSat) => trackedSat.name === sat.name)
+    ) {
       // Check that the satellite is not already in the list
       console.log("This satellite is already being tracked");
     } else {
       // Create a new satellite object to add to the trackedSatellites array.
-      const newSatellite = { name: sat.name,norad_id: sat.norad_id, uplink: sat.uplink, downlink: sat.downlink, mode: sat.mode};
-  
+      const initialData = await getSatelliteData(sat.name);
+      const date = new Date().getTime();
+      const newSatellite = {
+        name: sat.name,
+        norad_id: sat.norad_id,
+        uplink: sat.uplink,
+        downlink: sat.downlink,
+        mode: sat.mode,
+        tle: initialData.TLE,
+        satRec: initialData.satRec,
+        dataDate: date
+      };
+
       // Clone the old list and add the new satellite to it.
       const newList = [...trackedSatellites, newSatellite];
-  
+
       // Update the state with the new list of tracked satellites.
       setTrackedSatellites(newList);
-      
-      if(selectedSatellite === null){
 
+      if (selectedSatellite === null) {
         setSelectedSatellite(newSatellite);
       }
     }
-
+    
     setSearchText("");
-  }
-  
-  
+  };
 
   const handleClickAway = () => {
     // clear suggestions
@@ -125,7 +143,14 @@ export default function SearchBar() {
                 <ListItemText primary={suggestion.name} />
 
                 <Button
-                  sx={{ paddingTop: "0px", paddingBottom: "0px", color: "#8C92A4" , "&.MuiButton-root":{fontFamily:"Roboto Mono, monospace"}}}
+                  sx={{
+                    paddingTop: "0px",
+                    paddingBottom: "0px",
+                    color: "#8C92A4",
+                    "&.MuiButton-root": {
+                      fontFamily: "Roboto Mono, monospace",
+                    },
+                  }}
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
                   Add

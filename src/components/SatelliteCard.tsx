@@ -3,30 +3,52 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { useRotator } from "../classes/RotatorContext";
+import { getSatData } from "../utils/Helper.jsx";
+import { propagate } from "satellite.js";
 
+const getSatSpeed = (satRec) => {
+  const currentTime = new Date(); // Replace with the desired time
+  const velocity = propagate(satRec, currentTime).velocity;
+  const speed = Math.sqrt(
+    velocity.x * velocity.x + velocity.y * velocity.y + velocity.z * velocity.z,
+  );
+  return Math.floor(speed);
+};
 
 export default function BasicCard() {
   const { rotator, selectedSatellite } = useRotator();
-
+  const satRec = selectedSatellite.satRec;
   var now = new Date();
   var hour = now.getUTCHours();
   var minute = now.getUTCMinutes();
   var second = now.getUTCSeconds();
-  const initialUTCTime = hour + ":" + minute + ":" + second;
+  
+  const initialUTCTime = `${String(hour).padStart(2, "0")}:${String(
+    minute,
+  ).padStart(2, "0")}:${String(second).padStart(2, "0")}`;
 
   let initialLocalTime = "";
-  if(rotator){
-    const localHourOffset = rotator.state.Rotator.UTCoffset;
-    const localHour = (hour + localHourOffset) % 24; 
-    initialLocalTime = localHour + ":" + minute + ":" + second;
-}
+  if (rotator) {
+    const localHourOffset = rotator.Rotator.UTCoffset;
+    var localHour = (hour + localHourOffset) % 24;
+    if (localHour < 0) {
+      localHour = 24 + localHour;
+    }
+    initialLocalTime = `${String(localHour).padStart(2, "0")}:${String(
+    minute,
+  ).padStart(2, "0")}:${String(second).padStart(2, "0")}`;
+  }
 
   const [utcTime, setUtcTime] = useState(initialUTCTime);
   const [localTime, setLocalTime] = useState(initialLocalTime);
-  const [satLongitude, setSatLongitude] = useState("23 deg");
-  const [satLatitude, setSatLatitude] = useState("90 deg");
-  const [satHeight, setSatHeight] = useState("525 mi");
-  const [satSpeed, setSatSpeed] = useState("8 mi/s");
+  const [satLongitude, setSatLongitude] = useState(
+    getSatData("longitude", satRec),
+  );
+  const [satLatitude, setSatLatitude] = useState(
+    getSatData("latitude", satRec),
+  );
+  const [satHeight, setSatHeight] = useState(getSatData("height", satRec));
+  const [satSpeed, setSatSpeed] = useState(getSatSpeed(satRec));
   useEffect(() => {
     // Function to update UTC and local time every x seconds
     const updateTimes = () => {
@@ -34,13 +56,13 @@ export default function BasicCard() {
       setUtcTime(newUtcTime);
       const newLocalTime = incrementTime(localTime);
       setLocalTime(newLocalTime);
-      const newSatLongitude = 10;
+      const newSatLongitude = getSatData("longitude", satRec);
       setSatLongitude(newSatLongitude);
-      const newSatLatitude = 10;
+      const newSatLatitude = getSatData("latitude", satRec);
       setSatLatitude(newSatLatitude);
-      const newSatHeight = 10;
+      const newSatHeight = getSatData("height", satRec);
       setSatHeight(newSatHeight);
-      const newSatSpeed = 10;
+      const newSatSpeed = getSatSpeed(satRec);
       setSatSpeed(newSatSpeed);
     };
 
@@ -53,13 +75,18 @@ export default function BasicCard() {
     if (time == "" && !rotator) {
       return "";
     } else if (time == "") {
-      let localOffsetHours = rotator.state.Rotator.UTCoffset;
+      let localOffsetHours = rotator.Rotator.UTCoffset;
       var now = new Date();
       var hour = now.getUTCHours();
       var minute = now.getUTCMinutes();
       var second = now.getUTCSeconds();
       let localHour = (hour + localOffsetHours) % 24;
-      let initialLocalTime = localHour + ":" + minute + ":" + second;
+      if (localHour < 0) {
+      localHour = 24 + localHour;
+      }
+      let initialLocalTime = `${String(localHour).padStart(2, "0")}:${String(
+    minute,
+  ).padStart(2, "0")}:${String(second).padStart(2, "0")}`;;
       return initialLocalTime;
     }
     // Parse time (HH:MM:SS) and increment by 1 second
@@ -174,35 +201,35 @@ export default function BasicCard() {
               component="div"
               sx={{ color: "#8C92A4", fontFamily: "Roboto Mono, monospace" }}
             >
-               {localTime !== null ? localTime : 'Loading...'}
+              {localTime !== null ? localTime : "Loading..."}
             </Typography>
             <Typography
               variant="caption"
               component="div"
               sx={{ color: "#8C92A4", fontFamily: "Roboto Mono, monospace" }}
             >
-              {satLongitude}
+              {satLongitude}°
             </Typography>
             <Typography
               variant="caption"
               component="div"
               sx={{ color: "#8C92A4", fontFamily: "Roboto Mono, monospace" }}
             >
-              {satLatitude}
+              {satLatitude}°
             </Typography>
             <Typography
               variant="caption"
               component="div"
               sx={{ color: "#8C92A4", fontFamily: "Roboto Mono, monospace" }}
             >
-              {satHeight}
+              {satHeight} km
             </Typography>
             <Typography
               variant="caption"
               component="div"
               sx={{ color: "#8C92A4", fontFamily: "Roboto Mono, monospace" }}
             >
-              {satSpeed}
+              {satSpeed} km/s
             </Typography>
           </Stack>
         </Stack>

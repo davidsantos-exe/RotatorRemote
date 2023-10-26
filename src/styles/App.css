@@ -52,3 +52,22 @@
 .model-controls.open{
   opacity: 1;
 }
+
+
+/* Define a transition for smooth animation */
+.gauge-indicator, .gauge-label {
+  transition: all 1s ease-in-out;
+}
+
+/* Style the indicator and label */
+.gauge-indicator {
+  fill: white;
+  width: 0.25rem;
+  height: 32px;
+}
+
+.gauge-label {
+  fill: white;
+  font-size: 12;
+  font-family: 'Roboto Mono', monospace;
+}

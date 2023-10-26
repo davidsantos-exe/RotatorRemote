@@ -13,7 +13,8 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import SearchBar from "./SearchBar";
 import { useRotator } from "../classes/RotatorContext";
-import DeleteIcon from '@mui/icons-material/Delete';
+import Passes from "./Passes";
+import CloseIcon from "@mui/icons-material/Close";
 
 //const trackedSatellites = [{name:"Satellite1"},{name:"Satellite2"},{name:"Satellite3"}];
 const SatelliteListLabels = ["Pass 1", "Pass 2", "Pass 3"];
@@ -36,9 +37,9 @@ function SatelliteTable() {
     setTrackedSatellites(updatedSatellites);
     // If selected, Remove
     if (satelliteToRemove.name === selectedSatellite.name) {
-      if(trackedSatellites.length === 1 ){
+      if (trackedSatellites.length === 1) {
         setSelectedSatellite(null);
-      }else{
+      } else {
         setSelectedSatellite(trackedSatellites[1]);
       }
     }
@@ -98,71 +99,56 @@ function SatelliteTable() {
             }}
           >
             {trackedSatellites.map((sat) => (
-               <Card
-               key={sat.name}
-               sx={{
-                 backgroundColor: sat.name === selectedSatellite.name ? 'blue' : '#2C333A'
-               }}
-             >
-                <Stack direction="column" spacing={1} alignItems="center">
+              <Card
+                key={sat.name}
+                sx={{
+                  padding: "4px",
+                  backgroundColor: "#2C333A",
+                  border:
+                    sat.name === selectedSatellite.name
+                      ? "1px solid white"
+                      : "none",
+                }}
+              >
+                <Stack direction="column" spacing={1} justifyContent="center">
                   <Stack
-                    direction="column"
-                    alignItems="space-between"
-                    justifyContent="space-between"
+                    direction="row"
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
                   >
-                    <Stack direction="row" alignItems="space-between">
                     <Typography
                       variant="h6"
                       component="div"
-                      sx={{ fontFamily: "Roboto Mono, monospace" }}
+                      sx={{
+                        fontSize: 15,
+                        fontFamily: "Roboto Mono, monospace",
+                      }}
                     >
                       {sat.name}
                     </Typography>
-                    <Button onClick={() => handleRemoveButton(sat)}>
-                      <DeleteIcon/>
-                    </Button>
-                    </Stack>
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      justifyContent="space-between"
-                      alignItems="space-between"
+                    <Button
+                      onClick={() => handleRemoveButton(sat)}
+                      sx={{
+                        borderRadius: 0,
+                        padding: "0px",
+                        width: "24px", 
+                        height: "24px",
+                      }}
                     >
-                      <Stack
-                        direction="column"
-                        justifyContent="space-between"
-                        alignItems="space-between"
-                      >
-                        {SatelliteListLabels.map((label, index) => (
-                          <Typography
-                            key={index}
-                            variant="caption"
-                            component="div"
-                            sx={{ fontFamily: "Roboto Mono, monospace" }}
-                          >
-                            {label}
-                            start:(-0.2,231.23)
-                            date: 10/10/23
-                            time: 10:10:10
-                            maxE: 234km
-                            visible:  yes
-                          </Typography>
-                        ))}
-                      </Stack>
-
-                      <Stack direction="column">
-                        {/* Show satellite object values from database */}
-                      </Stack>
-                    </Stack>
+                      <CloseIcon fontSize="small" />
+                    </Button>
                   </Stack>
 
-                
-                    {selectedSatellite && (selectedSatellite.name !== sat.name ) && (
-                      <Button onClick={() => handleSelectButton(sat)}>
-                        Set as Target
-                      </Button>
-                    )}
-             
+                  <Passes />
+
+                  {selectedSatellite && selectedSatellite.name !== sat.name && (
+                    <Button onClick={() => handleSelectButton(sat)}>
+                      Set as Target
+                    </Button>
+                  )}
                 </Stack>
               </Card>
             ))}

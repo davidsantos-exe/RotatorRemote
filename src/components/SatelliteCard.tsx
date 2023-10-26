@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { useRotator } from "../classes/RotatorContext";
 import { getSatData } from "../utils/Helper.jsx";
@@ -112,13 +113,21 @@ export default function BasicCard() {
   };
 
   return (
-    <CardContent
-      sx={{
-        height: "100%",
-        padding: "8px",
-        "&.MuiCardContent-root": { paddingBottom: "8px" },
-      }}
-    >
+<Paper
+    //elevation={0}
+    direction="row"
+    variant="outlined"
+    border={1}
+    sx={{
+      padding: "8px",
+      height: "100%",
+      justifyContent: "center",
+      display: "flex",
+      alignItems: "center",
+      backgroundColor: "transparent",
+      borderRadius: "4px",
+    }}
+  >
       <Stack
         direction="column"
         alignItems="space-between"
@@ -234,6 +243,7 @@ export default function BasicCard() {
           </Stack>
         </Stack>
       </Stack>
-    </CardContent>
+      </Paper>
+
   );
 }

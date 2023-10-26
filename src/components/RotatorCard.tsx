@@ -11,9 +11,11 @@ import Input from "@mui/material/Input";
 import Scene from "./Scene.jsx";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import { useState, useEffect } from "react";
 import AutoTrackingCard from "./AutoTrackingCard";
+import ManualTrackingCard from "./ManualTrackingCard";
 import IconButton from "@mui/material/IconButton";
 import PowerOffSharpIcon from "@mui/icons-material/PowerOffSharp";
 import RotatorModel from "./RotatorModel";
@@ -36,7 +38,7 @@ export default function RotatorCard() {
     updateIsManualTracking,
     updateIsAutoTracking,
     selectedSatellite,
-    updateRotator
+    updateRotator,
   } = useRotator();
   const [RadioListButtons, setInputValues] = useState([
     heading,
@@ -98,34 +100,35 @@ export default function RotatorCard() {
     updateRotator(null);
   };
   return (
-    <CardContent
-      sx={{
-        height: "100%",
-        width: "100%",
-        padding: "8px",
-        "&.MuiCardContent-root": { paddingBottom: "8px" },
-      }}
-    >
-      <Stack
+    <Paper
+        elevation={0}
         direction="row"
-        justifyContent="space-between"
-        alignItems="space-between"
+        variant="outlined"
+        border={1}
+        sx={{
+          padding: "8px",
+          height: "100%",
+          //marginTop: "16px",
+          //alignItems="space-between",
+          display: "flex",
+          backgroundColor: "transparent",
+          borderRadius: "4px",
+        }}
       >
+    <Stack
+      direction="row"
+      spacing={1}
+      //justifyContent="space-between"
+      //alignItems="space-between"
+    >
+      {/*Settings*/}
+      
         <Stack
           direction="column"
-          justifyContent="flex-start"
+          justifyContent="center"
           sx={{ minWidth: 180, maxWidth: 200 }}
         >
-          {/*Card Name */}
-       
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ fontFamily: "Roboto Mono, monospace" }}
-            >
-              {rotator.Rotator.Model}
-            </Typography>
-     
+
           <Stack direction="row" justifyContent="space-between">
             {/*Heading*/}
             <Stack direction="column" spacing={1.5} sx={{ width: "100%" }}>
@@ -205,35 +208,75 @@ export default function RotatorCard() {
                   />
                 ),
               )}
+              
             </Stack>
+            
           </Stack>
-        </Stack>
-        {selectedSatellite && (mode === "Manual" ? ("${selectedSatellite.name}"):(<AutoTrackingCard/>))}
-        
-        <Stack
-          direction="column"
-          spacing={1}
-          sx={{ minWidth: 100, paddingLeft: "8px" }}
+          <Button
+          sx={{
+            marginTop: "8px",
+            height: "20px",
+            fontFamily: "Roboto Mono, monospace",
+            backgroundColor: "#007BFF",
+            color: "white",
+            "&.MuiButtonBase-root": {
+              padding: "4px 4px 4px 4px",
+            },
+          }}
+          onClick={disconnectHandler}
         >
-          {!(isAutoTracking || isManualTracking) ? (
-            mode === "Manual" ? (
-              <Button  sx = {{color: "white", backgroundColor: "green"}} onClick={() => startButtonHandler()}>Start </Button>
-            ) : (
-              <Button  sx = {{color: "white", backgroundColor: "green "}} onClick={() => trackButtonHandler()}>Track</Button>
-            )
-          ) : (
-            <Button  sx = {{color: "white", backgroundColor: "red"}} onClick={() => stopButtonHandler()}>Stop</Button>
-          )}
-
-          <Button  sx = {{color: "white", backgroundColor: "purple"}}>Park</Button>
-          <Button sx = {{color: "white", backgroundColor: "grey"}} onClick={() => disconnectHandler()}>
-           <PowerOffSharpIcon sx={{ fontSize: "16px" }} />
-        
-           Disconnect 
-          </Button>
+          disconnect
+        </Button>
         </Stack>
-        <RotatorModel />
+      
+
+      {/*Manual/Auto */}
+      {selectedSatellite &&
+        (mode === "Manual" ? <ManualTrackingCard /> : <AutoTrackingCard />)}
+
+      {/*Control Buttons*/}
+      <Stack
+        direction="column"
+        spacing={1}
+        sx={{ minWidth: 70, paddingTop: "4px"}}
+      >
+        {!(isAutoTracking || isManualTracking) ? (
+          mode === "Manual" ? (
+            <Button
+              sx={{"&.MuiButtonBase-root": {
+                padding: "40px 4px 40px 5px",
+              }, color: "white", backgroundColor: "#19B600" }}
+              onClick={() => startButtonHandler()}
+            >
+              Go To{" "}
+            </Button>
+          ) : (
+            <Button
+              sx={{"&.MuiButtonBase-root": {
+                padding: "40px 4px 40px 5px",
+              }, color: "white", backgroundColor: "#19B600" }}
+              onClick={() => trackButtonHandler()}
+            >
+              Track
+            </Button>
+          )
+        ) : (
+          <Button
+            sx={{"&.MuiButtonBase-root": {
+              padding: "40px 4px 40px 5px",
+            }, color: "white", backgroundColor: "red" }}
+            onClick={() => stopButtonHandler()}
+          >
+            Stop
+          </Button>
+        )}
+
+        <Button sx={{ color: "white", backgroundColor: "purple" }}>Park</Button>
+        
       </Stack>
-    </CardContent>
+
+      <RotatorModel />
+    </Stack>
+    </Paper>
   );
 }

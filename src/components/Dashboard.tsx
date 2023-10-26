@@ -36,8 +36,10 @@ export default function Dashboard(props) {
 
       <Stack
         direction="row"
+        //variant="outlined"
+        //border={1}
         justifyContent="space-around"
-        divider={
+        /*divider={
           selectedSatellite && (
             <Divider
               orientation="vertical"
@@ -45,7 +47,7 @@ export default function Dashboard(props) {
               sx={{ backgroundColor: "#373C4B" }}
             />
           )
-        }
+        }*/
         spacing={1}
         sx={{ height: "11rem" }}
       >
@@ -102,22 +104,20 @@ export default function Dashboard(props) {
           <>
             <Stack
               direction="row"
-              divider={
+              /*divider={
                 <Divider
                   orientation="vertical"
                   flexItem
                   sx={{ backgroundColor: "#373C4B" }}
                 />
-              }
+              }*/
               spacing={1}
               //justifyContent="space-around"
-              sx={{ height: "11rem", width: "100%", minWidth: 280 }}
+              sx={{ height: "11rem", width: "100%", }}
             >
               <Box
                 sx={{
-                  maxWidth: 450,
-                  minwidth: 260,
-                  width: "100%",
+        
                   backgroundColor: "transparent",
                 }}
               >
@@ -126,7 +126,7 @@ export default function Dashboard(props) {
 
               <Box
                 sx={{
-                  width: "100%",
+                  //width: "100%",
                   backgroundColor: "transparent",
                 }}
               >

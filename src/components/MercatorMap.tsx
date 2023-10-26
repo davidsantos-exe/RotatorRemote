@@ -76,7 +76,7 @@ function MercatorMap() {
         //whenCreated={setLeafletMap}
         // maxBounds={bounds}
       >
-        {trackedSatellites.length > 0 && (<SatelliteLayer satellites={trackedSatellites}/>)}
+       {/* {trackedSatellites.length > 0 && (<SatelliteLayer satellites={trackedSatellites}/>)}*/}
         
         <TileLayer url={baseMap.url} />
         {rotator!==null &&(<Marker position={[rotator.Rotator.Location.Latitude,rotator.Rotator.Location.Longitude]}>

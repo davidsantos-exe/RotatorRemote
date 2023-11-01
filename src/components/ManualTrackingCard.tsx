@@ -17,7 +17,8 @@ function ManualTrackingCard() {
   };
 
   return (
-    <Stack direction="row">
+
+    <Stack direction="row" >
       <Paper
         elevation={0}
         direction="row"
@@ -46,7 +47,7 @@ function ManualTrackingCard() {
               lineHeight: "1.3rem",
             }}
           >
-            Azimuth
+            Set Target
           </Typography>
           <Stack direction="row">
             <Stack direction="column">
@@ -59,7 +60,7 @@ function ManualTrackingCard() {
                   paddingRight: "16px",
                 }}
               >
-                target
+                azimuth
               </Typography>
               <Input
                 //onChange={(e) => handleChange(index, e.target.value)}
@@ -219,35 +220,22 @@ function ManualTrackingCard() {
             ))}
           </Stack>
         </Stack>
-      </Paper>
-      <Paper
-        elevation={0}
-        direction="row"
-        variant="outlined"
-        border={1}
-        sx={{
-          padding: "8px",
-          marginLeft: "8px",
-          justifyContent: "center",
-          display: "flex",
-          alignItems: "flex-start",
-          backgroundColor: "transparent",
-          borderRadius: "4px",
-        }}
-      >
+
         {/*Elevation*/}
-        <Stack direction="column">
+        <Stack direction="column" sx={{paddingLeft:"8px"}}>
           <Typography
             variant="h6"
             component="div"
             sx={{
               fontFamily: "Roboto Mono, monospace",
               fontSize: 16,
+              
               paddingRight: "16px",
               lineHeight: "1.3rem",
+              color: "transparent"
             }}
           >
-            Elevation
+            
           </Typography>
           <Stack direction="row">
             <Stack direction="column">
@@ -260,7 +248,7 @@ function ManualTrackingCard() {
                   paddingRight: "16px",
                 }}
               >
-                target
+                elevation
               </Typography>
               <Input
                 //onChange={(e) => handleChange(index, e.target.value)}
@@ -422,6 +410,7 @@ function ManualTrackingCard() {
         </Stack>
       </Paper>
     </Stack>
+  
   );
 }
 

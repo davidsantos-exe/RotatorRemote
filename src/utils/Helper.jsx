@@ -24,6 +24,13 @@ export async function getSatelliteData(satelliteName) {
     const InitialSatData = {
       TLE: TLE,
       satRec: satRec,
+      pass: {
+        time: "00:00:00",
+        look: "32 N 280 W",
+        visibility: "Yes",
+        maxE: "214 mi",
+        inclination: "32 ",
+      }
     };
     return InitialSatData;
   }

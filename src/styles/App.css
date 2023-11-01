@@ -71,3 +71,20 @@
   font-size: 12;
   font-family: 'Roboto Mono', monospace;
 }
+
+
+.set-target-btn{
+   visibility: hidden; 
+}
+
+.remove-sat-btn {
+  visibility: hidden; 
+}
+
+.satellite-card:hover .set-target-btn {
+  visibility: visible; 
+}
+
+.satellite-card:hover .remove-sat-btn {
+  visibility: visible; 
+}

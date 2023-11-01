@@ -13,11 +13,8 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import SearchBar from "./SearchBar";
 import { useRotator } from "../classes/RotatorContext";
-import Passes from "./Passes";
-import CloseIcon from "@mui/icons-material/Close";
 
-//const trackedSatellites = [{name:"Satellite1"},{name:"Satellite2"},{name:"Satellite3"}];
-const SatelliteListLabels = ["Pass 1", "Pass 2", "Pass 3"];
+import CloseIcon from "@mui/icons-material/Close";
 
 function SatelliteTable() {
   const {
@@ -26,6 +23,8 @@ function SatelliteTable() {
     setSelectedSatellite,
     selectedSatellite,
   } = useRotator();
+
+  const PassInfoLabels = ["Time", "Look", "Visibility", "Max-E", "Inclination"];
 
   const handleRemoveButton = (satelliteToRemove) => {
     // Use the filter method to create a new array excluding the satelliteToRemove
@@ -93,24 +92,32 @@ function SatelliteTable() {
             sx={{
               padding: "8px",
               ".MuiCard-root": {
-                width: 200,
+                width: 160,
                 height: "10rem",
               },
             }}
           >
             {trackedSatellites.map((sat) => (
+              <div className="satellite-card">
               <Card
                 key={sat.name}
                 sx={{
-                  padding: "4px",
-                  backgroundColor: "#2C333A",
-                  border:
-                    sat.name === selectedSatellite.name
-                      ? "1px solid white"
-                      : "none",
+                  //display: 'flex',
+                  justifyContent: "center",
+
+                  padding: "8px",
+                  backgroundColor:
+                    sat.name === selectedSatellite.name ?  "#2C333A" : "#16191d",
+                 
                 }}
               >
-                <Stack direction="column" spacing={1} justifyContent="center">
+                <Stack
+                  sx={{ m: "0px" }}
+                  direction="column"
+                  spacing={0}
+                  justifyContent="center"
+                >
+                  {/*NAME and CLOSE*/}
                   <Stack
                     direction="row"
                     sx={{
@@ -123,34 +130,89 @@ function SatelliteTable() {
                       variant="h6"
                       component="div"
                       sx={{
+                        width: "100%",
                         fontSize: 15,
                         fontFamily: "Roboto Mono, monospace",
+                        borderBottom: "1px solid green",
                       }}
                     >
                       {sat.name}
                     </Typography>
+                    <div className="remove-sat-btn">
                     <Button
                       onClick={() => handleRemoveButton(sat)}
                       sx={{
+                        color: "red",
                         borderRadius: 0,
-                        padding: "0px",
-                        width: "24px", 
-                        height: "24px",
+                        minWidth: 0,
+                        padding: "2px",
+                        "&.MuiTouchRipple-root": {
+                          width: "24px",
+                          height: "24px",
+                        },
                       }}
                     >
-                      <CloseIcon fontSize="small" />
+                      <CloseIcon
+                        fontSize="small"
+                        sx={{ maxWidth: "15px", maxHeight: "15px" }}
+                      />
                     </Button>
+                    </div>
                   </Stack>
+                  {/*PASS INFO*/}
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{ marginTop: "4px" }}
+                    justifyContent="space-between"
+                    alignItems="space-between"
+                  >
+                    <Stack
+                      direction="column"
+                      justifyContent="space-between"
+                      alignItems="space-between"
+                    >
+                      {PassInfoLabels.map((label) => (
+                        <Typography
+                          variant="caption"
+                          component="div"
+                          sx={{ fontFamily: "Roboto Mono, monospace" }}
+                        >
+                          {label}
+                        </Typography>
+                      ))}
+                    </Stack>
 
-                  <Passes />
-
-                  {selectedSatellite && selectedSatellite.name !== sat.name && (
-                    <Button onClick={() => handleSelectButton(sat)}>
-                      Set as Target
-                    </Button>
-                  )}
+                    <Stack direction="column">
+                      {PassInfoLabels.map((label) => (
+                        <Typography
+                          variant="caption"
+                          component="div"
+                          sx={{
+                            color: "#8C92A4",
+                            fontFamily: "Roboto Mono, monospace",
+                          }}
+                        >
+                          {sat.nextPass.time}
+                        </Typography>
+                      ))}
+                    </Stack>
+                  </Stack>
                 </Stack>
+                {/* SET AS TARGET */}
+                {selectedSatellite && selectedSatellite.name !== sat.name && (
+                  <div className="set-target-btn">
+                  <Button
+                    
+                    sx={{color:"green",fontSize: 12,m: "0px", p: "0px" , width:"100%"}}
+                    onClick={() => handleSelectButton(sat)}
+                  >
+                    Set as Target
+                  </Button>
+                  </div>
+                )}
               </Card>
+              </div>
             ))}
           </Stack>
         )}

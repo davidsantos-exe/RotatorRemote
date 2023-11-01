@@ -64,7 +64,8 @@ export default function SearchBar() {
         mode: sat.mode,
         tle: initialData.TLE,
         satRec: initialData.satRec,
-        dataDate: date
+        dataDate: date,
+        nextPass: initialData.pass
       };
 
       // Clone the old list and add the new satellite to it.

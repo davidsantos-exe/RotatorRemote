@@ -45,6 +45,7 @@ import ControlCameraIcon from "@mui/icons-material/ControlCamera";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import ViewInArIcon from "@mui/icons-material/ViewInAr";
 import SquareIcon from "@mui/icons-material/Square";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -81,13 +82,8 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   cameraControlsRef = useRef({});
 
   useEffect(() => {
-    cameraControlsRef.current?.setLookAt(
-      ...[15, 15, 15],
-      ...[-3, 6, 0],
-      false,
-    );
-  }, []); 
-  
+    cameraControlsRef.current?.setLookAt(...[15, 15, 15], ...[-3, 6, 0], false);
+  }, []);
 
   return (
     <>
@@ -179,9 +175,18 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
 useGLTF.preload("/models/finalscene.gltf");
 
 let viewCamera1;
-export default function RotatorModel() {
-  const { azimuth, elevation, rotator, updateAzimuth, updateElevation } =
-    useRotator();
+export default function RotatorModel({
+  targetAzimuthText,
+  targetElevationText,
+}) {
+  const {
+    azimuth,
+    elevation,
+    rotator,
+    updateAzimuth,
+    updateElevation,
+    isManualTracking,
+  } = useRotator();
   const [modelType, setModelType] = useState("Real-Time");
   const [isOpen, setIsOpen] = useState(false); // Define state for rotator visibility
 
@@ -210,7 +215,7 @@ export default function RotatorModel() {
   });
 
   return (
-    <div style={{ minWidth: 300 , padding:"4px"}}>
+    <div style={{ minWidth: 300, padding: "4px" }}>
       {isOpen && (
         <div
           style={{
@@ -288,126 +293,19 @@ export default function RotatorModel() {
         </div>
       )}
 
-        {!isOpen ? (
-          <Paper
-            elevation={0}
-            direction="row"
-            variant="outlined"
-            border={1}
-            sx={{
-              marginBottom: "16px",
-              justifyContent: "center",
-              //padding: "8px",
-              display: "flex",
-              alignItems: "center",
-              color: "white",
-              backgroundColor: "transparent",
-              borderRadius: "4px",
-              ".MuiTypography-root": {
-                color: "white",
-                fontSize: "1.2rem",
-                fontFamily: "Roboto Mono, monospace",
-              },
-            }}
-          >
-            <Button
-              sx={{
-                fontFamily: "Roboto Mono, monospace",
-                width: "100%",
-               // height: "40px",
-              }}
-              onClick={toggleViewRotator}
-            >
-              {" "}
-              View Rotator{" "}
-            </Button>
-          </Paper>
-        ) : (
-          <Paper
-            elevation={0}
-            direction="row"
-            variant="outlined"
-            border={1}
-            sx={{
-              marginBottom: "16px",
-              justifyContent: "center",
-              display: "flex",
-              
-              alignItems: "center",
-              color: "white",
-              backgroundColor: "transparent",
-              borderRadius: "4px",
-              ".MuiTypography-root": {
-                color: "white",
-                fontSize: "1.2rem",
-                fontFamily: "Roboto Mono, monospace",
-              },
-            }}
-          >
-            <IconButton aria-label="menu" onClick={toggleViewRotator}>
-              <ExpandMoreIcon fontSize="small" />
-            </IconButton>
-            <Divider sx={{ height: 28, m: 0.25 }} orientation="vertical" />
-            <IconButton
-              color="primary"
-              sx={{ p: "10px" }}
-              aria-label="directions"
-              onClick={() => {
-                cameraControlsRef.current.setPosition(15, 15, 15, true);
-                cameraControlsRef.current?.setLookAt(
-                  ...[15, 15, 15],
-                  ...[-3, 6, 0],
-                  true,
-                );
-              }}
-            >
-              <ViewInArIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              color="primary"
-              sx={{ p: "10px" }}
-              aria-label="directions"
-              onClick={() => {
-                cameraControlsRef.current?.setPosition(...[20, 10, 2.5], true);
-                cameraControlsRef.current?.setLookAt(
-                  ...[20, 10, 2.5],
-                  ...[0, 10, 2.5],
-                  true,
-                );
-              }}
-            >
-              <SquareIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              color="primary"
-              sx={{ p: "10px" }}
-              aria-label="directions"
-              onClick={() => {
-                cameraControlsRef.current?.setPosition(...[0, 20, 2.5], true);
-                cameraControlsRef.current?.setLookAt(
-                  ...[0, 20, 2.5],
-                  ...[0, 0, 2.5],
-                  true,
-                );
-                cameraControlsRef.current?.rotate(Math.PI, 0, true);
-              }}
-            >
-              <ViewInArIcon fontSize="small" />
-            </IconButton>
-          </Paper>
-        )}
-
+      {!isOpen ? (
         <Paper
           elevation={0}
           direction="row"
           variant="outlined"
           border={1}
           sx={{
-            padding: "8px",
-            height: "95px",
+            marginBottom: "16px",
             justifyContent: "center",
+            //padding: "8px",
             display: "flex",
             alignItems: "center",
+            color: "white",
             backgroundColor: "transparent",
             borderRadius: "4px",
             ".MuiTypography-root": {
@@ -417,28 +315,160 @@ export default function RotatorModel() {
             },
           }}
         >
-          <Stack direction="column" alignItems="center">
-            <Typography>Azimuth</Typography>
-            <Divider sx={{ width: 50 }} orientation="horizontal" />
+          <Button
+            sx={{
+              fontFamily: "Roboto Mono, monospace",
+              width: "100%",
+              height: "40px",
+            }}
+            onClick={toggleViewRotator}
+          >
+            {" "}
+            View Rotator{" "}
+          </Button>
+        </Paper>
+      ) : (
+        <Paper
+          elevation={0}
+          direction="row"
+          variant="outlined"
+          border={1}
+          sx={{
+            marginBottom: "16px",
+            justifyContent: "center",
+            display: "flex",
+
+            alignItems: "center",
+            color: "white",
+            backgroundColor: "transparent",
+            borderRadius: "4px",
+            ".MuiTypography-root": {
+              color: "white",
+              fontSize: "1.2rem",
+              fontFamily: "Roboto Mono, monospace",
+            },
+          }}
+        >
+          <IconButton aria-label="menu" onClick={toggleViewRotator}>
+            <ExpandMoreIcon fontSize="small" />
+          </IconButton>
+          <Divider sx={{ height: 28, m: 0.25 }} orientation="vertical" />
+          <IconButton
+            color="primary"
+            sx={{ p: "10px" }}
+            aria-label="directions"
+            onClick={() => {
+              cameraControlsRef.current.setPosition(15, 15, 15, true);
+              cameraControlsRef.current?.setLookAt(
+                ...[15, 15, 15],
+                ...[-3, 6, 0],
+                true,
+              );
+            }}
+          >
+            <ViewInArIcon fontSize="small" />
+          </IconButton>
+          <IconButton
+            color="primary"
+            sx={{ p: "10px" }}
+            aria-label="directions"
+            onClick={() => {
+              cameraControlsRef.current?.setPosition(...[20, 10, 2.5], true);
+              cameraControlsRef.current?.setLookAt(
+                ...[20, 10, 2.5],
+                ...[0, 10, 2.5],
+                true,
+              );
+            }}
+          >
+            <SquareIcon fontSize="small" />
+          </IconButton>
+          <IconButton
+            color="primary"
+            sx={{ p: "10px" }}
+            aria-label="directions"
+            onClick={() => {
+              cameraControlsRef.current?.setPosition(...[0, 20, 2.5], true);
+              cameraControlsRef.current?.setLookAt(
+                ...[0, 20, 2.5],
+                ...[0, 0, 2.5],
+                true,
+              );
+              cameraControlsRef.current?.rotate(Math.PI, 0, true);
+            }}
+          >
+            <ViewInArIcon fontSize="small" />
+          </IconButton>
+        </Paper>
+      )}
+
+      <Paper
+        elevation={0}
+        direction="row"
+        variant="outlined"
+        border={1}
+        sx={{
+          padding: "8px",
+          height: "95px",
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+          backgroundColor: "transparent",
+          borderRadius: "4px",
+          ".MuiTypography-root": {
+            color: "white",
+            fontSize: "1.2rem",
+            fontFamily: "Roboto Mono, monospace",
+          },
+        }}
+      >
+        <Stack direction="column" alignItems="center">
+          <Typography>Azimuth</Typography>
+          <Divider sx={{ width: 50 }} orientation="horizontal" />
+          <Stack direction="row" alignItems="center" spacing={1}>
             <Typography sx={{ paddingTop: "8px" }}>
               {azimuth}
-              {"°"}
+              {"° "}
             </Typography>
+            {isManualTracking && azimuth != targetAzimuthText && (
+              <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
+                <ArrowRightAltIcon sx={{color:"#2ff33A", p:"0px", paddingTop:"8px", height:"2rem"
+              }}/>
+                <Typography sx={{ paddingTop: "8px" }}>
+                  {" "}
+                  {targetAzimuthText}
+                  {"°"}
+                </Typography>
+              </Stack>
+            )}
           </Stack>
-          <Divider
-            sx={{ height: 60, marginLeft: 2, marginRight: 2 }}
-            orientation="vertical"
-          />
-          <Stack direction="column" alignItems="center" sx={{}}>
-            <Typography>Elevation</Typography>
-            <Divider sx={{ width: 60 }} orientation="horizontal" />
+        </Stack>
+        <Divider
+          sx={{ height: 60, marginLeft: 2, marginRight: 2 }}
+          orientation="vertical"
+        />
+        <Stack direction="column" alignItems="center" justifyContent="center">
+          <Typography>Elevation</Typography>
+          <Divider sx={{ width: 60 }} orientation="horizontal" />
+          <Stack direction="row" alignItems="center" spacing={1}>
             <Typography sx={{ paddingTop: "8px" }}>
               {elevation}
-              {"°"}
+              {"° "}
             </Typography>
+            {isManualTracking && elevation != targetElevationText && (
+              <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
+                <ArrowRightAltIcon sx={{color:"#2ff33A", p:"0px", paddingTop:"8px", height:"2rem"
+              }}/>
+                <Typography sx={{ paddingTop: "8px" }}>
+                  {" "}
+                  {targetElevationText}
+                  {"°"}
+                </Typography>
+              </Stack>
+            )}
           </Stack>
-        </Paper>
-      
+        </Stack>
+      </Paper>
     </div>
   );
 }

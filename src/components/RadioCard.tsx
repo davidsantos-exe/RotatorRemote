@@ -17,9 +17,9 @@ export default function BasicCard() {
   const { rotator, selectedSatellite } = useRotator();
   return (
     <Paper
-      //elevation={1}
+      elevation={0}
       variant="outlined"
-      border={1}
+      //border={1}
       sx={{
         minWidth: 300,
         padding: "8px",
@@ -35,9 +35,9 @@ export default function BasicCard() {
         direction="column"
       >
         <Paper
-          //elevation={1}
+          elevation={0}
           direction="row"
-          variant="outlined"
+          //variant="outlined"
           border={1}
           sx={{
             padding: "8px",
@@ -54,9 +54,9 @@ export default function BasicCard() {
         </Paper>
 
         <Paper
-          //elevation={1}
-          direction="row"
-          variant="outlined"
+          elevation={0}
+          //direction="row"
+          //variant="outlined"
           //border={1}
           
           sx={{

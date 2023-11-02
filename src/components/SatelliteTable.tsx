@@ -24,7 +24,7 @@ function SatelliteTable() {
     selectedSatellite,
   } = useRotator();
 
-  const PassInfoLabels = ["Time", "Look", "Visibility", "Max-E", "Inclination"];
+  const PassInfoLabels = ["Time", "Look", "Visibility", "MaxE", "Inclination"];
 
   const handleRemoveButton = (satelliteToRemove) => {
     // Use the filter method to create a new array excluding the satelliteToRemove
@@ -92,19 +92,18 @@ function SatelliteTable() {
             sx={{
               padding: "8px",
               ".MuiCard-root": {
-                width: 160,
+                width: 180,
                 height: "10rem",
               },
             }}
           >
-            {trackedSatellites.map((sat) => (
-              <div className="satellite-card">
+            {trackedSatellites.map((sat,index) => (
+              <div className="satellite-card" key={index}>
               <Card
-                key={sat.name}
+                elevation={2}
                 sx={{
                   //display: 'flex',
                   justifyContent: "center",
-
                   padding: "8px",
                   backgroundColor:
                     sat.name === selectedSatellite.name ?  "#2C333A" : "#16191d",
@@ -133,7 +132,7 @@ function SatelliteTable() {
                         width: "100%",
                         fontSize: 15,
                         fontFamily: "Roboto Mono, monospace",
-                        borderBottom: "1px solid green",
+                        borderBottom: "1px solid #2ff33A",
                       }}
                     >
                       {sat.name}
@@ -142,10 +141,12 @@ function SatelliteTable() {
                     <Button
                       onClick={() => handleRemoveButton(sat)}
                       sx={{
-                        color: "red",
-                        borderRadius: 0,
+                        color: "#2ff33A",
+                        borderRadius: "4px",
                         minWidth: 0,
-                        padding: "2px",
+                        marginTop:"-16px",
+                        marginRight:"-6px",
+                        padding: "4px",
                         "&.MuiTouchRipple-root": {
                           width: "24px",
                           height: "24px",
@@ -159,6 +160,7 @@ function SatelliteTable() {
                     </Button>
                     </div>
                   </Stack>
+                  
                   {/*PASS INFO*/}
                   <Stack
                     direction="row"
@@ -167,13 +169,15 @@ function SatelliteTable() {
                     justifyContent="space-between"
                     alignItems="space-between"
                   >
+
                     <Stack
                       direction="column"
                       justifyContent="space-between"
                       alignItems="space-between"
                     >
-                      {PassInfoLabels.map((label) => (
+                      {PassInfoLabels.map((label,index) => (
                         <Typography
+                          key={index}
                           variant="caption"
                           component="div"
                           sx={{ fontFamily: "Roboto Mono, monospace" }}
@@ -184,8 +188,9 @@ function SatelliteTable() {
                     </Stack>
 
                     <Stack direction="column">
-                      {PassInfoLabels.map((label) => (
+                      {PassInfoLabels.map((label,index) => (
                         <Typography
+                          key={index}
                           variant="caption"
                           component="div"
                           sx={{
@@ -193,10 +198,12 @@ function SatelliteTable() {
                             fontFamily: "Roboto Mono, monospace",
                           }}
                         >
-                          {sat.nextPass.time}
+                          {sat.nextPass[label]}
                         </Typography>
                       ))}
                     </Stack>
+
+
                   </Stack>
                 </Stack>
                 {/* SET AS TARGET */}
@@ -204,7 +211,7 @@ function SatelliteTable() {
                   <div className="set-target-btn">
                   <Button
                     
-                    sx={{color:"green",fontSize: 12,m: "0px", p: "0px" , width:"100%"}}
+                    sx={{color:"#2ff33A",fontSize: 12,m: "0px", p: "0px" , width:"100%"}}
                     onClick={() => handleSelectButton(sat)}
                   >
                     Set as Target

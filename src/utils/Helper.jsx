@@ -25,11 +25,11 @@ export async function getSatelliteData(satelliteName) {
       TLE: TLE,
       satRec: satRec,
       pass: {
-        time: "00:00:00",
-        look: "32 N 280 W",
-        visibility: "Yes",
-        maxE: "214 mi",
-        inclination: "32 ",
+        Time: "00:00:00",
+        Look: "32 N 280 W",
+        Visibility: "Yes",
+        MaxE: "214 mi",
+        Inclination: "32 ",
       }
     };
     return InitialSatData;
@@ -93,4 +93,9 @@ function fetchOrbitalData(satelliteName, format) {
     .catch((error) => {
       console.error(error);
     });
+}
+
+
+export function goToPosition(azimuth,elevation){
+  console.log("Moving to Position: (" + azimuth + "," + elevation+ ")");
 }

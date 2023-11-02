@@ -19,6 +19,8 @@ import ManualTrackingCard from "./ManualTrackingCard";
 import IconButton from "@mui/material/IconButton";
 import PowerOffSharpIcon from "@mui/icons-material/PowerOffSharp";
 import RotatorModel from "./RotatorModel";
+import StepInput from "./StepInput";
+import { goToPosition } from "../utils/Helper.jsx";
 
 const RadioListLabels = ["Heading", "Mode", "α-offset", "γ-offset"];
 
@@ -46,6 +48,9 @@ export default function RotatorCard() {
     aOffset,
     yOffset,
   ]);
+
+  const [targetAzimuthText, setTargetAzimuthText] = useState(0);
+  const [targetElevationText, setTargetElevationText] = useState(0);
 
   const handleChange = (index, newValue) => {
     const newInputValues = [...RadioListButtons];
@@ -81,7 +86,16 @@ export default function RotatorCard() {
   }
 
   const startButtonHandler = () => {
+    goToPosition(targetAzimuthText, targetElevationText);
     updateIsManualTracking(true);
+  };
+
+  const parkButtonHandler = () => {
+    goToPosition(0,0);
+    updateIsManualTracking(true);
+    setTargetAzimuthText(0);
+    setTargetElevationText(0);
+    console.log(targetElevationText);
   };
 
   const trackButtonHandler = () => {
@@ -101,34 +115,33 @@ export default function RotatorCard() {
   };
   return (
     <Paper
-        elevation={0}
-        direction="row"
-        variant="outlined"
-        border={1}
-        sx={{
-          padding: "8px",
-          height: "100%",
-          //marginTop: "16px",
-          //alignItems="space-between",
-          display: "flex",
-          backgroundColor: "transparent",
-          borderRadius: "4px",
-        }}
-      >
-    <Stack
+      elevation={0}
       direction="row"
-      spacing={1}
-      //justifyContent="space-between"
-      //alignItems="space-between"
+      variant="outlined"
+      border={1}
+      sx={{
+        padding: "8px",
+        height: "100%",
+        //marginTop: "16px",
+        //alignItems="space-between",
+        display: "flex",
+        backgroundColor: "transparent",
+        borderRadius: "4px",
+      }}
     >
-      {/*Settings*/}
-      
+      <Stack
+        direction="row"
+        spacing={1}
+        //justifyContent="space-between"
+        //alignItems="space-between"
+      >
+        {/*Settings*/}
+
         <Stack
           direction="column"
           justifyContent="center"
           sx={{ minWidth: 180, maxWidth: 200 }}
         >
-
           <Stack direction="row" justifyContent="space-between">
             {/*Heading*/}
             <Stack direction="column" spacing={1.5} sx={{ width: "100%" }}>
@@ -152,6 +165,7 @@ export default function RotatorCard() {
               {RadioListButtons.map((value, index) =>
                 index === 1 ? (
                   <Button
+                    disabled={isManualTracking}
                     sx={{
                       height: "25px",
                       fontFamily: "Roboto Mono, monospace",
@@ -167,116 +181,166 @@ export default function RotatorCard() {
                     {RadioListButtons[1]}
                   </Button>
                 ) : (
-                  <Input
-                    onChange={(e) => handleChange(index, e.target.value)}
-                    value={value}
+                  <Stack
                     key={index}
-                    type="number"
+                    direction="row"
                     sx={{
-                      fontFamily: "Roboto Mono, monospace",
-                      color: "#8C92A4",
-                      fontWeight: 10,
-                      width: "74.81px",
-                      borderBottom: 0,
-                      "&&&:before": {
-                        borderBottom: "none",
-                      },
-                      "&&:after": {
-                        borderBottom: "none",
-                      },
-                      "& .MuiInputBase-input": {
-                        textAlign: "center",
-                        borderRadius: 1,
-                        border: 0.5,
-                        borderColor: "#373C4B",
-                        position: "relative",
-                        backgroundColor: "#373C4B",
-                        fontSize: 10,
-                        padding: "4px 4px 4px 4px",
-                        //alignItems: "right",
-                        transition: "background-color 0.3s", // Add a transition for smooth hover effect
-                      },
-                      "& .MuiInputBase-input:hover": {
-                        border: 0.5,
-                        borderColor: "#007BFF", // Change the background color on hover
-                      },
-                      "& .MuiInputBase-selected": {
-                        border: 0.5,
-                        borderColor: "#007BFF", // Change the background color on hover
-                      },
+                      width: "80px",
+                      backgroundColor: "#373C4B",
+                      borderRadius: "4px",
                     }}
-                  />
+                  >
+                    <Input
+                      disabled={isManualTracking}
+                      onChange={(e) => handleChange(index, e.target.value)}
+                      value={value}
+                      key={index}
+                      type="number"
+                      sx={{
+                        fontFamily: "Roboto Mono, monospace",
+                        color: "#8C92A4",
+                        fontWeight: 10,
+                        //width: "74.81px",
+                        borderBottom: 0,
+                        "&&&:before": {
+                          borderBottom: "none",
+                        },
+                        "&&:after": {
+                          borderBottom: "none",
+                        },
+                        "& .MuiInputBase-input": {
+                          textAlign: "center",
+                          borderRadius: 1,
+                          border: 0.5,
+                          borderColor: "#373C4B",
+                          position: "relative",
+                          backgroundColor: "#373C4B",
+                          fontSize: 10,
+                          padding: "4px 0px 4px 10px",
+                          //alignItems: "right",
+                          transition: "background-color 0.3s", // Add a transition for smooth hover effect
+                        },
+                        "& .MuiInputBase-input:hover": {
+                          border: 0.5,
+                          borderColor: "#007BFF", // Change the background color on hover
+                        },
+                        "& .MuiInputBase-selected": {
+                          border: 0.5,
+                          borderColor: "#007BFF", // Change the background color on hover
+                        },
+                      }}
+                    />
+                  </Stack>
                 ),
               )}
-              
             </Stack>
-            
           </Stack>
           <Button
-          sx={{
-            marginTop: "8px",
-            height: "20px",
-            fontFamily: "Roboto Mono, monospace",
-            backgroundColor: "#007BFF",
-            color: "white",
-            "&.MuiButtonBase-root": {
-              padding: "4px 4px 4px 4px",
-            },
-          }}
-          onClick={disconnectHandler}
-        >
-          disconnect
-        </Button>
-        </Stack>
-      
-
-      {/*Manual/Auto */}
-      {selectedSatellite &&
-        (mode === "Manual" ? <ManualTrackingCard /> : <AutoTrackingCard />)}
-
-      {/*Control Buttons*/}
-      <Stack
-        direction="column"
-        spacing={1}
-        sx={{ minWidth: 70, paddingTop: "4px"}}
-      >
-        {!(isAutoTracking || isManualTracking) ? (
-          mode === "Manual" ? (
-            <Button
-              sx={{"&.MuiButtonBase-root": {
-                padding: "40px 4px 40px 5px",
-              }, color: "white", backgroundColor: "#19B600" }}
-              onClick={() => startButtonHandler()}
-            >
-              Go To{" "}
-            </Button>
-          ) : (
-            <Button
-              sx={{"&.MuiButtonBase-root": {
-                padding: "40px 4px 40px 5px",
-              }, color: "white", backgroundColor: "#19B600" }}
-              onClick={() => trackButtonHandler()}
-            >
-              Track
-            </Button>
-          )
-        ) : (
-          <Button
-            sx={{"&.MuiButtonBase-root": {
-              padding: "40px 4px 40px 5px",
-            }, color: "white", backgroundColor: "red" }}
-            onClick={() => stopButtonHandler()}
+            disabled={isManualTracking}
+            sx={{
+              marginTop: "8px",
+              height: "20px",
+              fontFamily: "Roboto Mono, monospace",
+              backgroundColor: "#007BFF",
+              color: "white",
+              "&.MuiButtonBase-root": {
+                padding: "4px 4px 4px 4px",
+              },
+            }}
+            onClick={disconnectHandler}
           >
-            Stop
+            disconnect
           </Button>
+        </Stack>
+
+        {selectedSatellite && (
+          <Paper
+            elevation={0}
+            direction="row"
+            //variant="outlined"
+            //border={1}
+            sx={{
+              padding: "8px",
+              width: 385,
+              // marginLeft: "8px",
+              justifyContent: "center",
+              display: "flex",
+              alignItems: "flex-start",
+              backgroundColor: "transparent",
+              borderRadius: "4px",
+            }}
+          >
+            {/*Manual/Auto */}
+
+            {mode === "Manual" ? (
+              <ManualTrackingCard
+                targetElevationText={targetElevationText}
+                targetAzimuthText={targetAzimuthText}
+                setTargetAzimuthText={setTargetAzimuthText}
+                setTargetElevationText={setTargetElevationText}
+              />
+            ) : (
+              <AutoTrackingCard />
+            )}
+          </Paper>
         )}
 
-        <Button sx={{ color: "white", backgroundColor: "purple" }}>Park</Button>
-        
-      </Stack>
+        {/*Control Buttons*/}
+        <Stack
+          direction="column"
+          spacing={1}
+          sx={{ minWidth: 70, paddingTop: "4px" }}
+        >
+          {!(isAutoTracking || isManualTracking) ? (
+            mode === "Manual" ? (
+              <Button
+                sx={{
+                  "&.MuiButtonBase-root": {
+                    padding: "40px 4px 40px 5px",
+                  },
+                  color: "white",
+                  backgroundColor: "#19B600",
+                }}
+                onClick={() => startButtonHandler()}
+              >
+                Go To{" "}
+              </Button>
+            ) : (
+              <Button
+                sx={{
+                  "&.MuiButtonBase-root": {
+                    padding: "40px 4px 40px 5px",
+                  },
+                  color: "white",
+                  backgroundColor: "#19B600",
+                }}
+                onClick={() => trackButtonHandler()}
+              >
+                Track
+              </Button>
+            )
+          ) : (
+            <Button
+              sx={{
+                "&.MuiButtonBase-root": {
+                  padding: "40px 4px 40px 5px",
+                },
+                color: "white",
+                backgroundColor: "red",
+              }}
+              onClick={() => stopButtonHandler()}
+            >
+              Stop
+            </Button>
+          )}
 
-      <RotatorModel />
-    </Stack>
+          <Button onClick={() => parkButtonHandler()} disabled={isManualTracking} sx={{ color: "white", backgroundColor: "purple" }}>
+            Park
+          </Button>
+        </Stack>
+
+        <RotatorModel targetAzimuthText={targetAzimuthText} targetElevationText={targetElevationText}/>
+      </Stack>
     </Paper>
   );
 }

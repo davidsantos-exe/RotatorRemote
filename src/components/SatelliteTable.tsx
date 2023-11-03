@@ -24,7 +24,7 @@ function SatelliteTable() {
     selectedSatellite,
   } = useRotator();
 
-  const PassInfoLabels = ["Time", "Look", "Visibility", "MaxE", "Inclination"];
+  const PassInfoLabels = ["Retrieved", "NextPass", "Visible", "MaxE", "Inclination"];
 
   const handleRemoveButton = (satelliteToRemove) => {
     // Use the filter method to create a new array excluding the satelliteToRemove
@@ -182,7 +182,7 @@ function SatelliteTable() {
                           component="div"
                           sx={{ fontFamily: "Roboto Mono, monospace" }}
                         >
-                          {label}
+                          {label === "NextPass" ? "Next Pass": label ==="MaxE" ? "Max Elevation" : label}
                         </Typography>
                       ))}
                     </Stack>

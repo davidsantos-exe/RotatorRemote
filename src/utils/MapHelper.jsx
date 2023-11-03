@@ -22,9 +22,7 @@ import "leaflet/dist/leaflet.css";
 import { useControls } from "leva";
 import Button from "@mui/material/Button";
 
-
 var heightColorScale = scaleThreshold().domain([1200, 22000]);
-//.range([schemeCategory10[3], schemeCategory10[2], schemeCategory10[0]])
 
 function clock() {
   var rate = 60; // 1ms elapsed : 60sec simulated
@@ -40,7 +38,7 @@ function clock() {
   };
 
   clock.elapsed = function (ms) {
-    if (!arguments.length) return date - now(); // calculates elapsed
+    if (!arguments.length) return date - now();
     elapsed = ms;
     return clock;
   };
@@ -210,10 +208,9 @@ function tle() {
 }
 
 function parseTle(tleString) {
-  // remove last newline so that we can properly split all the lines
-  var lines = tleString.replace(/\r?\n$/g, '').split(/\r?\n/);
+  var lines = tleString.replace(/\r?\n$/g, "").split(/\r?\n/);
 
-  return lines.reduce(function(acc, cur, index) {
+  return lines.reduce(function (acc, cur, index) {
     if (index % 2 === 0) acc.push([]);
     acc[acc.length - 1].push(cur);
     return acc;
@@ -221,13 +218,7 @@ function parseTle(tleString) {
 }
 
 function update(parsedTles) {
-  /*satrecs = tle()
-    .date(TLE_DATA_DATE)
-    .satrecs(parsedTles);
-   console.log(satrecs);*/
-  activeClock = clock()
-    .rate(100)
-    .date(TLE_DATA_DATE);
+  activeClock = clock().rate(100).date(TLE_DATA_DATE);
 
   window.requestAnimationFrame(draw);
 }
@@ -247,12 +238,39 @@ export default function SatelliteLayer(satellites) {
 
   satrecs = [satellites.satellites[0].satRec];
   TLE_DATA_DATE = satellites.satellites[0].dataDate;
-  //console.log(satRec);
-  //lines.shift();
-  //console.log(lines.join("\n"));
-  //parseTle(lines.join("\n")).then(update);
-  //text("src/data/tles.txt").then(parseTle).then(update);
-  //let parsed = parseTle(lines.join("\n"));
   update();
   return null;
 }
+
+
+
+export function chaikinSmooth(polygon, iterations) {
+  for (let i = 0; i < iterations; i++) {
+    const smoothedPolygon = [];
+    for (let j = 0; j < polygon.length; j++) {
+      const p0 = polygon[j];
+      const p1 = polygon[(j + 1) % polygon.length];
+      const p0x = p0[0];
+      const p0y = p0[1];
+      const p1x = p1[0];
+      const p1y = p1[1];
+
+      const Q1 = [
+        p0x + 0.25 * (p1x - p0x),
+        p0y + 0.25 * (p1y - p0y),
+      ];
+
+      const Q2 = [
+        p0x + 0.75 * (p1x - p0x),
+        p0y + 0.75 * (p1y - p0y),
+      ];
+
+      smoothedPolygon.push(Q1, Q2);
+    }
+    polygon = smoothedPolygon;
+  }
+
+  return polygon;
+}
+
+

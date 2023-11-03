@@ -54,18 +54,30 @@ export default function RotatorCard() {
 
   const handleChange = (index, newValue) => {
     const newInputValues = [...RadioListButtons];
-    newInputValues[index] = newValue;
-    setInputValues(newInputValues);
 
     switch (index) {
       case 0:
-        updateHeading(newValue);
+        if(newValue >= -360 && newValue <= 360){
+          updateHeading(newValue);
+          newInputValues[index] = newValue;
+          setInputValues(newInputValues);
+        }
         break;
       case 2:
-        updateAzimuthOffset(newValue);
+        if(newValue >= -360 && newValue <= 360){
+          updateAzimuthOffset(newValue);
+          newInputValues[index] = newValue;
+          setInputValues(newInputValues);
+        }
+        
         break;
       case 3:
-        updateElevationOffset(newValue);
+        if(newValue >= -90 && newValue <= 90){
+          updateElevationOffset(newValue);
+          newInputValues[index] = newValue;
+          setInputValues(newInputValues);
+        }
+        
         break;
       default:
         break;

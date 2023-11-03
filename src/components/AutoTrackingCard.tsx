@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Input from "@mui/material/Input";
 import Paper from "@mui/material/Paper";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { useRotator } from "../classes/RotatorContext";
 import {
   Table,
   TableBody,
@@ -18,6 +19,8 @@ import {
 } from "@mui/material";
 
 function AutoTrackingCard() {
+  const {selectedSatellite} = useRotator();
+
   return (
     <Stack direction="column" alignItems="center">
       <TableContainer>
@@ -25,11 +28,9 @@ function AutoTrackingCard() {
           size="small"
           sx={{
             "& .MuiTableCell-sizeSmall": {
-              padding: "4px 12px 4px 12px", // <-- arbitrary value
+              padding: "4px 12px 4px 12px",
               fontFamily: "Roboto Mono, monospace",
               border: "1px solid #373C4B",
-
-              //border: "none",
             },
           }}
         >
@@ -60,21 +61,21 @@ function AutoTrackingCard() {
           <TableBody>
             <TableRow>
               <TableCell align="center">Start</TableCell>
-              <TableCell align="center">10:10:10</TableCell>
-              <TableCell align="center">36.212</TableCell>
-              <TableCell align="center">24.312</TableCell>
+              <TableCell align="center">{selectedSatellite.nextPass.Start.Time}</TableCell>
+              <TableCell align="center">{selectedSatellite.nextPass.Start.Azimuth}{"°"}</TableCell>
+              <TableCell align="center">{selectedSatellite.nextPass.Start.Elevation}{"°"}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell align="center">Peak</TableCell>
-              <TableCell align="center">10:10:10</TableCell>
-              <TableCell align="center">36.212</TableCell>
-              <TableCell align="center">24.312</TableCell>
+              <TableCell align="center">{selectedSatellite.nextPass.Peak.Time}</TableCell>
+              <TableCell align="center">{selectedSatellite.nextPass.Peak.Azimuth}{"°"}</TableCell>
+              <TableCell align="center">{selectedSatellite.nextPass.Peak.Elevation}{"°"}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell align="center">Finish</TableCell>
-              <TableCell align="center">10:10:10</TableCell>
-              <TableCell align="center">36.212</TableCell>
-              <TableCell align="center">24.312</TableCell>
+              <TableCell align="center">{selectedSatellite.nextPass.Peak.Time}</TableCell>
+              <TableCell align="center">{selectedSatellite.nextPass.Peak.Azimuth}{"°"}</TableCell>
+              <TableCell align="center">{selectedSatellite.nextPass.Peak.Elevation}{"°"}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

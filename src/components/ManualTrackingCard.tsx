@@ -118,8 +118,6 @@ function ManualTrackingCard({
                 "& .MuiInputBase-input": {
                   textAlign: "center",
                   borderRadius: 1,
-                  border: 0.5,
-                  borderColor: "#373C4B",
                   position: "relative",
                   backgroundColor: "#373C4B",
                   fontSize: 15,
@@ -128,8 +126,7 @@ function ManualTrackingCard({
                   transition: "background-color 0.3s", // Add a transition for smooth hover effect
                 },
                 "& .MuiInputBase-input:hover": {
-                  border: 0.5,
-                  borderColor: "#007BFF", // Change the background color on hover
+                  backgroundColor: "#242730"// Change the background color on hover
                 },
                 "& .MuiInputBase-selected": {
                   border: 0.5,
@@ -171,8 +168,6 @@ function ManualTrackingCard({
                 "& .MuiInputBase-input": {
                   textAlign: "center",
                   borderRadius: 1,
-                  border: 0.5,
-                  borderColor: "#373C4B",
                   position: "relative",
                   backgroundColor: "#373C4B",
                   fontSize: 15,
@@ -181,8 +176,7 @@ function ManualTrackingCard({
                   transition: "background-color 0.3s", // Add a transition for smooth hover effect
                 },
                 "& .MuiInputBase-input:hover": {
-                  border: 0.5,
-                  borderColor: "#007BFF", // Change the background color on hover
+                  backgroundColor: "#242730" // Change the background color on hover
                 },
                 "& .MuiInputBase-selected": {
                   border: 0.5,
@@ -216,7 +210,7 @@ function ManualTrackingCard({
               sx={{
                 height: "24px",
                 fontFamily: "Roboto Mono, monospace",
-                backgroundColor: "#363D44",
+                backgroundColor: "#373C4B",
                 color: "#8C92A4",
                 "&.MuiButtonBase-root": {
                   p: "4px",
@@ -242,7 +236,7 @@ function ManualTrackingCard({
               sx={{
                 height: "24px",
                 fontFamily: "Roboto Mono, monospace",
-                backgroundColor: "#363D44",
+                backgroundColor: "#373C4B",
                 color: "#8C92A4",
                 "&.MuiButtonBase-root": {
                   p: "4px",
@@ -262,7 +256,7 @@ function ManualTrackingCard({
             sx={{
               height: "24px",
               fontFamily: "Roboto Mono, monospace",
-              backgroundColor: "#363D44",
+              backgroundColor: "#373C4B",
               color: "#8C92A4",
               "&.MuiButtonBase-root": {
                 p: "4px",
@@ -334,8 +328,6 @@ function ManualTrackingCard({
                 "& .MuiInputBase-input": {
                   textAlign: "center",
                   borderRadius: 1,
-                  border: 0.5,
-                  borderColor: "#373C4B",
                   position: "relative",
                   backgroundColor: "#373C4B",
                   fontSize: 15,
@@ -344,8 +336,7 @@ function ManualTrackingCard({
                   transition: "background-color 0.3s", // Add a transition for smooth hover effect
                 },
                 "& .MuiInputBase-input:hover": {
-                  border: 0.5,
-                  borderColor: "#007BFF", // Change the background color on hover
+                  backgroundColor: "#242730" // Change the background color on hover
                 },
                 "& .MuiInputBase-selected": {
                   border: 0.5,
@@ -389,8 +380,6 @@ function ManualTrackingCard({
                 "& .MuiInputBase-input": {
                   textAlign: "center",
                   borderRadius: 1,
-                  border: 0.5,
-                  borderColor: "#373C4B",
                   position: "relative",
                   backgroundColor: "#373C4B",
                   fontSize: 15,
@@ -399,8 +388,8 @@ function ManualTrackingCard({
                   transition: "background-color 0.3s", // Add a transition for smooth hover effect
                 },
                 "& .MuiInputBase-input:hover": {
-                  border: 0.5,
-                  borderColor: "#007BFF", // Change the background color on hover
+                  backgroundColor: "#242730"
+                  // Change the background color on hover
                 },
                 "& .MuiInputBase-selected": {
                   border: 0.5,
@@ -434,7 +423,7 @@ function ManualTrackingCard({
               sx={{
                 height: "24px",
                 fontFamily: "Roboto Mono, monospace",
-                backgroundColor: "#363D44",
+                backgroundColor: "#373C4B",
                 color: "#8C92A4",
                 "&.MuiButtonBase-root": {
                   p: "4px",
@@ -460,7 +449,7 @@ function ManualTrackingCard({
               sx={{
                 height: "24px",
                 fontFamily: "Roboto Mono, monospace",
-                backgroundColor: "#363D44",
+                backgroundColor: "#373C4B",
                 color: "#8C92A4",
                 "&.MuiButtonBase-root": {
                   p: "4px",

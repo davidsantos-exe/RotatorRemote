@@ -13,20 +13,25 @@ import { sgp4, twoline2satrec, gstime,eciToGeodetic, propagate} from 'satellite.
 import {text, geoPath,geoTransform, now,select,scaleThreshold,schemeCategory10} from "d3";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { useControls } from "leva";
+import { useControls ,Leva} from "leva";
 import Button from "@mui/material/Button";
-import SatelliteLayer from "../utils/MapHelper.jsx"
+//import SatelliteLayer from "../utils/MapHelper.jsx"
+import SatelliteLayer from "./SatelliteLayer";
+
 const voyagerMap =
   "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png";
 const esriStreetMap =
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}";
 const esriGreyMap =
   "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}";
+const esriSatelliteMap =
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
 
 const maps = {
   map1: { label: "Voyager", url: voyagerMap },
   map2: { label: "Esri Street", url: esriStreetMap },
   map3: { label: "Esri Grey", url: esriGreyMap },
+  map4: { label: "Esri Satellite", url: esriSatelliteMap },
 };
 const bounds = [
   [-90, -180],
@@ -36,7 +41,7 @@ const bounds = [
 
 function MercatorMap() {
   const {rotator, trackedSatellites} = useRotator();
-  const [baseMap, setBaseMap] = useState(maps.map1);
+  const [baseMap, setBaseMap] = useState(maps.map4);
 
   const [controls, set] = useControls('Map', () => ({
     select: {
@@ -56,6 +61,7 @@ function MercatorMap() {
             setBaseMap(maps.map2);
             break;
           default:
+            setBaseMap(maps.map4);
             break;
         }
       },
@@ -66,6 +72,7 @@ function MercatorMap() {
 
   return (
     <div>
+      <Leva collapsed />
       <MapContainer
 
         center={[0, 0]}
@@ -76,7 +83,7 @@ function MercatorMap() {
         //whenCreated={setLeafletMap}
         // maxBounds={bounds}
       >
-       {/* {trackedSatellites.length > 0 && (<SatelliteLayer satellites={trackedSatellites}/>)}*/}
+       {trackedSatellites.length > 0 && (<SatelliteLayer satellites={trackedSatellites}/>)}
         
         <TileLayer url={baseMap.url} />
         {rotator!==null &&(<Marker position={[rotator.Rotator.Location.Latitude,rotator.Rotator.Location.Longitude]}>

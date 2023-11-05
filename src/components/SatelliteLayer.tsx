@@ -1,5 +1,5 @@
 import React from "react";
-import { Polyline, Circle } from "react-leaflet";
+import { Polyline, Circle, CircleMarker, Popup } from "react-leaflet";
 import { gstime, eciToGeodetic, propagate } from "satellite.js";
 import { chaikinSmooth } from "../utils/MapHelper.jsx";
 
@@ -67,7 +67,6 @@ const SatelliteLayer = ({ satellites }) => {
       path[i][1] += orbit;
     }
 
-
     return path;
   };
 
@@ -92,43 +91,62 @@ const SatelliteLayer = ({ satellites }) => {
     return 1000;
   };
 
-  const groundTrackColors = ["#2ff33A", "#e3ff00", "#20d9ac", "#FF69B4", "#00D7FF" ,"#AEFF77", "#FF7792", "#FF77E4", "#7777FF", "#FFFF77" ]
+  const groundTrackColors = [
+    "#2ff33A",
+    "#e3ff00",
+    "#20d9ac",
+    "#FF69B4",
+    "#00D7FF",
+    "#AEFF77",
+    "#FF7792",
+    "#FF77E4",
+    "#7777FF",
+    "#FFFF77",
+  ];
 
   return satellites.map((sat, index) => (
     <div key={index}>
-      <Polyline 
-        pathOptions={{color:groundTrackColors[index],weight:1}}
+      <Polyline
+        pathOptions={{ color: groundTrackColors[index], weight: 1 }}
         positions={getPath(sat, 0)}
       />
       <Polyline
-        pathOptions={{color:groundTrackColors[index],weight:1}}
+        pathOptions={{ color: groundTrackColors[index], weight: 1 }}
         positions={getPath(sat, -360)}
       />
       <Polyline
-        pathOptions={{color:groundTrackColors[index],weight:1}}
+        pathOptions={{ color: groundTrackColors[index], weight: 1 }}
         positions={getPath(sat, 360)}
-      /><Polyline
-      pathOptions={{color:groundTrackColors[index],weight:1}}
-      positions={getPath(sat, -720)}
-    />
-    <Polyline
-      pathOptions={{color:groundTrackColors[index],weight:1}}
-      positions={getPath(sat, 720)}
-    />
-    <Polyline
-      pathOptions={{color:groundTrackColors[index],weight:1}}
-      positions={getPath(sat, -1080)}
-    />
-    <Polyline
-      pathOptions={{color:groundTrackColors[index],weight:1}}
-      positions={getPath(sat, 1080)}
-    />
-      {/*<Circle center={getSatCenter(sat)} pathOptions={{fillColor:'blue'}} radius={500} />*/}
-      <Circle
-        center={getSatCenter(sat)}
-        pathOptions={{ fillColor: "red" }}
-        radius={300}
       />
+      <Polyline
+        pathOptions={{ color: groundTrackColors[index], weight: 1 }}
+        positions={getPath(sat, -720)}
+      />
+      <Polyline
+        pathOptions={{ color: groundTrackColors[index], weight: 1 }}
+        positions={getPath(sat, 720)}
+      />
+      <Polyline
+        pathOptions={{ color: groundTrackColors[index], weight: 1 }}
+        positions={getPath(sat, -1080)}
+      />
+      <Polyline
+        pathOptions={{ color: groundTrackColors[index], weight: 1 }}
+        positions={getPath(sat, 1080)}
+      />
+      {/*<Circle center={getSatCenter(sat)} pathOptions={{fillColor:'blue'}} radius={500} />*/}
+      <Circle center={getSatCenter(sat)}
+        pathOptions={{ color: groundTrackColors[index] }}
+        radius={20}/>
+
+      <CircleMarker
+        center={getSatCenter(sat)}
+        pathOptions={{ color: groundTrackColors[index] }}
+        radius={20}
+      >
+        <Popup >{sat.name}</Popup>
+      </CircleMarker>
+
     </div>
   ));
 };

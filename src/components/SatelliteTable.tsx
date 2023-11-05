@@ -32,6 +32,19 @@ function SatelliteTable() {
     "Inclination",
   ];
 
+  const groundTrackColors = [
+    "#2ff33A",
+    "#e3ff00",
+    "#20d9ac",
+    "#FF69B4",
+    "#00D7FF",
+    "#AEFF77",
+    "#FF7792",
+    "#FF77E4",
+    "#7777FF",
+    "#FFFF77",
+  ];
+
   const handleRemoveButton = (satelliteToRemove) => {
     // Use the filter method to create a new array excluding the satelliteToRemove
     const updatedSatellites = trackedSatellites.filter(
@@ -156,7 +169,7 @@ function SatelliteTable() {
                           width: "100%",
                           fontSize: 15,
                           fontFamily: "Roboto Mono, monospace",
-                          borderBottom: "1px solid #2ff33A",
+                          borderBottom: `1px solid ${groundTrackColors[index]}`,
                         }}
                       >
                         {sat.name}

@@ -219,12 +219,13 @@ export default function RotatorModel({
       {isOpen && (
         <div
           style={{
+            backgroundColor:"rgba(24,28,32,0.5)",
             position: "absolute",
             bottom: "13rem",
             height: "22rem",
             //width: "100%",
             marginBottom: "16px",
-            //border: '1px solid #181C20', borderRadius:"8px"
+            border: '1px solid #181C20', borderRadius:"12px"
           }}
         >
           <Canvas
@@ -240,7 +241,7 @@ export default function RotatorModel({
             }}
           >
             {/*<OrbitControls target={[-3,2.5,0]} />*/}
-            {/*<color attach="background" args={["#181C20"]} />*/}
+            {/*<color attach="background" args={["rgba(256,256,256,0.5)"]} />*/}
 
             <Suspense fallback={null}>
               <Environment preset="city" />

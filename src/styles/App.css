@@ -99,3 +99,7 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+.satellite-popup {
+  background-color: "red";
+}

@@ -70,16 +70,9 @@ export default function Dashboard(props) {
           </Button>
         )}
         {selectedSatellite && (
-          <Box
-            sx={{
-              minWidth: 150,
-              maxWidth: 180,
-              width: "100%",
-              backgroundColor: "transparent",
-            }}
-          >
+      
             <SatelliteCard />
-          </Box>
+      
         )}
 
         {rotator == null && (
@@ -104,35 +97,11 @@ export default function Dashboard(props) {
           <>
             <Stack
               direction="row"
-              /*divider={
-                <Divider
-                  orientation="vertical"
-                  flexItem
-                  sx={{ backgroundColor: "#373C4B" }}
-                />
-              }*/
               spacing={1}
-              //justifyContent="space-around"
-              sx={{ height: "11rem", width: "100%", }}
+              sx={{ height: "11rem", width: "100%" }}
             >
-              <Box
-                sx={{
-        
-                  backgroundColor: "transparent",
-                }}
-              >
-                <RadioCard />
-              </Box>
-
-              <Box
-                sx={{
-                  //width: "100%",
-                  backgroundColor: "transparent",
-                }}
-              >
-                <RotatorCard />
-               
-              </Box>
+              <RadioCard />
+              <RotatorCard />
             </Stack>
           </>
         )}

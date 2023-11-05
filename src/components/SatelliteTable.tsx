@@ -24,7 +24,13 @@ function SatelliteTable() {
     selectedSatellite,
   } = useRotator();
 
-  const PassInfoLabels = ["Retrieved", "NextPass", "Visible", "MaxE", "Inclination"];
+  const PassInfoLabels = [
+    "Retrieved",
+    "NextPass",
+    "Visible",
+    "MaxE",
+    "Inclination",
+  ];
 
   const handleRemoveButton = (satelliteToRemove) => {
     // Use the filter method to create a new array excluding the satelliteToRemove
@@ -45,17 +51,19 @@ function SatelliteTable() {
   };
 
   const handleSelectButton = (satelliteToSelect) => {
-    setSelectedSatellite(satelliteToSelect);
+    if (satelliteToSelect.name != selectedSatellite.name) {
+      setSelectedSatellite(satelliteToSelect);
 
-    // Reorder the trackedSatellites array to place the selected satellite at the beginning
-    const updatedSatellites = [
-      satelliteToSelect,
-      ...trackedSatellites.filter(
-        (satellite) => satellite.name !== satelliteToSelect.name,
-      ),
-    ];
+      // Reorder the trackedSatellites array to place the selected satellite at the beginning
+      const updatedSatellites = [
+        satelliteToSelect,
+        ...trackedSatellites.filter(
+          (satellite) => satellite.name !== satelliteToSelect.name,
+        ),
+      ];
 
-    setTrackedSatellites(updatedSatellites);
+      setTrackedSatellites(updatedSatellites);
+    }
   };
 
   return (
@@ -92,133 +100,141 @@ function SatelliteTable() {
             sx={{
               padding: "8px",
               ".MuiCard-root": {
-                width: 180,
+                width: 185,
                 height: "10rem",
               },
             }}
           >
-            {trackedSatellites.map((sat,index) => (
-              <div className="satellite-card" key={index}>
-              <Card
-                elevation={2}
-                sx={{
-                  //display: 'flex',
-                  justifyContent: "center",
-                  padding: "8px",
-                  backgroundColor:
-                    sat.name === selectedSatellite.name ?  "#2C333A" : "#16191d",
-                 
+            {trackedSatellites.map((sat, index) => (
+              <div
+                className="satellite-card"
+                key={index}
+                style={{
+                  border:
+                    sat.name === selectedSatellite.name
+                      ? "1px solid #2C333A"
+                      : "1px solid #16191d",
                 }}
               >
-                <Stack
-                  sx={{ m: "0px" }}
-                  direction="column"
-                  spacing={0}
-                  justifyContent="center"
+                <Card
+                  onClick={() => handleSelectButton(sat)}
+                  className={
+                    sat.name === selectedSatellite.name
+                      ? "selected-sat-card"
+                      : "unselected-sat-card"
+                  }
+                  elevation={2}
+                  sx={{
+                    //display: 'flex',
+                    justifyContent: "center",
+                    padding: "8px",
+                    backgroundColor:
+                      sat.name === selectedSatellite.name
+                        ? "#2C333A"
+                        : "#16191d",
+                  }}
                 >
-                  {/*NAME and CLOSE*/}
                   <Stack
-                    direction="row"
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
+                    sx={{ m: "0px" }}
+                    direction="column"
+                    spacing={0}
+                    justifyContent="center"
                   >
-                    <Typography
-                      variant="h6"
-                      component="div"
-                      sx={{
-                        width: "100%",
-                        fontSize: 15,
-                        fontFamily: "Roboto Mono, monospace",
-                        borderBottom: "1px solid #2ff33A",
-                      }}
-                    >
-                      {sat.name}
-                    </Typography>
-                    <div className="remove-sat-btn">
-                    <Button
-                      onClick={() => handleRemoveButton(sat)}
-                      sx={{
-                        color: "#2ff33A",
-                        borderRadius: "4px",
-                        minWidth: 0,
-                        marginTop:"-16px",
-                        marginRight:"-6px",
-                        padding: "4px",
-                        "&.MuiTouchRipple-root": {
-                          width: "24px",
-                          height: "24px",
-                        },
-                      }}
-                    >
-                      <CloseIcon
-                        fontSize="small"
-                        sx={{ maxWidth: "15px", maxHeight: "15px" }}
-                      />
-                    </Button>
-                    </div>
-                  </Stack>
-                  
-                  {/*PASS INFO*/}
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    sx={{ marginTop: "4px" }}
-                    justifyContent="space-between"
-                    alignItems="space-between"
-                  >
-
+                    {/*NAME and CLOSE*/}
                     <Stack
-                      direction="column"
+                      direction="row"
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{
+                          width: "100%",
+                          fontSize: 15,
+                          fontFamily: "Roboto Mono, monospace",
+                          borderBottom: "1px solid #2ff33A",
+                        }}
+                      >
+                        {sat.name}
+                      </Typography>
+                      <div className="remove-sat-btn">
+                        <Button
+                          onClick={() => handleRemoveButton(sat)}
+                          sx={{
+                            color:
+                              sat.name === selectedSatellite.name
+                                ? "white"
+                                : "grey",
+                            borderRadius: "4px",
+                            minWidth: 0,
+                            marginTop: "-16px",
+                            marginRight: "-6px",
+                            padding: "4px",
+                            "&.MuiTouchRipple-root": {
+                              width: "24px",
+                              height: "24px",
+                            },
+                          }}
+                        >
+                          <CloseIcon
+                            fontSize="small"
+                            sx={{ maxWidth: "15px", maxHeight: "15px" }}
+                          />
+                        </Button>
+                      </div>
+                    </Stack>
+
+                    {/*PASS INFO*/}
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{ marginTop: "4px" }}
                       justifyContent="space-between"
                       alignItems="space-between"
                     >
-                      {PassInfoLabels.map((label,index) => (
-                        <Typography
-                          key={index}
-                          variant="caption"
-                          component="div"
-                          sx={{ fontFamily: "Roboto Mono, monospace" }}
-                        >
-                          {label === "NextPass" ? "Next Pass": label ==="MaxE" ? "Max Elevation" : label}
-                        </Typography>
-                      ))}
+                      <Stack
+                        direction="column"
+                        justifyContent="space-between"
+                        alignItems="space-between"
+                      >
+                        {PassInfoLabels.map((label, index) => (
+                          <Typography
+                            key={index}
+                            variant="caption"
+                            component="div"
+                            sx={{ fontFamily: "Roboto Mono, monospace" }}
+                          >
+                            {label === "NextPass"
+                              ? "Next Pass"
+                              : label === "MaxE"
+                              ? "Max Elevation"
+                              : label}
+                          </Typography>
+                        ))}
+                      </Stack>
+
+                      <Stack direction="column">
+                        {PassInfoLabels.map((label, index) => (
+                          <Typography
+                            key={index}
+                            variant="caption"
+                            component="div"
+                            sx={{
+                              color: "#8C92A4",
+                              fontFamily: "Roboto Mono, monospace",
+                            }}
+                          >
+                            {sat.nextPass[label]}
+                          </Typography>
+                        ))}
+                      </Stack>
                     </Stack>
-
-                    <Stack direction="column">
-                      {PassInfoLabels.map((label,index) => (
-                        <Typography
-                          key={index}
-                          variant="caption"
-                          component="div"
-                          sx={{
-                            color: "#8C92A4",
-                            fontFamily: "Roboto Mono, monospace",
-                          }}
-                        >
-                          {sat.nextPass[label]}
-                        </Typography>
-                      ))}
-                    </Stack>
-
-
                   </Stack>
-                </Stack>
-                {/* SET AS TARGET */}
-                {selectedSatellite && selectedSatellite.name !== sat.name && (
-                  <div className="set-target-btn">
-                  <Button
-                    
-                    sx={{color:"#2ff33A",fontSize: 12,m: "0px", p: "0px" , width:"100%"}}
-                    onClick={() => handleSelectButton(sat)}
-                  >
-                    Set as Target
-                  </Button>
-                  </div>
-                )}
-              </Card>
+                </Card>
               </div>
             ))}
           </Stack>

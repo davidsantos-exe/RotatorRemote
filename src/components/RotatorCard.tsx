@@ -132,6 +132,7 @@ export default function RotatorCard() {
       variant="outlined"
       border={1}
       sx={{
+        width:"100%",
         padding: "8px",
         height: "100%",
         //marginTop: "16px",
@@ -142,10 +143,11 @@ export default function RotatorCard() {
       }}
     >
       <Stack
+       sx={{width:"100%"}}
         direction="row"
         spacing={1}
-        //justifyContent="space-between"
-        //alignItems="space-between"
+        justifyContent="space-around"
+        alignItems="space-around"
       >
         {/*Settings*/}
 

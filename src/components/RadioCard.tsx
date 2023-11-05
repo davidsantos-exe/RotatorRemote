@@ -22,6 +22,7 @@ export default function BasicCard() {
       //border={1}
       sx={{
         minWidth: 300,
+        width:"30%",
         padding: "8px",
         height: "100%",
         justifyContent: "center",

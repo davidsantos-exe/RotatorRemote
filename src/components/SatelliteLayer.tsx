@@ -31,7 +31,7 @@ const SatelliteLayer = ({ satellites }) => {
       if (i === 0) {
         // console.log("from1: " + lon);
       }
-      if (path.length > 1 && Math.abs(path[i][1] - path[i - 1][1]) > 40) {
+      if (path.length > 1 && Math.abs(path[i][1] - path[i - 1][1]) > 50) {
         // console.log("to: " + path[i - 1][1]);
         path.slice(1);
         path.pop();
@@ -51,7 +51,7 @@ const SatelliteLayer = ({ satellites }) => {
           }
           // console.log("Added: " + path[i + j][1]);
 
-          if (j > 1 && Math.abs(path[i + j][1] - path[i + j - 1][1]) > 40) {
+          if (j > 1 && Math.abs(path[i + j][1] - path[i + j - 1][1]) > 50) {
             //console.log("to: " + path[i + j - 1][1]);
             path.pop();
             break;

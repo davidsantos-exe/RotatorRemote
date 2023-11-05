@@ -121,6 +121,8 @@ export default function BasicCard() {
     sx={{
       padding: "8px",
       height: "100%",
+      minWidth: 180,
+      width: "10%",
       justifyContent: "center",
       display: "flex",
       alignItems: "center",

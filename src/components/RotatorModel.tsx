@@ -69,6 +69,7 @@ type GLTFResult = GLTF & {
 };
 const { DEG2RAD } = THREE.MathUtils;
 let cameraControlsRef;
+
 export function Model(props: JSX.IntrinsicElements["group"]) {
   const { azimuth, elevation, updateAzimuth, updateElevation } = useRotator();
 
@@ -84,6 +85,29 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   useEffect(() => {
     cameraControlsRef.current?.setLookAt(...[15, 15, 15], ...[-3, 6, 0], false);
   }, []);
+
+  // Define your function
+  const updateSideCamera = () => {
+    if (
+      typeof cameraControlsRef === "object" &&
+      Math.floor(cameraControlsRef.current?._camera.position.y) === 10
+    ) {
+      cameraControlsRef.current?.setLookAt(
+        ...[
+          20 * Math.sin(-azimuth * (Math.PI / 180) + Math.PI * 0.5),
+          10,
+          20 * Math.cos(-azimuth * (Math.PI / 180) + Math.PI * 0.5) + 2.5,
+        ],
+        ...[0, 10, 2.5],
+        false,
+      );
+    }
+  };
+
+  // Set up an effect to call the function when azimuth changes
+  useEffect(() => {
+    updateSideCamera();
+  }, [azimuth]);
 
   return (
     <>
@@ -189,7 +213,7 @@ export default function RotatorModel({
   } = useRotator();
   const [modelType, setModelType] = useState("Real-Time");
   const [isOpen, setIsOpen] = useState(false); // Define state for rotator visibility
-
+  const [cameraView, setCameraView] = useState("ISO");
   const toggleViewRotator = () => {
     setIsOpen(!isOpen); // Toggle the state when the button is clicked
   };
@@ -214,18 +238,44 @@ export default function RotatorModel({
     },
   });
 
+  const handleISOButton = () => {
+    setCameraView("ISO");
+    cameraControlsRef.current.setPosition(15, 15, 15, true);
+    cameraControlsRef.current?.setLookAt(...[15, 15, 15], ...[-3, 6, 0], true);
+  };
+
+  const handleSideButton = () => {
+    setCameraView("Side");
+    cameraControlsRef.current?.setLookAt(
+      ...[
+        20 * Math.sin(-azimuth * (Math.PI / 180) + Math.PI * 0.5),
+        10,
+        20 * Math.cos(-azimuth * (Math.PI / 180) + Math.PI * 0.5) + 2.5,
+      ],
+      ...[0, 10, 2.5],
+      true,
+    );
+  };
+
+  const handleAboveButton = () => {
+    setCameraView("Above");
+    cameraControlsRef.current?.setPosition(...[0, 20, 2.5], true);
+    cameraControlsRef.current?.setLookAt(...[0, 20, 2.5], ...[0, 0, 2.5], true);
+    cameraControlsRef.current?.rotate(Math.PI, 0, true);
+  };
+
   return (
     <div style={{ minWidth: 300, padding: "4px" }}>
       {isOpen && (
         <div
           style={{
-            backgroundColor:"rgba(24,28,32,0.5)",
+            backgroundColor: "rgba(24,28,32,0.5)",
             position: "absolute",
             bottom: "13rem",
             height: "22rem",
             //width: "100%",
             marginBottom: "16px",
-            border: '1px solid #181C20', borderRadius:"12px"
+            borderRadius: "12px",
           }}
         >
           <Canvas
@@ -263,6 +313,7 @@ export default function RotatorModel({
                 shadow-mapSize={2048}
                 castShadow
               />
+              {/*Deleted compassRose*/}
               <Svg
                 fillMaterial={{
                   wireframe: false,
@@ -270,7 +321,7 @@ export default function RotatorModel({
                 position={[0.02 * 430, 0, 0.02 * 540]}
                 rotation={[0.5 * Math.PI, Math.PI, 0]}
                 scale={0.02}
-                src="/src/icons/compass.svg"
+                src="/src/icons/compassRose.svg"
                 strokeMaterial={{
                   wireframe: false,
                 }}
@@ -287,6 +338,34 @@ export default function RotatorModel({
                   wireframe: false,
                 }}
               />
+              {cameraView === "Side" && (
+                <>
+                  <Svg
+                    fillMaterial={{ wireframe: false }}
+                    position={[0, 11.2, 2.25]}
+                    rotation={[
+                      0,
+                      0.5 * Math.PI + (-azimuth * Math.PI) / 180,
+                      0,
+                    ]}
+                    scale={0.025}
+                    src="/src/icons/CompassHalf2.svg"
+                    strokeMaterial={{ wireframe: false }}
+                  />
+                  <Svg
+                    fillMaterial={{ wireframe: false }}
+                    position={[0, 11.2, 2.25]}
+                    rotation={[
+                      0 ,
+                      0.5 * Math.PI + (-azimuth * Math.PI) / 180,
+                      0.5 * Math.PI + ((-elevation * Math.PI) / 180),
+                    ]}
+                    scale={0.025}
+                    src="/src/icons/CompassHalfIndicator.svg"
+                    strokeMaterial={{ wireframe: false }}
+                  />
+                </>
+              )}
 
               {/*} <Ground />*/}
             </Suspense>
@@ -358,14 +437,7 @@ export default function RotatorModel({
             color="primary"
             sx={{ p: "10px" }}
             aria-label="directions"
-            onClick={() => {
-              cameraControlsRef.current.setPosition(15, 15, 15, true);
-              cameraControlsRef.current?.setLookAt(
-                ...[15, 15, 15],
-                ...[-3, 6, 0],
-                true,
-              );
-            }}
+            onClick={() => handleISOButton()}
           >
             <ViewInArIcon fontSize="small" />
           </IconButton>
@@ -373,14 +445,7 @@ export default function RotatorModel({
             color="primary"
             sx={{ p: "10px" }}
             aria-label="directions"
-            onClick={() => {
-              cameraControlsRef.current?.setPosition(...[20, 10, 2.5], true);
-              cameraControlsRef.current?.setLookAt(
-                ...[20, 10, 2.5],
-                ...[0, 10, 2.5],
-                true,
-              );
-            }}
+            onClick={() => handleSideButton()}
           >
             <SquareIcon fontSize="small" />
           </IconButton>
@@ -388,15 +453,7 @@ export default function RotatorModel({
             color="primary"
             sx={{ p: "10px" }}
             aria-label="directions"
-            onClick={() => {
-              cameraControlsRef.current?.setPosition(...[0, 20, 2.5], true);
-              cameraControlsRef.current?.setLookAt(
-                ...[0, 20, 2.5],
-                ...[0, 0, 2.5],
-                true,
-              );
-              cameraControlsRef.current?.rotate(Math.PI, 0, true);
-            }}
+            onClick={() => handleAboveButton()}
           >
             <ViewInArIcon fontSize="small" />
           </IconButton>
@@ -432,9 +489,20 @@ export default function RotatorModel({
               {"° "}
             </Typography>
             {isManualTracking && azimuth != targetAzimuthText && (
-              <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
-                <ArrowRightAltIcon sx={{color:"#2ff33A", p:"0px", paddingTop:"8px", height:"2rem"
-              }}/>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+                spacing={1}
+              >
+                <ArrowRightAltIcon
+                  sx={{
+                    color: "#2ff33A",
+                    p: "0px",
+                    paddingTop: "8px",
+                    height: "2rem",
+                  }}
+                />
                 <Typography sx={{ paddingTop: "8px" }}>
                   {" "}
                   {targetAzimuthText}
@@ -457,9 +525,20 @@ export default function RotatorModel({
               {"° "}
             </Typography>
             {isManualTracking && elevation != targetElevationText && (
-              <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
-                <ArrowRightAltIcon sx={{color:"#2ff33A", p:"0px", paddingTop:"8px", height:"2rem"
-              }}/>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+                spacing={1}
+              >
+                <ArrowRightAltIcon
+                  sx={{
+                    color: "#2ff33A",
+                    p: "0px",
+                    paddingTop: "8px",
+                    height: "2rem",
+                  }}
+                />
                 <Typography sx={{ paddingTop: "8px" }}>
                   {" "}
                   {targetElevationText}

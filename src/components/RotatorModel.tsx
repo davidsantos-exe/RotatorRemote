@@ -74,11 +74,14 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   const { azimuth, elevation, updateAzimuth, updateElevation } = useRotator();
 
   const { nodes, materials } = useGLTF("/models/finalscene.gltf") as GLTFResult;
-  const whiteMaterial = new THREE.MeshStandardMaterial({
+  /*const whiteMaterial = new THREE.MeshStandardMaterial({
     color: "white",
     metalness: 1,
     roughness: 0,
-  });
+  });*/
+
+  const whiteMaterial = new THREE.MeshNormalMaterial();
+
 
   cameraControlsRef = useRef({});
 
@@ -269,7 +272,7 @@ export default function RotatorModel({
       {isOpen && (
         <div
           style={{
-            backgroundColor: "rgba(24,28,32,0.5)",
+            backgroundColor: "rgba(24,28,32,0.8)",
             position: "absolute",
             bottom: "13rem",
             height: "22rem",
@@ -294,7 +297,7 @@ export default function RotatorModel({
             {/*<color attach="background" args={["rgba(256,256,256,0.5)"]} />*/}
 
             <Suspense fallback={null}>
-              <Environment preset="city" />
+            <Environment preset="city" />
               {/*<ContactShadows
                 opacity={0.6}
                 scale={20}
@@ -305,13 +308,18 @@ export default function RotatorModel({
                 color="#000000"
           />*/}
               <Model />
-              <ambientLight intensity={10} />
+              <ambientLight intensity={100} />
               <spotLight
                 position={[10, 10, 10]}
                 angle={0.15}
                 penumbra={1}
                 shadow-mapSize={2048}
-                castShadow
+              />
+              <spotLight
+                position={[14, 14, 14]}
+                angle={0.15}
+                penumbra={1}
+                shadow-mapSize={2048}
               />
               {/*Deleted compassRose*/}
               <Svg
@@ -338,35 +346,29 @@ export default function RotatorModel({
                   wireframe: false,
                 }}
               />
-              {cameraView === "Side" && (
-                <>
-                  <Svg
-                    fillMaterial={{ wireframe: false }}
-                    position={[0, 11.2, 2.25]}
-                    rotation={[
-                      0,
-                      0.5 * Math.PI + (-azimuth * Math.PI) / 180,
-                      0,
-                    ]}
-                    scale={0.025}
-                    src="/src/icons/CompassHalf2.svg"
-                    strokeMaterial={{ wireframe: false }}
-                  />
-                  <Svg
-                    fillMaterial={{ wireframe: false }}
-                    position={[0, 11.2, 2.25]}
-                    rotation={[
-                      0 ,
-                      0.5 * Math.PI + (-azimuth * Math.PI) / 180,
-                      0.5 * Math.PI + ((-elevation * Math.PI) / 180),
-                    ]}
-                    scale={0.025}
-                    src="/src/icons/CompassHalfIndicator.svg"
-                    strokeMaterial={{ wireframe: false }}
-                  />
-                </>
-              )}
-
+              
+              <Svg
+               
+                fillMaterial={{ wireframe: false }}
+                position={[0, 11.2, 2.25]}
+                rotation={[0, 0.5 * Math.PI + (-azimuth * Math.PI) / 180, 0]}
+                scale={0.025}
+                src="/src/icons/CompassHalf2.svg"
+                strokeMaterial={{ wireframe: false }}
+              />
+              <Svg
+                fillMaterial={{ wireframe: false }}
+                position={[0, 11.2, 2.25]}
+                rotation={[
+                  0,
+                  0.5 * Math.PI + (-azimuth * Math.PI) / 180,
+                  0.5 * Math.PI + (-elevation * Math.PI) / 180,
+                ]}
+                scale={0.025}
+                src="/src/icons/CompassHalfIndicator.svg"
+                strokeMaterial={{ wireframe: false }}
+              />
+              
               {/*} <Ground />*/}
             </Suspense>
           </Canvas>

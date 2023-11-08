@@ -7,6 +7,16 @@ function radiansToDegrees(radians) {
   return (radians * 180) / Math.PI;
 }
 
+function coreAngle(theta,altitude,r){
+  if (Math.sin(theta) > r / (altitude + r)) {
+    return Math.acos(r / (r + altitude));
+  }
+  return Math.abs(Math.asin((r + altitude) * Math.sin(theta) / r)) - theta;
+}
+
+function degreesToRadians(degrees) {
+  return (degrees * Math.PI) / 180;
+}
 const SatelliteLayer = ({ satellites }) => {
   const getPath = (sat, orbit) => {
     var date = new Date();
@@ -81,14 +91,37 @@ const SatelliteLayer = ({ satellites }) => {
   };
 
   const getFootPrint = (sat) => {
+    // get footprint location
     var date = new Date();
     var positionAndVelocity = propagate(sat.satRec, date);
     var gmst = gstime(date);
     var positionGd = eciToGeodetic(positionAndVelocity.position, gmst);
-    var lon = radiansToDegrees(positionGd.longitude);
-    var lat = radiansToDegrees(positionGd.latitude);
-
-    return 1000;
+    const latitude = positionGd.latitude; // radians
+    const longitude = positionGd.longitude; // radians
+    const altitude = positionGd.height; // meters
+  
+    // get footprint radius
+    const orbitType =
+      altitude < 1200 ? 'LEO' : altitude > 2000 ? 'GEO' : 'MEO';
+    const halfAngle =
+      orbitType === 'LEO'
+        ? (0.4 * (30 - 15) + 15) * (Math.PI / 180) // Convert to radians
+        : (0.4 * 4 + 1) * (Math.PI / 180); // Convert to radians
+    var R_EARTH = 6378.137;
+  
+    const footprintRadius = 10 * Math.floor(Math.abs(coreAngle(halfAngle, altitude, R_EARTH)) * (180 / Math.PI));
+  
+    // generate footprint path for Leaflet
+    const path = [];
+  
+    for (let i = 0; i < 2 * Math.PI; i += 0.05) {
+      const x = radiansToDegrees(longitude) + footprintRadius * Math.cos(i);
+      const y = radiansToDegrees(latitude) + footprintRadius * Math.sin(i);
+      path.push([y,x]);
+    }
+    path.push(path[0]);
+  
+    return path;
   };
 
   const groundTrackColors = [
@@ -104,7 +137,9 @@ const SatelliteLayer = ({ satellites }) => {
     "#FFFF77",
   ];
 
-  return satellites.map((sat, index) => (
+  return (
+  <>
+  {satellites.map((sat, index) => (
     <div key={index}>
       <Polyline
         pathOptions={{ color: groundTrackColors[index], weight: 1 }}
@@ -135,20 +170,26 @@ const SatelliteLayer = ({ satellites }) => {
         positions={getPath(sat, 1080)}
       />
       {/*<Circle center={getSatCenter(sat)} pathOptions={{fillColor:'blue'}} radius={500} />*/}
-      <Circle center={getSatCenter(sat)}
-        pathOptions={{ color: groundTrackColors[index] }}
-        radius={20}/>
-
-      <CircleMarker
+      <Circle
         center={getSatCenter(sat)}
         pathOptions={{ color: groundTrackColors[index] }}
         radius={20}
+      />
+      <Polyline
+        pathOptions={{ color: groundTrackColors[index], fill: groundTrackColors[index],weight: 1 }}
+        positions={getFootPrint(sat)}
       >
-        <Popup >{sat.name}</Popup>
-      </CircleMarker>
+        <Popup>{sat.name}</Popup>
+      </Polyline>
 
+  
     </div>
-  ));
-};
+  ))}
+
+  {/* Day/Night Terminator*/}
+   
+    {/*Grid*/}
+  </>
+)};
 
 export default SatelliteLayer;

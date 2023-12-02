@@ -2,72 +2,110 @@ import * as React from "react";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import ControllerCard from "./ControllerCard";
+import { styled, responsiveFontSizes } from "@mui/material/styles";
 import RadioCard from "./RadioCard";
 import SatelliteCard from "./SatelliteCard";
 import RotatorCard from "./RotatorCard";
-import { Button } from "@mui/material";
+import Card from "@mui/material/Card";
+import { Button, Modal, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Fade from "@mui/material/Fade";
+import TabIcon from "../icons/TabIcon.svg";
+import ConnectionModal from "./ConnectionModal";
+import { useRotator } from "../classes/RotatorContext";
+import { isNonNullExpression } from "typescript";
+import RotatorModel from "../components/RotatorModel";
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
-
-
-export default function DividerStack() {
-  const [selectedSatellite, setSelectedSatellite] = React.useState(false);
-  const [connectedRotator, setConnectedRotator] = React.useState(false);
-
+export default function Dashboard(props) {
+  const { selectedSatellite, rotator } = useRotator();
+  const [open, setOpen] = React.useState(false);
+  const [isFirst, setIsFirst] = React.useState(true);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  //setConnectedRotator(true)
   return (
-    <div>
+    <>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <ConnectionModal setOpen={setOpen} />
+      </Modal>
+
       <Stack
         direction="row"
-        divider={<Divider orientation="vertical" flexItem />}
+        //variant="outlined"
+        //border={1}
         justifyContent="space-around"
-        spacing={2}
+        /*divider={
+          selectedSatellite && (
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{ backgroundColor: "#373C4B" }}
+            />
+          )
+        }*/
+        spacing={1}
+        sx={{ height: "11rem" }}
       >
         {!selectedSatellite && (
           <Button
             variant="outlined"
-            onClick={() => setSelectedSatellite(true)}
-            sx = {{padding:'5rem', width:'20%'}}
+            onClick={() => props.setValue(1)}
+            sx={{
+              fontFamily: "Roboto Mono,monospace",
+              "&:hover": { border: 0, color: "white" },
+              color: "#8C92A4",
+              border: 0,
+              boxShadow: "inset 0 0 10px #000000",
+              minWidth: 150,
+              maxWidth: 180,
+              width: "100%",
+            }}
           >
             Add Satellite
           </Button>
         )}
         {selectedSatellite && (
-       
+      
             <SatelliteCard />
-          
+      
         )}
-        {!connectedRotator && (
+
+        {rotator == null && (
           <Button
             variant="outlined"
             size="large"
-            onClick={() => setConnectedRotator(true)}
-            sx = {{padding:'5rem', width:'80%'}}
+            onClick={handleOpen}
+            sx={{
+              fontFamily: "Roboto Mono,monospace",
+              color: "#8C92A4",
+              border: 0,
+              boxShadow: "inset 0 0 10px #000000",
+              width: "100%",
+              "&:hover": { border: 0, color: "white" },
+            }}
           >
             Connect a Rotator
           </Button>
         )}
-        {connectedRotator && (
+
+        {!(rotator == null) && (
           <>
-            <Item>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ height: "11rem", width: "100%" }}
+            >
               <RadioCard />
-            </Item>
-            <Item>
               <RotatorCard />
-            </Item>
-            <Item>
-              <ControllerCard />
-            </Item>
+            </Stack>
           </>
         )}
       </Stack>
-    </div>
+    </>
   );
 }

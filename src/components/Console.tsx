@@ -3,52 +3,10 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import SatelliteTable from "./SatelliteTable";
 import Dashboard from "./Dashboard";
+import { Icon, Modal } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-
-const AntTabs = styled(Tabs)({
-  borderBottom: "1px solid #e8e8e8",
-  "& .MuiTabs-indicator": {
-    backgroundColor: "#1890ff",
-  },
-});
-
-const AntTab = styled((props: StyledTabProps) => (
-  <Tab disableRipple {...props} />
-))(({ theme }) => ({
-  textTransform: "none",
-  minWidth: 0,
-  [theme.breakpoints.up("sm")]: {
-    minWidth: 0,
-  },
-  fontWeight: theme.typography.fontWeightRegular,
-  marginRight: theme.spacing(1),
-  color: "rgba(0, 0, 0, 0.85)",
-  fontFamily: [
-    "-apple-system",
-    "BlinkMacSystemFont",
-    '"Segoe UI"',
-    "Roboto",
-    '"Helvetica Neue"',
-    "Arial",
-    "sans-serif",
-    '"Apple Color Emoji"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-  ].join(","),
-  "&:hover": {
-    color: "#40a9ff",
-    opacity: 1,
-  },
-  "&.Mui-selected": {
-    color: "#1890ff",
-    fontWeight: theme.typography.fontWeightMedium,
-  },
-  "&.Mui-focusVisible": {
-    backgroundColor: "#d1eaff",
-  },
-}));
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -62,6 +20,9 @@ const StyledTabs = styled((props: StyledTabsProps) => (
     TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
   />
 ))({
+  "&.MuiTabs-root": {
+    minHeight: "24px",
+  },
   "& .MuiTabs-indicator": {
     display: "flex",
     justifyContent: "center",
@@ -69,28 +30,46 @@ const StyledTabs = styled((props: StyledTabsProps) => (
   },
   "& .MuiTabs-indicatorSpan": {
     maxWidth: 40,
-    width: "100%",
-    backgroundColor: "#635ee7",
+    //width: "100%",
+    //backgroundColor: "blue",
   },
 });
 
 interface StyledTabProps {
-  label: string;
+  label: string; // Add the label prop
 }
 
 const StyledTab = styled((props: StyledTabProps) => (
   <Tab disableRipple {...props} />
 ))(({ theme }) => ({
   textTransform: "none",
+  fontFamily: "Roboto Mono, monospace",
   fontWeight: theme.typography.fontWeightRegular,
   fontSize: theme.typography.pxToRem(15),
   marginRight: theme.spacing(1),
-  color: "rgba(255, 255, 255, 0.7)",
+  color: "#8C92A4",
   "&.Mui-selected": {
-    color: "#fff",
-  },
+    color: "white",
+    zIndex: 1,
+    "&.MuiTab-root":{
+      backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='129' height='26' fill='none'><path fill='%23181C20' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
+    }
+ },
   "&.Mui-focusVisible": {
-    backgroundColor: "rgba(100, 95, 228, 0.32)",
+    //backgroundColor: "rgba(100, 95, 228, 0.32)",
+  },
+  "&:hover":{
+    color:"white"
+  },
+  "&.MuiTab-root": {
+    
+    height: "26px",
+    minHeight: "26px",
+    width: "130px",
+    backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='129' height='26' fill='none'><path fill='%23121417' d='M21 0C10.648 0 15.109 26 0 26h129c-18.865 0-12.944-26-22.5-26H21Z'/></svg>")`,
+    backgroundSize: "cover",
+    paddingTop: "0px",
+    paddingBottom: "0px",
   },
 }));
 
@@ -112,10 +91,17 @@ function CustomTabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3}}>
-          <Typography>{children}</Typography>
+        <Box
+          sx={{
+            p: 3,
+            padding: "12px",
+            backgroundColor: "#181C20",
+            //borderRadius: "8px",
+          }}
+        >
+          {children}
+ 
         </Box>
-        
       )}
     </div>
   );
@@ -136,19 +122,30 @@ export default function CustomizedTabs() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ bgcolor: "#2e1534",height: "25rem" }}>
-        <StyledTabs value={value} onChange={handleChange}>
-          <StyledTab label="Satellites" {...a11yProps(0)} />
-          <StyledTab label="Dashboard" {...a11yProps(1)} />
-        </StyledTabs>
-        <CustomTabPanel value={value} index={0} >
-          <SatelliteTable />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <Dashboard/>
-        </CustomTabPanel>
+    <>
+      <Box sx={{ width: "100%" }}>
+        <Box>
+          <StyledTabs value={value} onChange={handleChange}>
+            <StyledTab
+           
+              label="Dashboard"
+              {...a11yProps(0)}
+              sx={{ marginLeft: "4px",marginRight: "-10px" }}
+            />
+            <StyledTab
+              label="Satellites"
+              {...a11yProps(1)}
+              sx={{ marginLeft: "-20px" }}
+            />
+          </StyledTabs>
+          <CustomTabPanel value={value} index={1}>
+            <SatelliteTable />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={0}>
+            <Dashboard setValue={setValue} />
+          </CustomTabPanel>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }
